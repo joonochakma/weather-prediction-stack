@@ -1,2 +1,3 @@
-# weather-prediction
+# Weather-Prediction
 Weather analysis
+# Requirements
