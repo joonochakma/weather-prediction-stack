@@ -1,4 +1,4 @@
-Date,TemperatureMean,TemperatureMax,TemperatureMin,RainSum,RelativeHumidityMean,RelativeHumidityMax,RelativeHumidityMin
+Datetime,TemperatureMean,TemperatureMax,TemperatureMin,RainSum,RelativeHumidityMean,RelativeHumidityMax,RelativeHumidityMin
 2014-01-01,18.770834,24.875,13.575,8.5,68.30834,92.99228,32.491898
 2014-01-02,15.345833,19.724998,10.725,0.0,70.80868,91.67509,50.22602
 2014-01-03,16.835417,21.775,12.175,0.0,58.217876,68.85703,45.992092

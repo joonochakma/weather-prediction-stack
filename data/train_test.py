@@ -19,7 +19,6 @@ def split_data(train_file : str, output_train_file : str, output_test_file : str
     # Load the CSV file into a DataFrame, replacing missing values with 0
     df = pd.read_csv(train_file, encoding='utf-8').fillna(0)
 
-    # Convert 'Combined DateTime' to datetime format
     df['Datetime'] = pd.to_datetime(df['Datetime']).dt.date
 
     # Define the split date for training and testing datasets
@@ -34,4 +33,4 @@ def split_data(train_file : str, output_train_file : str, output_test_file : str
     test_df.to_csv(output_test_file, index=False)
 
 # Call the function to split data into training and testing sets
-# split_data('Weather Data.csv', 'data/train.csv', 'data/test.csv')
+split_data('Weather Data.csv', 'data/train.csv', 'data/test.csv')
