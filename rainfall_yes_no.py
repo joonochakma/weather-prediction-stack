@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Step 1: Prepare the dataset from the provided data
-data = pd.read_csv('rainfall.csv')
+data = pd.read_csv('rainfall/temperature_rainfall.csv')
 df = pd.DataFrame(data)
 
 # Step 2: Data cleaning
@@ -15,14 +15,12 @@ df['Rainy'] = (df['Rainfall amount (millimetres)'] > 0).astype(int)  # 1 for rai
 
 # Step 3: Feature engineering
 df['Previous_Rainfall'] = df['Rainfall amount (millimetres)'].shift(1)  # Shift for previous day's rainfall
-df['Date'] = pd.to_datetime(df[['Year', 'Month', 'Day']])
-df['Day_of_Week'] = df['Date'].dt.dayofweek
 
-# Drop rows with NaN values created by shifting
+# Drop rows with NaN values created by shifting (first row)
 df.dropna(inplace=True)
 
 # Step 4: Select features and target
-X = df[['Previous_Rainfall', 'Day_of_Week']]
+X = df[['Maximum temperature (Degree C)', 'Minimum temperature (Degree C)', 'Previous_Rainfall']]
 y = df['Rainy']
 
 # Train-test split
@@ -35,29 +33,35 @@ model.fit(X_train, y_train)
 # Step 6: Get predicted probabilities
 y_prob = model.predict_proba(X_test)  # Get probabilities for both classes
 
-# Step 7: Determine predictions based on threshold
-predictions_binary = [1 if prob[1] > 0.5 else 0 for prob in y_prob]  # 1 for rain if probability > 70%
+# Step 7: Determine predictions based on threshold and fill missing values
+predictions_binary = [1 if prob[1] > 0.5 else 0 for prob in y_prob]  # Threshold of 50% for rain prediction
 predictions_label = ['Y' if pred == 1 else 'N' for pred in predictions_binary]  # Map to 'Y'/'N'
 
-# Step 8: Add predictions and probabilities to the DataFrame
-# Align the predictions with the original DataFrame's indices
+# Step 8: Align predictions with the correct test indices and fill missing values
 df_test_indices = X_test.index
+
+# Ensure all labels are either 'Y' or 'N' and handle misalignments
 df.loc[df_test_indices, 'Predicted_Rainy'] = predictions_label
+
+# Fill any missing predictions with 'N' (no rain)
+df['Predicted_Rainy'] = df['Predicted_Rainy'].fillna('N')
+
+# Step 9: Add predicted probabilities to the DataFrame
 df.loc[df_test_indices, 'Probability_of_Rain'] = [prob[1] for prob in y_prob]
 
-# Step 9: Calculate metrics
+# Step 10: Calculate metrics
 accuracy = accuracy_score(y_test, predictions_binary)
 report = classification_report(y_test, predictions_binary)
 
-# Step 10: Save to a new CSV file
-df.to_csv('rainfall_predictions.csv', index=False)
+# Step 11: Save to a new CSV file
+df.to_csv('rainfall/rainfall_predictions.csv', index=False)
 
-# Step 11: Display metrics
+# Step 12: Display metrics
 print(f'\nAccuracy: {accuracy:.2f}')
 print('\nClassification Report:')
 print(report)
 
-# Step 12: Visualization
+# Step 13: Visualization
 # Plotting the actual vs predicted rainfall
 plt.figure(figsize=(10, 4))
 
@@ -79,4 +83,3 @@ plt.legend()
 plt.grid()
 
 plt.show()
-
