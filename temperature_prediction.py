@@ -129,7 +129,7 @@ def plot_scatter_matrix(train_data):
 
 def main():
     # Load the data
-    train_data, test_data = load_data('data/train.csv', 'data/test.csv')
+    train_data, test_data = load_data('temperature/train.csv', 'temperature/test.csv')
     
     # Preprocess the data
     train_data = preprocess_data(train_data)

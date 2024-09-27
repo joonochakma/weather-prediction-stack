@@ -22,7 +22,7 @@ def split_data(train_file : str, output_train_file : str, output_test_file : str
     df['Datetime'] = pd.to_datetime(df['Datetime']).dt.date
 
     # Define the split date for training and testing datasets
-    split_date = pd.to_datetime('2022-01-01').date()
+    split_date = pd.to_datetime('2023-01-01').date()
 
     # Split the DataFrame into training and testing sets based on the split date
     train_df = df[df['Datetime'] < split_date]
@@ -33,4 +33,4 @@ def split_data(train_file : str, output_train_file : str, output_test_file : str
     test_df.to_csv(output_test_file, index=False)
 
 # Call the function to split data into training and testing sets
-split_data('Weather Data.csv', 'data/train.csv', 'data/test.csv')
+split_data('temperature/Weather Data.csv', 'temperature/train.csv', 'temperature/test.csv')

@@ -125,7 +125,7 @@ def plot_learning_curve(clf, X, y):
 
 def main():
     # Load and preprocess data
-    df = load_data('merged_data.csv')
+    df = load_data('weather/merged_weather_data.csv')
     df = preprocess_data(df)
     df = add_weather_condition_column(df)
 
