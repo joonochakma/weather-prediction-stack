@@ -1,7 +1,6 @@
 """
 Processes temperature and rainfall data to identify heatwave conditions and clusters using KMeans clustering.
 """
-
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -11,6 +10,7 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from scipy import stats
 from sklearn.metrics import silhouette_score
+import joblib
 
 
 def load_data(file_path):
@@ -121,6 +121,9 @@ def apply_kmeans_clustering(data):
 
     # Add the cluster labels to the DataFrame for further analysis
     data['Cluster'] = labels
+
+    # Save the KMeans model to a file
+    joblib.dump(kmeans, 'model/heatwave_model.joblib')  # Save the model to the specified path
     
     return data
 

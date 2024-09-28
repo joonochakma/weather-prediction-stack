@@ -10,6 +10,7 @@ import seaborn as sns
 from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test_split, learning_curve
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+import joblib  # Import joblib for saving the model
 
 def load_data(filepath):
     """
@@ -119,6 +120,10 @@ def train_model(X, y):
     
     # Fit the model to the entire dataset
     clf.fit(X, y)
+    
+    # Save the model to a file
+    joblib.dump(clf, 'model/weather_classifier_model.joblib')
+     
     return clf
 
 def evaluate_model(clf, X, y):

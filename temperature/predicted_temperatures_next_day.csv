@@ -1,0 +1,2 @@
+Datetime,TemperatureMax,TemperatureMin,RainSum,RelativeHumidityMean,RelativeHumidityMax,RelativeHumidityMin,Year,Month,Day,Hour,PredictedTemperatureMean
+2024-08-01,18.843702740484428,10.019740458650519,2.137197231020761,74.94478866608998,90.48996558823531,55.075450498269895,2024,8,1,0,14.001250085104175

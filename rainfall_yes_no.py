@@ -1,14 +1,13 @@
 """
-Predicts rainfall Yes or No based on temperature and rainfall data using a Decision Tree Classifier. 
+Classifies with it rain or not
 """
-
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report, accuracy_score
 import matplotlib.pyplot as plt
 import seaborn as sns
-
+import joblib
 
 def load_data(filepath):
     """
@@ -71,19 +70,39 @@ def prepare_data(df):
     y = df['Rainy']
     return X, y
 
-def train_model(X_train, y_train):
+def train_model(X_train, y_train, model_filepath='rainfall/decision_tree_model.joblib'):
     """
-    Train a Decision Tree Classifier on the training data.
+    Train a Decision Tree Classifier on the training data and save the model.
 
     Args:
     - X_train (DataFrame): Feature variables for training.
     - y_train (Series): Target variable for training.
+    - model_filepath (str): File path to save the trained model.
 
     Returns:
     - model (DecisionTreeClassifier): Trained decision tree model.
     """
     model = DecisionTreeClassifier(random_state=42)
     model.fit(X_train, y_train)  # Fit the model on the training data.
+    
+    # Save the trained model to disk
+    joblib.dump(model, model_filepath)
+    print(f"Model saved to {model_filepath}")
+    
+    return model
+
+def load_model(model_filepath='rainfall/decision_tree_model.joblib'):
+    """
+    Load a saved decision tree model from a file.
+
+    Args:
+    - model_filepath (str): File path to the saved model.
+
+    Returns:
+    - model (DecisionTreeClassifier): Loaded decision tree model.
+    """
+    model = joblib.load(model_filepath)
+    print(f"Model loaded from {model_filepath}")
     return model
 
 def make_predictions(model, X_test):
@@ -176,8 +195,11 @@ def main():
     # Train-test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
+    # Train or load the model
+    model_filepath = 'model/rainfall_model.joblib'
+    
     # Train the model
-    model = train_model(X_train, y_train)
+    model = train_model(X_train, y_train, model_filepath)
     
     # Make predictions
     predictions, probabilities = make_predictions(model, X_test)
