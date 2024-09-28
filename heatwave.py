@@ -80,6 +80,14 @@ def visualize_distribution(data):
     plt.ylabel('Frequency')
     plt.show()
 
+def plot_correlation_heatmap(features):
+    """Plot the correlation heatmap."""
+    corr = features.corr()
+    plt.figure(figsize=(12, 8))
+    sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f")
+    plt.title('Correlation Heatmap')
+    plt.show()
+
 
 def define_heatwave_conditions(data):
     """
@@ -193,6 +201,8 @@ def main():
     
     # Visualize data distribution
     visualize_distribution(data_no_outliers)
+    # Plot the correlation heatmap
+    plot_correlation_heatmap(data_no_outliers)
     
     # Define heatwave conditions
     data_no_outliers = define_heatwave_conditions(data_no_outliers)

@@ -70,6 +70,26 @@ def prepare_data(df):
     y = df['Rainy']
     return X, y
 
+def data_analysis(df):
+    """
+    Perform exploratory data analysis on the dataset.
+
+    Args:
+    - df (DataFrame): DataFrame containing the rainfall data.
+
+    """    
+    # Plot histograms for numerical features
+    df.hist(bins=30, figsize=(15, 10), color='blue', alpha=0.7)
+    plt.suptitle('Histograms of Numerical Features')
+    plt.show()
+
+    # Plot correlation matrix
+    plt.figure(figsize=(12, 8))
+    correlation_matrix = df.corr()
+    sns.heatmap(correlation_matrix, annot=True, fmt=".2f", cmap='coolwarm', square=True)
+    plt.title('Correlation Matrix')
+    plt.show()
+
 def train_model(X_train, y_train, model_filepath='rainfall/decision_tree_model.joblib'):
     """
     Train a Decision Tree Classifier on the training data and save the model.
@@ -191,6 +211,9 @@ def main():
     
     # Prepare feature and target variables
     X, y = prepare_data(df)
+
+    # Perform data analysis
+    data_analysis(df)
     
     # Train-test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

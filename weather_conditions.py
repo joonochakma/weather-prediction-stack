@@ -11,6 +11,7 @@ from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 import joblib  
+from pandas.plotting import scatter_matrix
 
 def load_data(filepath):
     """
@@ -156,6 +157,37 @@ def evaluate_model(clf, X, y):
 
     return y_test, y_test_pred
 
+def plot_correlation_heatmap(df):
+    """
+    Plot a heatmap of the correlation matrix for the preprocessed data.
+
+    Args:
+        df (DataFrame): The pandas DataFrame containing weather data.
+    """
+     # Select only numeric columns for correlation
+    numeric_df = df.select_dtypes(include=[np.number])
+
+    # Plot a heatmap of the correlation matrix
+    plt.figure(figsize=(10, 8))
+    correlation_matrix = numeric_df.corr()
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=0.5)
+    plt.title('Correlation Heatmap of Weather Features')
+    plt.show()
+
+def plot_scatter_matrix(df):
+    """
+    Plot a scatter matrix to visualize pairwise relationships between features.
+
+    Args:
+        df (DataFrame): The pandas DataFrame containing weather data.
+    """
+    # Plot a scatter matrix of selected features
+    scatter_cols = ['Minimum temperature (°C)', 'Maximum temperature (°C)', 'Rainfall (mm)', 
+                    '9am Temperature (°C)', '3pm Temperature (°C)']
+    scatter_matrix(df[scatter_cols], figsize=(10, 10), diagonal='kde')
+    plt.suptitle('Scatter Matrix of Weather Features')
+    plt.show()
+
 def plot_confusion_matrix(y_test, y_test_pred, clf):
     """
     Plot the confusion matrix for model predictions.
@@ -232,6 +264,10 @@ def main():
     df = load_data('weather/merged_weather_data.csv')
     df = preprocess_data(df)
     df = add_weather_condition_column(df)
+
+    # plot data analysis
+    plot_correlation_heatmap(df)
+    plot_scatter_matrix(df)
 
     # Split the data into features and target
     X, y = split_data(df)
