@@ -57,80 +57,80 @@ pip install h5py==3.11.0
 ```
 
 ### Data Preprocessing
-Scripts for preprocessing data:
+## Scripts for preprocessing data:
 
-rainfall_preprocess.py
+** rainfall_preprocess.py
 
 ```bash
 python rainfall_preprocess.py
 ```
 
-temperature_train_test.py
+** temperature_train_test.py
 
 ```bash
 python temperature_train_test.py
 ```
 
-weather_preprocess.py
+** weather_preprocess.py
 
 ```bash
 python weather_preprocess.py
 ```
 
 ### Training and Visualization
-Scripts for training models and visualizing results:
+## Scripts for training models and visualizing results:
 
-temperature.py
+** temperature.py
 
 ```bash
 python temperature.py
 ```
-weather_conditions.py
+** weather_conditions.py
 
 ```bash
 python weather_conditions.py
 ```
 
-rainfall_yes_no.py
+** rainfall_yes_no.py
 
 ```bash
 python rainfall_yes_no.py
 ```
 
-heatwave.py
+** heatwave.py
 
 ```bash
 python heatwave.py
 ```
 
 ### Prediction
-Scripts for making predictions:
+## Scripts for making predictions:
 
-temperature_prediction.py
+** temperature_prediction.py
 
 ```bash
 python temperature_prediction.py
 ```
 
-heatwave_prediction.py
+** heatwave_prediction.py
 
 ```bash
 python heatwave_prediction.py
 ```
 
-rainfall_yes_no_prediction.py
+** rainfall_yes_no_prediction.py
 
 ```bash
 python rainfall_yes_no_prediction.py
 ```
 
-weather_prediction.py
+** weather_prediction.py
 
 ```bash
 python weather_prediction.py
 ```
 
 ### Acknowledgments
-Dhruv Patel
-Joono Chakma
-NIRACHORN BOONNOUL
+** Dhruv Patel
+** Joono Chakma
+** NIRACHORN BOONNOUL
