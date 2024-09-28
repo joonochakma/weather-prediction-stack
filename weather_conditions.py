@@ -2,7 +2,7 @@
 This code implements a weather classification model using a Random Forest classifier based on various meteorological features.
 """
 
-# Import necessary libraries for data manipulation, visualization, and machine learning
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -10,7 +10,7 @@ import seaborn as sns
 from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test_split, learning_curve
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
-import joblib  # Import joblib for saving the model
+import joblib  
 
 def load_data(filepath):
     """
@@ -35,7 +35,7 @@ def preprocess_data(df):
     Returns:
         DataFrame: The preprocessed DataFrame with cleaned data.
     """
-    # Replace 'Calm' with 1 in wind speed columns (assuming 'Calm' means no wind)
+    # Replace 'Calm' with 1 in wind speed columns
     df['9am wind speed (km/h)'] = df['9am wind speed (km/h)'].replace('Calm', 1)
     df['3pm wind speed (km/h)'] = df['3pm wind speed (km/h)'].replace('Calm', 1)
 

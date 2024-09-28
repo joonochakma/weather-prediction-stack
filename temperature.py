@@ -139,7 +139,7 @@ def plot_scatter_matrix(train_data):
 def save_model(model, filepath):
     joblib.dump(model, filepath)  # Save the model using joblib
 
-# Main function to orchestrate data loading, processing, model training, and evaluation
+# Main function 
 def main():
     # Load data
     train_data, test_data = load_data('temperature/train.csv', 'temperature/test.csv')
@@ -163,6 +163,6 @@ def main():
     plot_residuals(y_test, y_pred)
     plot_scatter_matrix(train_data)
 
-# Run the main function when the script is executed
+# Run the main function
 if __name__ == "__main__":
     main()

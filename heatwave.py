@@ -53,7 +53,7 @@ def preprocess_data(data):
 
     # Outlier detection using Z-scores
     z_scores = np.abs(stats.zscore(data_scaled))
-    threshold = 3  # Set a threshold for identifying outliers
+    threshold = 3
 
     # Remove outliers from the dataset
     data_no_outliers = data[(z_scores < threshold).all(axis=1)]

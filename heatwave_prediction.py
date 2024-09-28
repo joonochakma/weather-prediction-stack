@@ -36,7 +36,7 @@ def preprocess_data(data):
 def predict_heatwave_conditions(model, data_scaled):
     return model.predict(data_scaled) 
 
-# Main function that orchestrates the workflow
+# Main function 
 def main():
     # Load the heatwave prediction model
     model = load_model('model/heatwave_model.joblib')

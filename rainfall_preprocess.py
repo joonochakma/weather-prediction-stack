@@ -21,8 +21,7 @@ merged_df = pd.merge(df1, df2, on=['Year', 'Month', 'Day'], how='inner')
 # This adds rainfall data to the merged temperature DataFrame based on the same date columns
 merged_df = pd.merge(merged_df, df3, on=['Year', 'Month', 'Day'], how='inner')
 
-# Select only the relevant columns for the final DataFrame
-# We're interested in Year, Month, Day, Maximum temperature, Minimum temperature, and Rainfall amount
+# Select Year, Month, Day, Maximum temperature, Minimum temperature, and Rainfall amount
 final_df = merged_df[['Year', 'Month', 'Day', 
                       'Maximum temperature (Degree C)', 
                       'Minimum temperature (Degree C)', 
