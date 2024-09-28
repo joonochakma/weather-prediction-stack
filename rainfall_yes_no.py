@@ -85,7 +85,7 @@ def train_model(X_train, y_train, model_filepath='rainfall/decision_tree_model.j
     model = DecisionTreeClassifier(random_state=42)
     model.fit(X_train, y_train)  # Fit the model on the training data.
     
-    # Save the trained model to disk
+    # Save the trained model 
     joblib.dump(model, model_filepath)
     print(f"Model saved to {model_filepath}")
     

@@ -9,11 +9,11 @@ from datetime import datetime, timedelta
 
 # Function to load the pre-trained model from a specified path
 def load_model(model_path):
-    return joblib.load(model_path)  # Returns the loaded model
+    return joblib.load(model_path)  
 
 # Function to load data from a CSV file
 def load_data(file_path):
-    return pd.read_csv(file_path, encoding='utf-8')  # Loads data and returns it as a DataFrame
+    return pd.read_csv(file_path, encoding='utf-8')  
 
 # Function to preprocess the data
 def preprocess_data(data):
@@ -29,12 +29,12 @@ def preprocess_data(data):
     
     # Scale the features using StandardScaler for better model performance
     scaler = StandardScaler()
-    data_scaled = scaler.fit_transform(features)  # Fit and transform the features
-    return data_scaled  # Return the scaled features
+    data_scaled = scaler.fit_transform(features)  
+    return data_scaled  
 
 # Function to predict heatwave conditions using the trained model
 def predict_heatwave_conditions(model, data_scaled):
-    return model.predict(data_scaled)  # Returns the predictions based on scaled data
+    return model.predict(data_scaled) 
 
 # Main function that orchestrates the workflow
 def main():
@@ -45,7 +45,7 @@ def main():
     data = load_data('rainfall/temperature_rainfall.csv')
     
     # Extract the most recent data entry
-    today_data = data.iloc[-1:]  # Get the last row of data
+    today_data = data.iloc[-1:]
     
     # Preprocess the data for prediction
     data_scaled = preprocess_data(today_data)
@@ -64,6 +64,6 @@ def main():
     print("Predicted heatwave conditions for tomorrow:")
     print(today_data[['Date', 'Minimum temperature (Degree C)', 'Maximum temperature (Degree C)', 'Predicted Cluster']].to_string(index=False))
 
-# Entry point of the script
+# Main function
 if __name__ == "__main__":
-    main()  # Run the main function
+    main()  

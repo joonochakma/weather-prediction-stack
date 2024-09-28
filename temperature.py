@@ -35,24 +35,24 @@ def prepare_features(train_data, test_data):
     features = ['TemperatureMax', 'TemperatureMin', 'RainSum', 
                 'RelativeHumidityMean', 'RelativeHumidityMax', 
                 'RelativeHumidityMin', 'Month', 'Day', 'Hour']
-    X_train = train_data[features]  # Select feature columns for training
-    y_train = train_data['TemperatureMean']  # Select target variable for training
-    X_test = test_data[features]  # Select feature columns for testing
-    y_test = test_data['TemperatureMean']  # Select target variable for testing
+    X_train = train_data[features]  
+    y_train = train_data['TemperatureMean']  
+    X_test = test_data[features]  
+    y_test = test_data['TemperatureMean']  
     
     return X_train, y_train, X_test, y_test
 
 # Function to scale feature data using StandardScaler
 def scale_data(X_train, X_test):
-    scaler = StandardScaler()  # Create a StandardScaler instance
-    X_train_scaled = scaler.fit_transform(X_train)  # Fit and transform training data
-    X_test_scaled = scaler.transform(X_test)  # Transform testing data
+    scaler = StandardScaler()  
+    X_train_scaled = scaler.fit_transform(X_train)  
+    X_test_scaled = scaler.transform(X_test) 
     joblib.dump(scaler, 'model/temperauture_scaler.joblib')  # Save the scaler model for future use
     return X_train_scaled, X_test_scaled  
 
 # Function to train a linear regression model
 def train_model(X_train_scaled, y_train):
-    model = LinearRegression()  # Instantiate a Linear Regression model
+    model = LinearRegression()  
     model.fit(X_train_scaled, y_train)  # Fit the model to the scaled training data
     return model
 
@@ -100,10 +100,10 @@ def plot_actual_vs_predicted(dates, y_test, y_pred):
 # Function to plot a heatmap of feature correlations
 def plot_correlation_heatmap(train_data):
     corr_matrix = train_data.corr()  # Compute the correlation matrix
-    plt.figure(figsize=(10, 8))  # Set figure size
-    sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", linewidths=0.5)  # Create heatmap
-    plt.title("Feature Correlation Heatmap")  # Set title
-    plt.show()  # Display the heatmap
+    plt.figure(figsize=(10, 8)) 
+    sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", linewidths=0.5)  
+    plt.title("Feature Correlation Heatmap") 
+    plt.show()  
 
 # Function to plot histograms of actual vs predicted temperatures
 def plot_histogram(y_test, y_pred):
@@ -111,15 +111,15 @@ def plot_histogram(y_test, y_pred):
     fig_hist = px.histogram(hist_data, barmode='overlay', 
                              color_discrete_map={'Actual':'blue', 'Predicted':'red'},
                              title="Histogram of Actual vs Predicted TemperatureMean")
-    fig_hist.show()  # Display the histogram
+    fig_hist.show()  
 
 # Function to plot residuals of the predictions
 def plot_residuals(y_test, y_pred):
     residuals = y_test - y_pred  # Calculate residuals
     fig_resid = px.scatter(x=y_pred, y=residuals, title="Residuals Plot: Predicted vs Residuals",
                            labels={'x': 'Predicted TemperatureMean', 'y': 'Residuals'})
-    fig_resid.add_hline(y=0, line_dash="dash", line_color="red")  # Add a horizontal line at y=0
-    fig_resid.show()  # Display the residuals plot
+    fig_resid.add_hline(y=0, line_dash="dash", line_color="red")  
+    fig_resid.show()  
 
 # Function to plot a scatter matrix of selected features
 def plot_scatter_matrix(train_data):
@@ -131,9 +131,9 @@ def plot_scatter_matrix(train_data):
         dragmode='select',
         width=1000,
         height=1000,
-        template='plotly_dark'
+        template='plotly_white'
     )
-    fig_scatter_matrix.show()  # Display the scatter matrix
+    fig_scatter_matrix.show()  
 
 # Function to save the trained model to disk
 def save_model(model, filepath):
