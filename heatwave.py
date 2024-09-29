@@ -81,7 +81,12 @@ def visualize_distribution(data):
     plt.show()
 
 def plot_correlation_heatmap(features):
-    """Plot the correlation heatmap."""
+    """
+    Plot the correlation heatmap.
+
+    Args:
+        features (pd.DataFrame): DataFrame containing temperature features.
+    """
     corr = features.corr()
     plt.figure(figsize=(12, 8))
     sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f")
