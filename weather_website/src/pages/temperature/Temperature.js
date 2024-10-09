@@ -14,7 +14,9 @@ function Temperature() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Rainfall
+          
+          
+          Temperature
         </a>
       </header>
     </div>
