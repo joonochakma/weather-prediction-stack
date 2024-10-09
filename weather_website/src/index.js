@@ -2,37 +2,31 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Header from './Header';
 import Home from './pages/home/Home';
-import Footer from './Footer';
-import Heatwave from './pages/Models/Heatwave';
-import Rainfall from './pages/Models/Rainfall';
-import Weather from './pages/Models/Weather';
-import Temperature from './pages/Models/Temperature';
+import { Heatwave, Rainfall } from './pages';
+import Weather from './pages/weather/Weather';
+import Temperature from './pages/temperature/Temperature';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-
+import NoPage from './NoPage';
+import Layout from './Layout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Header/>
-    <Home />
-<BrowserRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<pages/>}>
+        <Route path="/" element={<Layout/>}>
           <Route index element={<Home />} />
-          <Route path="Temperature" element={<Temperature />} />
-          <Route path="Rainfall" element={<Rainfall />} />
-          <Route path="Heatwave" element={<Heatwave />} />
-          <Route path="Weather" element={<Weather />} />
+          <Route path="temperature" element={<Temperature />} />
+          <Route path="rainfall" element={<Rainfall />} />
+          <Route path="heatwave" element={<Heatwave />} />
+          <Route path="weather" element={<Weather />} />
 
           
-          {/* <Route path="*" element={<NoPage />} /> */}
+          <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
-    <Footer/>
   </React.StrictMode>
 );
 

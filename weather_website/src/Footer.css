@@ -1,0 +1,13 @@
+.footer {
+    background-color: #0095fd;
+
+  display: flex;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+}
+
+.Logo {
+    float: left;
+}
