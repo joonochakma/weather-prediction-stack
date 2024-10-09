@@ -1,24 +1,21 @@
-
+import { useState, useEffect} from 'react';
+import getTestData from "../../services/test-data";
 
 
 function Temperature() {
+  const [data, setData] = useState(null);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getTestData();
+      setData(result);
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="header">
-    <h1 className="Logo">
-        DCA
-    </h1>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          
-          
-          Temperature
-        </a>
-      </header>
+    <div>
+      Temperature X is {data?.x.toString()} and Y is {data?.y.toString()}
     </div>
   );
 }
