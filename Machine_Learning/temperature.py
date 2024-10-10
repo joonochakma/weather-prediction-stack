@@ -139,9 +139,8 @@ def plot_scatter_matrix(train_data):
 def save_model(model, filepath):
     joblib.dump(model, filepath)  # Save the model using joblib
 
-# Main function 
-def main():
-    # Load data
+def get_temperature():
+     # Load data
     train_data, test_data = load_data('temperature/train.csv', 'temperature/test.csv')
     # Preprocess data
     train_data = preprocess_data(train_data)
@@ -157,11 +156,22 @@ def main():
     y_pred = evaluate_model(model, X_test_scaled, y_test)
     # Plot results
     dates = test_data['Datetime'].values
+
+    return train_data, y_pred, dates, y_test
+#  y_pred, dates, y_test
+
+
+# Main function 
+def main():
+    train_data, y_pred, dates, y_test = get_temperature()
     plot_actual_vs_predicted(dates, y_test, y_pred)
     plot_correlation_heatmap(train_data)
     plot_histogram(y_test, y_pred)
     plot_residuals(y_test, y_pred)
     plot_scatter_matrix(train_data)
+    print("--------------------------------")
+    pd.set_option('display.max_columns', 500)
+    print(train_data)
 
 # Run the main function
 if __name__ == "__main__":
