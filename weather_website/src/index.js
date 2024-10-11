@@ -17,6 +17,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
           <Route path="temperature" element={<Temperature />} />
           <Route path="rainfall" element={<Rainfall />} />
           <Route path="heatwave" element={<Heatwave />} />
