@@ -1,15 +1,18 @@
 import './Header.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from '@mui/material'; // Importing components from Material-UI
 
 const Header = () => {
+  // State to store the anchor element for the menu
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  // Function to handle opening the menu
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // Function to handle closing the menu
   const handleClose = () => {
     setAnchorEl(null);
   };
