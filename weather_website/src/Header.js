@@ -24,12 +24,14 @@ const Header = () => {
           
           {/* Title and logo */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant="h6" component="div" sx={{ fontSize: { xs: '1.2rem', sm: '1.8rem' }, fontWeight: 'bold' }}>
-              DCA
-            </Typography>
-            <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '5px' }} />
+            <Link to="/home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
+              <Typography variant="h6" component="div" sx={{ fontSize: { xs: '1.2rem', sm: '1.8rem' }, fontWeight: 'bold' }}>
+                DCA
+              </Typography>
+              <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '5px' }} />
+            </Link>
           </Box>
-  
+          
           {/* Centered Navigation buttons */}
           <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
             <Button color="inherit" component={Link} to="/home" sx={{ fontSize: '1rem', marginX: '20px' }}>Home</Button>
