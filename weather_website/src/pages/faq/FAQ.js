@@ -32,7 +32,6 @@ function FAQ() {
       <Typography variant="body1" paragraph>
         Here are some frequently asked questions:
       </Typography>
-      // Display FAQs using Accordion component
       {faqs.map((faq, index) => (
         <Accordion key={index} sx={{ marginBottom: '10px' }}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>

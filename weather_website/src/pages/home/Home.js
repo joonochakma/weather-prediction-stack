@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Home.css';
 
+
 function Home() {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
@@ -106,7 +107,9 @@ function Home() {
         </div>
       </header>
     </div>
+    
   );
+  
 }
 
 export default Home;
