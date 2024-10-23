@@ -17,7 +17,7 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  return (
+  return ( 
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ padding: { xs: '0 10px', sm: '0 20px' }, minHeight: '64px' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -27,13 +27,13 @@ const Header = () => {
             <Typography variant="h6" component="div" sx={{ fontSize: { xs: '1.2rem', sm: '1.8rem' }, fontWeight: 'bold' }}>
               DCA
             </Typography>
-            <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '10px' }} />
+            <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '5px' }} />
           </Box>
-
-          {/* Navigation buttons */}
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button color="inherit" component={Link} to="/home" sx={{ fontSize: '1rem', marginRight: '20px' }}>Home</Button>
-            <Button color="inherit" onClick={handleMenu} sx={{ fontSize: '1rem' }}>Models</Button>
+  
+          {/* Centered Navigation buttons */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+            <Button color="inherit" component={Link} to="/home" sx={{ fontSize: '1rem', marginX: '20px' }}>Home</Button>
+            <Button color="inherit" onClick={handleMenu} sx={{ fontSize: '1rem', marginX: '20px' }}>Models</Button>
             <Menu
               id="models-menu"
               anchorEl={anchorEl}
@@ -42,11 +42,14 @@ const Header = () => {
             >
               <MenuItem component={Link} to="/rainfall" onClick={handleClose}>Rainfall</MenuItem>
               <MenuItem component={Link} to="/temperature" onClick={handleClose}>Temperature</MenuItem>
-              <MenuItem component={Link} to="/Weather" onClick={handleClose}>Weather Conditions</MenuItem>
+              <MenuItem component={Link} to="/weather" onClick={handleClose}>Weather Conditions</MenuItem>
               <MenuItem component={Link} to="/heatwave" onClick={handleClose}>Heatwave</MenuItem>
             </Menu>
+            
+            <Button color="inherit" component={Link} to="/faq" sx={{ fontSize: '1rem', marginX: '20px' }}>FAQ</Button>
+            <Button color="inherit" component={Link} to="/about" sx={{ fontSize: '1rem', marginX: '20px' }}>About Us</Button>
           </Box>
-
+  
           {/* User Profile Icon */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <img src="/user.png" alt="User" style={{ height: '40px', marginLeft: '20px' }} />
@@ -55,6 +58,6 @@ const Header = () => {
       </AppBar>
     </Box>
   );
-};
+}
 
 export default Header;
