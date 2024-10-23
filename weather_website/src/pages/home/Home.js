@@ -5,9 +5,14 @@ function Home() {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [error, setError] = useState('');
-  const API_KEY = '99c7de6dacdf4b50a8613548242310'; // replafe whenever key is expired
+  const API_KEY = '99c7de6dacdf4b50a8613548242310'; // replace whenever key is expired
 
-  // Australian cities
+  const weatherIcons = {
+    Sunny: 'sunny.svg',  
+    Cloudy: 'cloudy.svg',
+    Rainy: 'rainy.svg',  
+  };
+
   const cities = [
     { name: 'Sydney', value: 'Sydney' },
     { name: 'Melbourne', value: 'Melbourne' },
@@ -27,11 +32,9 @@ function Home() {
     if (city) {
       try {
         console.log(`Searching for weather in: ${city}`);
-        
-        // Fetch weather data from WeatherAPI link
         const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`);
         const data = await response.json();
-        
+
         console.log('API Response:', data);
 
         if (data.error) {
@@ -40,11 +43,12 @@ function Home() {
           return;
         }
 
-        // Set weather data
+        // Set weather data with date
         setWeatherData({
-          temp_min: data.current.temp_c, // WeatherAPI provides only current temp
-          temp_max: data.current.temp_c, // Using the same value for simplicity
+          temp_min: data.current.temp_c,
+          temp_max: data.current.temp_c,
           weather_state: data.current.condition.text,
+          date: data.location.localtime,  // Date from API response
         });
         setError('');
       } catch (error) {
@@ -58,28 +62,48 @@ function Home() {
     }
   };
 
+  const getWeatherIcon = (state) => {
+    const formattedState = state.toLowerCase();
+    if (formattedState.includes('sun')) return weatherIcons.Sunny;
+    if (formattedState.includes('cloud')) return weatherIcons.Cloudy;
+    if (formattedState.includes('rain')) return weatherIcons.Rainy;
+    return null;
+  };
+
   return (
     <div className="home-container">
       <header className="App-header">
-        <h1>Australian Cities Weather App</h1>
-        <div className="search-bar">
-          <select value={city} onChange={handleCityChange}>
-            <option value="">Select a city</option>
-            {cities.map((city) => (
-              <option key={city.value} value={city.value}>
-                {city.name}
-              </option>
-            ))}
-          </select>
-          <button onClick={handleSearch}>Search</button>
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        {weatherData && (
-          <div className="weather-info">
-            <p>Temperature: {weatherData.temp_min}°C</p>
-            <p>Condition: {weatherData.weather_state}</p>
+        <div className='background'>
+          <h1>Australian Cities Weather App</h1>
+          <div className="search-bar">
+            <select value={city} onChange={handleCityChange}>
+              <option value="">Select a city</option>
+              {cities.map((city) => (
+                <option key={city.value} value={city.value}>
+                  {city.name}
+                </option>
+              ))}
+            </select>
+            <button onClick={handleSearch}>Search</button>
           </div>
-        )}
+          {error && <p className="error-message">{error}</p>}
+          {weatherData && (
+            <div className="weather-info">
+              <p>Date: {new Date(weatherData.date).toLocaleString()}</p> {/* Display date */}
+              <p>Temperature: {weatherData.temp_min}°C</p>
+              <p className='icon'>
+                {getWeatherIcon(weatherData.weather_state) && (
+                  <img
+                    src={getWeatherIcon(weatherData.weather_state)}
+                    alt={weatherData.weather_state}
+                    className="weather-icon"
+                  />
+                )}{' '}
+                {weatherData.weather_state}
+              </p>
+            </div>
+          )}
+        </div>
       </header>
     </div>
   );
