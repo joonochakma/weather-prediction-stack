@@ -27,7 +27,7 @@ const Header = () => {
             <Typography variant="h6" component="div" sx={{ fontSize: { xs: '1.2rem', sm: '1.8rem' }, fontWeight: 'bold' }}>
               DCA
             </Typography>
-            <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '10px' }} />
+            <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '5px' }} />
           </Box>
 
           {/* Navigation buttons */}
