@@ -9,6 +9,9 @@ import Temperature from './pages/temperature/Temperature';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from './NoPage';
 import Layout from './Layout';
+import FAQ from './pages/faq/faq';
+import About from './pages/about/About';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +25,8 @@ root.render(
           <Route path="rainfall" element={<Rainfall />} />
           <Route path="heatwave" element={<Heatwave />} />
           <Route path="weather" element={<Weather />} />
+          <Route path="about" element={<About />} />
+          <Route path="faq" element={<FAQ />} />
 
           
           <Route path="*" element={<NoPage />} />
