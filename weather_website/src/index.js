@@ -9,7 +9,7 @@ import Temperature from './pages/temperature/Temperature';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from './NoPage';
 import Layout from './Layout';
-import FAQ from './pages/faq/faq';
+import FAQ from './pages/faq/FAQ';
 import About from './pages/about/About';
 
 
