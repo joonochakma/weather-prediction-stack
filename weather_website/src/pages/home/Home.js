@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Home.css';
 
-
 function Home() {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
@@ -44,12 +43,11 @@ function Home() {
           return;
         }
 
-        // Set weather data with date
+        // Set weather data
         setWeatherData({
           temp_min: data.current.temp_c,
           temp_max: data.current.temp_c,
           weather_state: data.current.condition.text,
-          date: data.location.localtime,  // Date from API response
         });
         setError('');
       } catch (error) {
@@ -71,6 +69,14 @@ function Home() {
     return null;
   };
 
+  // Function to format the current date as "Today, 23 Oct"
+  const formatDate = () => {
+    const today = new Date();
+    const day = today.getDate();
+    const month = today.toLocaleString('default', { month: 'short' }); // e.g., "Oct"
+    return `Today, ${day} ${month}`;
+  };
+
   return (
     <div className="home-container">
       <header className="App-header">
@@ -90,7 +96,7 @@ function Home() {
           {error && <p className="error-message">{error}</p>}
           {weatherData && (
             <div className="weather-info">
-              <p>Date: {new Date(weatherData.date).toLocaleString()}</p> {/* Display date */}
+              <p>{formatDate()}</p> {/* Display formatted date */}
               <p>Temperature: {weatherData.temp_min}°C</p>
               <p className='icon'>
                 {getWeatherIcon(weatherData.weather_state) && (
@@ -107,9 +113,7 @@ function Home() {
         </div>
       </header>
     </div>
-    
   );
-  
 }
 
 export default Home;
