@@ -14,10 +14,14 @@ body {
   padding: 20px;
 }
 
-h1 {
+h1, h2{
   color: #fff;
   font-size: 2.5rem;
   margin-bottom: 20px;
+}
+
+.text-white {
+  color: #fff;
 }
 
 /* Header */
@@ -124,4 +128,30 @@ button:hover {
     width: 40px;
     height: 40px;
   }
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast-day {
+  margin: 0 20px; /* Adjust spacing between items */
+  text-align: center;
+}
+button {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+button:disabled {
+  background-color: #ccc; /* Gray */
+  cursor: not-allowed;
 }

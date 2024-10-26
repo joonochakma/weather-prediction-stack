@@ -7,7 +7,7 @@ function Footer() {
       <div className="footer-top">
         <div className="footer-column">
           <h3>About Us</h3>
-          <p>At DCA Weather Website, we provide real-time weather updates and forecasts to 
+          <p className='text-white'>At DCA Weather Website, we provide real-time weather updates and forecasts to 
             help you stay prepared. With reliable data and user-friendly features, we're your 
             trusted source for all things weather.</p>
         </div>
@@ -30,7 +30,7 @@ function Footer() {
 
       <div className="footer-middle">
         <ul className="information">
-          <p>Information based from <a href="http://www.bom.gov.au/climate/dwo/202311/html/IDCJDW3050.202311.shtml">BOM (Bureau Of Meteorology)</a> & <a href="https://www.kaggle.com/datasets/nadzmiagthomas/australia-weather-data-2000-2024">KAGGLE Dataset</a></p>
+          <p className='text-white'>Information based from <a href="http://www.bom.gov.au/climate/dwo/202311/html/IDCJDW3050.202311.shtml">BOM (Bureau Of Meteorology)</a> & <a href="https://www.kaggle.com/datasets/nadzmiagthomas/australia-weather-data-2000-2024">KAGGLE Dataset</a></p>
         </ul>
       </div>
 
@@ -46,7 +46,7 @@ function Footer() {
           </ul>
         </div>
         <div className="footer-right">
-          <p>&copy; 2024 DCA | All Rights Reserved </p>
+          <p className='text-white'>&copy; 2024 DCA | All Rights Reserved </p>
           <a href="#privacy-policy">Privacy Policy</a>
           <a href="#terms-conditions">Terms & Conditions</a>
         </div>

@@ -1,9 +1,9 @@
 import './Header.css';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from '@mui/material'; // Importing components from Material-UI
+import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from '@mui/material';
 
-const Header = () => {
+const Header = ({ scrollToFAQ }) => {
   // State to store the anchor element for the menu
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -48,7 +48,18 @@ const Header = () => {
               <MenuItem component={Link} to="/heatwave" onClick={handleClose}>Heatwave</MenuItem>
             </Menu>
             
-            <Button color="inherit" component={Link} to="/faq" sx={{ fontSize: '1rem', marginX: '20px' }}>FAQ</Button>
+            <Button
+  color="inherit"
+  onClick={() => {
+    const faqSection = document.getElementById('faq-section');
+    if (faqSection) {
+      faqSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }}
+  sx={{ fontSize: '1rem', marginX: '20px' }}
+>
+  FAQ
+</Button>
             <Button color="inherit" component={Link} to="/about" sx={{ fontSize: '1rem', marginX: '20px' }}>About Us</Button>
           </Box>
   
