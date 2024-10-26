@@ -1,3 +1,4 @@
+
 .footer {
   background-color: #0095fd;
   color: #fff;
@@ -65,6 +66,9 @@
 .footer-center,
 .footer-right {
   flex: 1;
+}
+p{
+  color: white;
 }
 
 .footer-logo {

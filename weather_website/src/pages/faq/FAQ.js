@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import './faq.css';
+
 
 function FAQ() {
   const faqs = [
@@ -25,7 +27,7 @@ function FAQ() {
     { name: 'Heatwave', link: '/heatwave' }
   ]
     return (
-      <Box sx={{ padding: '20px' }}>
+      <Box id="faq-section" sx={{ padding: '20px' }}>
       <Typography variant="h4" gutterBottom>
         FAQ
       </Typography>
