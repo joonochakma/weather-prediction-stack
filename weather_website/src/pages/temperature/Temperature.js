@@ -5,7 +5,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Temperature() {
   const [data, setData] = useState(null);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [isScatterOpen, setIsScatterOpen] = useState(false);
+  const [isHistogramOpen, setIsHistogramOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +20,11 @@ function Temperature() {
     return <div>Loading...</div>; // Handle loading state
   }
 
-  // Prepare data for scatter matrix
+  if (!data.X_train || !data.y_train || !data.y_pred) {
+    return <div>Error: Data not loaded correctly.</div>;
+  }
+
+  // Prepare data for scatter matrix plot
   const scatterData = {
     x: data.X_train.map(item => item.TemperatureMax),
     y: data.X_train.map(item => item.TemperatureMin),
@@ -29,13 +34,29 @@ function Temperature() {
     marker: { size: 10 }
   };
 
-  const plotData = [scatterData];
+  // Prepare data for histogram plot
+  const histogramData = [
+    {
+      x: data.y_train,
+      type: 'histogram',
+      name: 'Actual Temperature',
+      marker: { color: 'blue' },
+      opacity: 0.6
+    },
+    {
+      x: data.y_pred,
+      type: 'histogram',
+      name: 'Predicted Temperature',
+      marker: { color: 'red' },
+      opacity: 0.6
+    }
+  ];
 
   return (
     <div>
-      {/* Accordion header */}
+      {/* Scatter Plot Accordion */}
       <div 
-        onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+        onClick={() => setIsScatterOpen(!isScatterOpen)}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -43,31 +64,73 @@ function Temperature() {
           padding: '1em',
           backgroundColor: '#f0f0f0',
           border: '1px solid #ccc',
-          fontWeight: 'bold'
+          fontWeight: 'bold',
+          marginBottom: '10px'
         }}
       >
-        {isAccordionOpen ? 'Hide Chart' : 'Show Chart for Scatter Matrix for Temperature and Related Features'}
+        {isScatterOpen ? 'Hide Scatter Plot' : 'Show Scatter Plot for Temperature Features'}
         <ExpandMoreIcon 
           style={{
             marginLeft: 'auto',
-            transform: isAccordionOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transform: isScatterOpen ? 'rotate(180deg)' : 'rotate(0deg)',
             transition: 'transform 0.3s ease'
           }}
         />
       </div>
 
-      {/* Accordion content */}
-      {isAccordionOpen && (
+      {/* Scatter Plot Content */}
+      {isScatterOpen && (
         <div style={{ padding: '1em', border: '1px solid #ccc', borderTop: 'none' }}>
           <Plot
-            data={plotData}
+            data={[scatterData]}
             layout={{
               title: 'Scatter Matrix for Temperature and Related Features',
               xaxis: { title: 'Temperature Max' },
               yaxis: { title: 'Temperature Min' },
               dragmode: 'select',
               width: 1000,
-              height: 1000,
+              height: 500,
+            }}
+          />
+        </div>
+      )}
+
+      {/* Histogram Plot Accordion */}
+      <div 
+        onClick={() => setIsHistogramOpen(!isHistogramOpen)}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          cursor: 'pointer',
+          padding: '1em',
+          backgroundColor: '#f0f0f0',
+          border: '1px solid #ccc',
+          fontWeight: 'bold',
+          marginBottom: '10px'
+        }}
+      >
+        {isHistogramOpen ? 'Hide Histogram' : 'Show Histogram for Actual vs Predicted Temperature'}
+        <ExpandMoreIcon 
+          style={{
+            marginLeft: 'auto',
+            transform: isHistogramOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.3s ease'
+          }}
+        />
+      </div>
+
+      {/* Histogram Plot Content */}
+      {isHistogramOpen && (
+        <div style={{ padding: '1em', border: '1px solid #ccc', borderTop: 'none' }}>
+          <Plot
+            data={histogramData}
+            layout={{
+              barmode: 'overlay',
+              title: 'Histogram of Actual vs Predicted Temperature',
+              xaxis: { title: 'Temperature' },
+              yaxis: { title: 'Frequency' },
+              width: 1000,
+              height: 500,
             }}
           />
         </div>
