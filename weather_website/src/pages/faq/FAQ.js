@@ -32,8 +32,8 @@ function FAQ() {
     }
   ]
 
-    return (
-      <Box id="faq-section" sx={{ padding: '20px' }}>
+  return (
+    <Box id="faq-section" sx={{ padding: '20px' }}>
       <Typography variant="h4" gutterBottom>
         FAQ
       </Typography>
@@ -46,12 +46,12 @@ function FAQ() {
             <Typography>{faq.question}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{faq.answer}</Typography>
+            <Typography sx={{ color: '#0095fd' }}>{faq.answer}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}
     </Box>
-    );
-  }
-  
-  export default FAQ;
+  );
+}
+
+export default FAQ;

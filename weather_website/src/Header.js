@@ -1,41 +1,66 @@
 import './Header.css';
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Box, Menu, MenuItem, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
-const Header = ({ scrollToFAQ }) => {
-  // State to store the anchor element for the menu
-  const [anchorEl, setAnchorEl] = React.useState(null);
+const Header = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Function to handle opening the menu
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleMenu = (event) => setAnchorEl(event.currentTarget);
+  const handleClose = () => setAnchorEl(null);
+  const toggleDrawer = (open) => () => setDrawerOpen(open);
 
-  // Function to handle closing the menu
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const renderDrawerMenu = () => (
+    <List className="drawer-list">
+      <ListItem button component={Link} to="/home" onClick={toggleDrawer(false)}>
+        <ListItemText primary="Home" />
+      </ListItem>
+      <ListItem button onClick={handleMenu}>
+        <ListItemText primary="Models" />
+      </ListItem>
+      <Menu
+        id="models-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem component={Link} to="/rainfall" onClick={handleClose}>Rainfall</MenuItem>
+        <MenuItem component={Link} to="/temperature" onClick={handleClose}>Temperature</MenuItem>
+        <MenuItem component={Link} to="/weather" onClick={handleClose}>Weather Conditions</MenuItem>
+        <MenuItem component={Link} to="/heatwave" onClick={handleClose}>Heatwave</MenuItem>
+      </Menu>
+      <ListItem button component={Link} to="/faq" onClick={toggleDrawer(false)}>
+        <ListItemText primary="FAQ" />
+      </ListItem>
+      <ListItem button component={Link} to="/about" onClick={toggleDrawer(false)}>
+        <ListItemText primary="About Us" />
+      </ListItem>
+    </List>
+  );
 
-  return ( 
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ padding: { xs: '0 10px', sm: '0 20px' }, minHeight: '64px' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          
-          {/* Title and logo */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Link to="/home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}>
-              <Typography variant="h6" component="div" sx={{ fontSize: { xs: '1.2rem', sm: '1.8rem' }, fontWeight: 'bold' }}>
-                DCA
-              </Typography>
-              <img src="/umbrella.png" alt="Logo" style={{ height: '40px', marginLeft: '5px' }} />
+  return (
+    <Box className="header-container">
+      <AppBar position="static" className="app-bar">
+        <Toolbar className="toolbar">
+          {/* Drawer button on the left side for mobile view */}
+          <IconButton edge="start" color="inherit" aria-label="menu" className="menu-icon" onClick={toggleDrawer(true)}>
+            <MenuIcon />
+          </IconButton>
+
+          {/* Logo Container */}
+          <Box className="logo-container">
+            <Link to="/home" className="logo-link">
+              <Typography variant="h6" component="div" className="title">DCA</Typography>
+              <img src="/umbrella.png" alt="Logo" className="logo-image" />
             </Link>
           </Box>
-          
-          {/* Centered Navigation buttons */}
-          <Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
-            <Button color="inherit" component={Link} to="/home" sx={{ fontSize: '1rem', marginX: '20px' }}>Home</Button>
-            <Button color="inherit" onClick={handleMenu} sx={{ fontSize: '1rem', marginX: '20px' }}>Models</Button>
+
+          {/* Navigation Buttons for screens larger than 768px */}
+          <Box className="nav-buttons">
+            <Button color="inherit" component={Link} to="/home" className="nav-button">Home</Button>
+            <Button color="inherit" onClick={handleMenu} className="nav-button">Models</Button>
             <Menu
               id="models-menu"
               anchorEl={anchorEl}
@@ -47,26 +72,14 @@ const Header = ({ scrollToFAQ }) => {
               <MenuItem component={Link} to="/weather" onClick={handleClose}>Weather Conditions</MenuItem>
               <MenuItem component={Link} to="/heatwave" onClick={handleClose}>Heatwave</MenuItem>
             </Menu>
-            
-            <Button
-  color="inherit"
-  onClick={() => {
-    const faqSection = document.getElementById('faq-section');
-    if (faqSection) {
-      faqSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }}
-  sx={{ fontSize: '1rem', marginX: '20px' }}
->
-  FAQ
-</Button>
-            <Button color="inherit" component={Link} to="/about" sx={{ fontSize: '1rem', marginX: '20px' }}>About Us</Button>
+            <Button color="inherit" component={Link} to="/faq" className="nav-button">FAQ</Button>
+            <Button color="inherit" component={Link} to="/about" className="nav-button">About Us</Button>
           </Box>
-  
-          {/* User Profile Icon */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <img src="/user.png" alt="User" style={{ height: '40px', marginLeft: '20px' }} />
-          </Box>
+
+          {/* Drawer for mobile view */}
+          <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+            {renderDrawerMenu()}
+          </Drawer>
         </Toolbar>
       </AppBar>
     </Box>
