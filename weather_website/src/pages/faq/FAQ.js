@@ -1,18 +1,10 @@
-import React from 'react'; 
+import React from 'react';
 import { Box, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { styled } from '@mui/material/styles';
-import './faq.css'; // Import the CSS file
+import './faq.css';
 
-// Styled Container Component for the FAQ section
-const FAQContainer = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: { // Responsive design for small screens
-    padding: '10px', 
-  },
-}));
 
-const FAQ = () => {
-  // Array of FAQ objects
+function FAQ() {
   const faqs = [
     {
       question: "What is this website about?",
@@ -38,42 +30,28 @@ const FAQ = () => {
       question: "What is forecasting?",
       answer: "A calculation or estimate of future events, especially upcoming weather."
     }
-  ];
+  ]
 
   return (
-    <FAQContainer id="faq-section" className="faq-container">
-      <Typography 
-        variant="h4" 
-        gutterBottom 
-        className={`faq-title ${window.innerWidth < 600 ? 'sm' : ''}`}
-      >
+    <Box id="faq-section" sx={{ padding: '20px' }}>
+      <Typography variant="h4" gutterBottom>
         FAQ
       </Typography>
-      <Typography 
-        variant="body1" 
-        className={`faq-description ${window.innerWidth < 600 ? 'sm' : ''}`}
-      >
+      <Typography variant="body1" paragraph>
         Here are some frequently asked questions:
       </Typography>
-      {faqs.map((faq, index) => ( // Loop through the FAQ array
-        <Accordion key={index} className="accordion">
-          <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: '#1976d2' }} />}>
-            <Typography 
-              variant="h6" 
-              className={`faq-question ${window.innerWidth < 600 ? 'sm' : ''}`}
-            >
-              {faq.question}
-            </Typography> 
+      {faqs.map((faq, index) => (
+        <Accordion key={index} sx={{ marginBottom: '10px' }}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>{faq.question}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography className={`faq-answer ${window.innerWidth < 600 ? 'sm' : ''}`}>
-              {faq.answer}
-            </Typography> 
+            <Typography sx={{ color: '#0095fd' }}>{faq.answer}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}
-    </FAQContainer>
+    </Box>
   );
-};
+}
 
 export default FAQ;

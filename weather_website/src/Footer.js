@@ -14,23 +14,25 @@ function Footer() {
         <div className="footer-column">
           <h3>Contact Us</h3>
           <ul>
-            <li>Address: [Your Address]</li>
-            <li>Tel: [Your Phone Number]</li>
-            <li>Email: [Your Email Address]</li>
+            <li>Address: Swinburne University of Technology</li>
+            <li>Contact Number: +61 451722891</li>
+            <li>Email: dcaweather@gmail.com</li>
           </ul>
         </div>
         <div className="footer-column">
           <h3>Site Map</h3>
           <ul>
-            <li><a href="#home">Home</a></li>
+            <li><a href="/home">Home</a></li>
             <li><a href="#models">Models</a></li>
+            <li><a href="#FAQ">FAQ</a></li>
+            <li><a href="#About Us">About Us</a></li>
           </ul>
         </div>
       </div>
 
       <div className="footer-middle">
         <ul className="information">
-          <p className='text-white'>Information based from <a href="http://www.bom.gov.au/climate/dwo/202311/html/IDCJDW3050.202311.shtml">BOM (Bureau Of Meteorology)</a> & <a href="https://www.kaggle.com/datasets/nadzmiagthomas/australia-weather-data-2000-2024">KAGGLE Dataset</a></p>
+          <p className='text-white'>Information based on data provided by  <a href="http://www.bom.gov.au/climate/dwo/202311/html/IDCJDW3050.202311.shtml">BOM (Bureau Of Meteorology)</a> & <a href="https://www.kaggle.com/datasets/nadzmiagthomas/australia-weather-data-2000-2024">KAGGLE Dataset</a></p>
         </ul>
       </div>
 
