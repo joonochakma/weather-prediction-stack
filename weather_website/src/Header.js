@@ -12,6 +12,14 @@ const Header = () => {
   const handleClose = () => setAnchorEl(null);
   const toggleDrawer = (open) => () => setDrawerOpen(open);
 
+  const scrollToFAQ = () => {
+    const element = document.getElementById('faq-section'); // Ensure this matches your FAQ section ID
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      toggleDrawer(false)(); // Close the drawer after scrolling
+    }
+  };
+  
   const renderDrawerMenu = () => (
     <List className="drawer-list">
       <ListItem button component={Link} to="/home" onClick={toggleDrawer(false)}>
@@ -31,7 +39,7 @@ const Header = () => {
         <MenuItem component={Link} to="/weather" onClick={handleClose}>Weather Conditions</MenuItem>
         <MenuItem component={Link} to="/heatwave" onClick={handleClose}>Heatwave</MenuItem>
       </Menu>
-      <ListItem button component={Link} to="/faq" onClick={toggleDrawer(false)}>
+      <ListItem button onClick={scrollToFAQ}>
         <ListItemText primary="FAQ" />
       </ListItem>
       <ListItem button component={Link} to="/about" onClick={toggleDrawer(false)}>
@@ -44,12 +52,10 @@ const Header = () => {
     <Box className="header-container">
       <AppBar position="static" className="app-bar">
         <Toolbar className="toolbar">
-          {/* Drawer button on the left side for mobile view */}
           <IconButton edge="start" color="inherit" aria-label="menu" className="menu-icon" onClick={toggleDrawer(true)}>
             <MenuIcon />
           </IconButton>
 
-          {/* Logo Container */}
           <Box className="logo-container">
             <Link to="/home" className="logo-link">
               <Typography variant="h6" component="div" className="title">DCA</Typography>
@@ -57,7 +63,6 @@ const Header = () => {
             </Link>
           </Box>
 
-          {/* Navigation Buttons for screens larger than 768px */}
           <Box className="nav-buttons">
             <Button color="inherit" component={Link} to="/home" className="nav-button">Home</Button>
             <Button color="inherit" onClick={handleMenu} className="nav-button">Models</Button>
@@ -72,11 +77,10 @@ const Header = () => {
               <MenuItem component={Link} to="/weather" onClick={handleClose}>Weather Conditions</MenuItem>
               <MenuItem component={Link} to="/heatwave" onClick={handleClose}>Heatwave</MenuItem>
             </Menu>
-            <Button color="inherit" component={Link} to="/faq" className="nav-button">FAQ</Button>
+            <Button color="inherit" onClick={scrollToFAQ} className="nav-button">FAQ</Button>
             <Button color="inherit" component={Link} to="/about" className="nav-button">About Us</Button>
           </Box>
 
-          {/* Drawer for mobile view */}
           <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
             {renderDrawerMenu()}
           </Drawer>
