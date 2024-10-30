@@ -1,10 +1,10 @@
-import React from 'react';
-import { Box, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import React from 'react'; 
+import { Box, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import './faq.css';
+import './faq.css'; 
 
-
-function FAQ() {
+const FAQ = () => {
+  // Array of FAQ objects
   const faqs = [
     {
       question: "What is this website about?",
@@ -30,28 +30,28 @@ function FAQ() {
       question: "What is forecasting?",
       answer: "A calculation or estimate of future events, especially upcoming weather."
     }
-  ]
+  ];
 
   return (
-    <Box id="faq-section" sx={{ padding: '20px' }}>
-      <Typography variant="h4" gutterBottom>
-        FAQ
-      </Typography>
-      <Typography variant="body1" paragraph>
-        Here are some frequently asked questions:
-      </Typography>
-      {faqs.map((faq, index) => (
-        <Accordion key={index} sx={{ marginBottom: '10px' }}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{faq.question}</Typography>
+    <Box id="faq-section" className="faq-container">
+      <h4 className="faq-title">FAQ</h4>
+      <p className="faq-description">Here are some frequently asked questions:</p>
+      {faqs.map((faq, index) => ( // Loop through the FAQ array
+        <Accordion key={index} className="accordion">
+          <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: '#1976d2' }} />}>
+            <div className="faq-question">
+              {faq.question}
+            </div> 
           </AccordionSummary>
           <AccordionDetails>
-            <Typography sx={{ color: '#0095fd' }}>{faq.answer}</Typography>
+            <div className="faq-answer">
+              {faq.answer}
+            </div>
           </AccordionDetails>
         </Accordion>
       ))}
     </Box>
   );
-}
+};
 
 export default FAQ;
