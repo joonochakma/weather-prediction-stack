@@ -42,9 +42,9 @@ function Footer() {
         </div>
         <div className="footer-center">
           <ul className="social-media-links">
-            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/facebook.png"></img></a></li>
-            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/x.png"></img></a></li>
-            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/instagram.png"></img></a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/facebook.png" alt="link to Facebook"></img></a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/x.png" alt="link to X"></img></a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/instagram.png" alt="link to instagram"></img></a></li>
           </ul>
         </div>
         <div className="footer-right">
