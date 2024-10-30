@@ -22,10 +22,10 @@ function Footer() {
         <div className="footer-column">
           <h3>Site Map</h3>
           <ul>
-            <li><a href="#home">HOME</a></li>
-            <li><a href="#models">MODELS</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="#models">Models</a></li>
             <li><a href="#FAQ">FAQ</a></li>
-            <li><a href="#About Us">ABOUT US</a></li>
+            <li><a href="#About Us">About Us</a></li>
           </ul>
         </div>
       </div>
