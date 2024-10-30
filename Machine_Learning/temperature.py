@@ -157,7 +157,7 @@ def get_temperature():
     # Plot results
     dates = test_data['Datetime'].values
 
-    return train_data, y_pred, dates, y_test
+    return train_data, y_pred, dates, y_test, y_train
 #  y_pred, dates, y_test
 
 
