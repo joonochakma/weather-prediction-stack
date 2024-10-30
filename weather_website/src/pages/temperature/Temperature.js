@@ -7,6 +7,7 @@ function Temperature() {
   const [data, setData] = useState(null);
   const [isScatterOpen, setIsScatterOpen] = useState(false);
   const [isHistogramOpen, setIsHistogramOpen] = useState(false);
+  const [plotWidth, setPlotWidth] = useState(window.innerWidth * 0.9);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -14,6 +15,13 @@ function Temperature() {
       setData(result);
     };
     fetchData();
+
+    const handleResize = () => {
+      setPlotWidth(window.innerWidth * 0.9); // Adjust plot width based on window size
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   if (!data) {
@@ -53,7 +61,7 @@ function Temperature() {
   ];
 
   return (
-    <div>
+    <div style={{ maxWidth: '100%', padding: '1em', boxSizing: 'border-box' }}>
       {/* Scatter Plot Accordion */}
       <div 
         onClick={() => setIsScatterOpen(!isScatterOpen)}
@@ -80,7 +88,7 @@ function Temperature() {
 
       {/* Scatter Plot Content */}
       {isScatterOpen && (
-        <div style={{ padding: '1em', border: '1px solid #ccc', borderTop: 'none' }}>
+        <div style={{ padding: '1em', border: '1px solid #ccc', borderTop: 'none', overflowX: 'auto' }}>
           <Plot
             data={[scatterData]}
             layout={{
@@ -88,8 +96,9 @@ function Temperature() {
               xaxis: { title: 'Temperature Max' },
               yaxis: { title: 'Temperature Min' },
               dragmode: 'select',
-              width: 1000,
-              height: 500,
+              width: plotWidth,
+              height: plotWidth * 0.5,
+              autosize: true,
             }}
           />
         </div>
@@ -121,7 +130,7 @@ function Temperature() {
 
       {/* Histogram Plot Content */}
       {isHistogramOpen && (
-        <div style={{ padding: '1em', border: '1px solid #ccc', borderTop: 'none' }}>
+        <div style={{ padding: '1em', border: '1px solid #ccc', borderTop: 'none', overflowX: 'auto' }}>
           <Plot
             data={histogramData}
             layout={{
@@ -129,8 +138,9 @@ function Temperature() {
               title: 'Histogram of Actual vs Predicted Temperature',
               xaxis: { title: 'Temperature' },
               yaxis: { title: 'Frequency' },
-              width: 1000,
-              height: 500,
+              width: plotWidth,
+              height: plotWidth * 0.5,
+              autosize: true,
             }}
           />
         </div>
