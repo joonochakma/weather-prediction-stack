@@ -1,10 +1,12 @@
-from fastapi import FastAPI, Response, HTTPException
+from datetime import datetime
+from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import pandas as pd
 import joblib
 from typing import Dict, Any
 from temperature import get_temperature  # Ensure get_temperature returns only train_data
+from sklearn.preprocessing import StandardScaler
 
 app = FastAPI()
 
@@ -102,3 +104,46 @@ async def predict_rain(request: RainPredictionRequest) -> Dict[str, Any]:
             "will_rain": result,
             "score": probability  # This will be 'N/A' if no score is available
         }
+    
+# --------------- Heatwave prediction integration ----------------
+# Load the heatwave prediction model
+heatwave_model = joblib.load('model/heatwave_model.joblib')
+scaler = StandardScaler()
+
+class HeatwavePredictionRequest(BaseModel):
+    min_temp: float
+    max_temp: float
+
+@app.post("/predict_heatwave")
+async def predict_heatwave(request: HeatwavePredictionRequest, date: str = Query(None)) -> Dict[str, Any]:
+    """Predict heatwave conditions based on temperature inputs."""
+    try:
+        # Prepare features for heatwave prediction
+        features = pd.DataFrame([{
+            'Minimum temperature (Degree C)': request.min_temp,
+            'Maximum temperature (Degree C)': request.max_temp
+        }])
+        
+        # Scale the features using the StandardScaler
+        features_scaled = scaler.fit_transform(features)
+        
+        # Predict heatwave conditions
+        prediction = heatwave_model.predict(features_scaled)
+
+        # Determine cluster (assuming this is the predicted cluster)
+        cluster = int(prediction[0])  # Get the cluster from the prediction
+
+        # If no date is provided, use today's date
+        if date is None:
+            date = datetime.now().strftime("%Y-%M-%D")
+        
+        # Return the prediction result including the cluster
+        return {
+            "date": date,
+            "minimum_temperature": request.min_temp,
+            "maximum_temperature": request.max_temp,
+            "cluster": cluster,  # Include the predicted cluster
+            "heatwave": cluster == 1  # Cluster 1 indicates a heatwave
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
