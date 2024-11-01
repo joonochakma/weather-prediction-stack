@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
+import Modal from 'react-modal';
+import './Heatwave.css';
+import { alignProperty } from '@mui/material/styles/cssUtils';
 
 const Heatwave = () => {
     const [minTemp, setMinTemp] = useState('');
     const [maxTemp, setMaxTemp] = useState('');
-    const [date, setDate] = useState(''); // New state for date input
+    const [date, setDate] = useState('');
     const [prediction, setPrediction] = useState(null);
     const [error, setError] = useState('');
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [detailsModalIsOpen, setDetailsModalIsOpen] = useState(false); 
 
     const handleSubmit = async (event) => {
         event.preventDefault(); // Prevent default form submission
 
         try {
-          const response = await fetch('http://127.0.0.1:8000/predict_heatwave?date=' + date, {
+            const response = await fetch('http://127.0.0.1:8000/predict_heatwave?date=' + date, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,6 +34,7 @@ const Heatwave = () => {
             const data = await response.json();
             setPrediction(data); // Set the entire prediction object
             setError(''); // Clear any previous errors
+            setModalIsOpen(true); // Open the modal after setting prediction
         } catch (err) {
             console.error('Error:', err);
             setError('Error fetching prediction. Please try again.');
@@ -36,9 +42,22 @@ const Heatwave = () => {
         }
     };
 
+    const closeModal = () => {
+        setModalIsOpen(false);
+    }
+
+    const openDetailsModal = () => {
+      setDetailsModalIsOpen(true); // Open details modal
+    };
+
+    const closeDetailsModal = () => {
+      setDetailsModalIsOpen(false); // Close details modal
+    };
+
     return (
         <div>
-            <h2>Heatwave Prediction</h2>
+            <h2 className="model_title">Heatwave Prediction</h2>
+            <p className="model_description">Predict if a heatwave is likely to occur in Melbourne based on the minimum and maximum temperature.</p>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>
@@ -69,26 +88,43 @@ const Heatwave = () => {
                             type="date"
                             value={date}
                             onChange={(e) => setDate(e.target.value)}
+                            required
                         />
                     </label>
                 </div>
-                <button type="submit">Predict Heatwave</button>
+                <button className="submit-button" type="submit">Predict Heatwave</button>
             </form>
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
-            {prediction && (
-                <div>
-                    <h3>Prediction Result</h3>
-                    <p>Date: {prediction.date}</p>
-                    <p>Minimum Temperature: {prediction.minimum_temperature} °C</p>
-                    <p>Maximum Temperature: {prediction.maximum_temperature} °C</p>
-                    <p>Predicted Cluster: {prediction.predicted_cluster}</p>
-                    <p>{prediction.predicted_cluster === 1 ? "Heatwave is occurring!" : "No heatwave."}</p>
-                </div>
-            )}
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Prediction Result">
+                {prediction && (
+                    <div className="result">
+                        <h3>Prediction Result</h3>
+                        <p>Date: {prediction.date}</p>
+                        <p>Minimum Temperature: {prediction.minimum_temperature} °C</p>
+                        <p>Maximum Temperature: {prediction.maximum_temperature} °C</p>
+                        <p>Predicted Cluster: {prediction.cluster}</p>
+                        <p>{prediction.predicted_cluster === 1 ? "Heatwave is occurring!" : "No heatwave."}</p>
+                        <div className="button-container">
+                            <button className="detail-button" onClick={openDetailsModal}>More Details</button>
+                            <button className="reset-button" onClick={() => setPrediction(null)}>Reset</button>
+                        </div>
+                    </div>
+                )}
+                <button onClick={closeModal} style={{margin:'20px auto', width: 'stretch', display: 'block'}}>Close</button>
+            </Modal>
+
+            {/* Nested Modal for More Details */}
+            <Modal isOpen={detailsModalIsOpen} onRequestClose={closeDetailsModal} contentLabel="More Details">
+                <h3>More About Heatwaves</h3>
+                <p>A heatwave is defined as a prolonged period of excessively hot weather, which may be accompanied by high humidity.</p>
+                <button onClick={closeDetailsModal}>Close</button>
+            </Modal>
         </div>
     );
 };
+
+Modal.setAppElement('#root'); // Set the root element for accessibility
 
 export default Heatwave;
