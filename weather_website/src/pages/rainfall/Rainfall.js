@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Rainfall.css';
 
 function Rainfall() {
   const [maxTemp, setMaxTemp] = useState('');
@@ -33,7 +34,7 @@ function Rainfall() {
 
   return (
     <div className="rainfall-form" style={{ textAlign: 'center', padding: '20px' }}>
-      <h2>Will it Rain Tomorrow?</h2>
+      <h2 className="rainfall-title">Will it Rain Tomorrow?</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>
