@@ -5,7 +5,7 @@ import numpy as np
 from pydantic import BaseModel, Field, model_validator
 import pandas as pd
 import joblib
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 from temperature import get_temperature  # Ensure get_temperature returns only train_data
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
@@ -199,13 +199,60 @@ async def create_temperature_prediction(request: TemperaturePredictionRequest):
         
         return {"predicted_temperature": rounded_prediction}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
 
 
-# --------------- Weather condition model integration ----------------
+# --------------- Weather condition model integration -----------------------
+model = joblib.load('model/weather_classifier_model.joblib')
 
+# Define a Pydantic model for the prediction request
+class WeatherPredictionRequest(BaseModel):
+    minimum_temp: float = Field(..., ge=-50, le=60, description="Minimum Temperature in °C")
+    maximum_temp: float = Field(..., ge=-50, le=60, description="Maximum Temperature in °C")
+    rainfall: float = Field(..., ge=0, description="Rainfall in mm")
+    nine_am_temp: Optional[float] = Field(None, ge=-50, le=60, description="9 AM Temperature in °C")
+    nine_am_humidity: Optional[float] = Field(None, ge=0, le=100, description="9 AM Relative Humidity in %")
+    nine_am_cloud: Optional[float] = Field(None, ge=0, le=8, description="9 AM Cloud Amount in oktas")
+    nine_am_wind_speed: Optional[float] = Field(None, ge=0, description="9 AM Wind Speed in km/h")
+    three_pm_temp: Optional[float] = Field(None, ge=-50, le=60, description="3 PM Temperature in °C")
+    three_pm_humidity: Optional[float] = Field(None, ge=0, le=100, description="3 PM Relative Humidity in %")
+    three_pm_cloud: Optional[float] = Field(None, ge=0, le=8, description="3 PM Cloud Amount in oktas")
+    three_pm_wind_speed: Optional[float] = Field(None, ge=0, description="3 PM Wind Speed in km/h")
 
-# --------------- Heatwave model integration ----------------
+# Define a route for the weather condition prediction endpoint
+@app.post("/weather_prediction")
+async def create_weather_prediction( conditions: WeatherPredictionRequest) -> Dict[str, Any]:
+    """Predict the weather condition based on input features."""
+    try:
+        # Prepare features for weather prediction
+        # Using default values if None is provided for optional features
+        # These values are the mean values from the training data
+        features = {
+            "Minimum temperature (°C)": conditions.minimum_temp,
+            "Maximum temperature (°C)": conditions.maximum_temp,
+            "Rainfall (mm)": conditions.rainfall,
+            "9am Temperature (°C)": conditions.nine_am_temp or 14.29, 
+            "9am relative humidity (%)": conditions.nine_am_humidity or 73.47,
+            "9am cloud amount (oktas)": conditions.nine_am_cloud or 5.14,
+            "9am wind speed (km/h)": conditions.nine_am_wind_speed or 9.7,
+            "3pm Temperature (°C)": conditions.three_pm_temp or 18.64,
+            "3pm relative humidity (%)": conditions.three_pm_humidity or 57.28,
+            "3pm cloud amount (oktas)": conditions.three_pm_cloud or 4.82,
+            "3pm wind speed (km/h)": conditions.three_pm_wind_speed or 13.57,
+        }
+
+        # Convert features to DataFrame
+        features_df = pd.DataFrame([features])
+
+        # Predict the weather condition
+        prediction = model.predict(features_df)[0]
+        
+        return {"predicted_weather_condition": prediction}
+    except Exception as e:
+        print(f"Error in create_weather_prediction: {e}")
+        raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
+
+# --------------- Heatwave model integration --------------------------------
 # Load the heatwave prediction model
 heatwave_model = joblib.load('model/heatwave_model.joblib')
 scaler = StandardScaler()
@@ -248,7 +295,7 @@ async def create_heatwave_prediction(request: HeatwavePredictionRequest, date: s
             "heatwave": cluster == 1  # Cluster 1 indicates a heatwave
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
 
 @app.get("/clusters_visualization")
 def visualize_clusters_endpoint() -> Dict[str, Any]:
@@ -262,11 +309,7 @@ def visualize_clusters_endpoint() -> Dict[str, Any]:
 
         # Handle NaN values
         if data.isnull().values.any():
-            # Option 1: Drop rows with any NaN values
             data = data.dropna()  # Drop rows with NaN values
-            
-            # Option 2: Alternatively, you could fill NaN values with the mean or median
-            # data.fillna(data.mean(), inplace=True)  # Replace NaN with column mean
 
         # Check if the data has the required columns
         required_columns = {'Minimum temperature (Degree C)', 'Maximum temperature (Degree C)'}
