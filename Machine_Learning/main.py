@@ -5,12 +5,13 @@ import numpy as np
 from pydantic import BaseModel, Field, model_validator
 import pandas as pd
 import joblib
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional , List
 from temperature import get_temperature  # Ensure get_temperature returns only train_data
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 import numpy as np
+
 
 app = FastAPI()
 
@@ -74,6 +75,39 @@ def apply_kmeans_clustering(data: pd.DataFrame, n_clusters: int = 2) -> pd.DataF
     data['Cluster'] = kmeans.fit_predict(data[['Minimum temperature (Degree C)', 'Maximum temperature (Degree C)']])
     return data
 
+# Define the probability distribution endpoint
+@app.get("/probability_distribution", response_model=Dict[str, List[float]])
+async def get_probability_distribution():
+    """Return counts of rainy and non-rainy days."""
+    try:
+        # Load your data
+        df = pd.read_csv('rainfall/rainfall_predictions.csv')  # Update with the path to your dataset
+        print("Loaded DataFrame columns:", df.columns.tolist())  # Debug print
+        print("Sample data:\n", df.head())  # Debug print
+
+    except Exception as e:
+        print(f"Error loading data: {e}")  # Log error
+        raise HTTPException(status_code=500, detail="Error loading data: " + str(e))
+
+    # Check if required columns exist
+    if 'Rainy' not in df.columns:
+        error_message = "Dataframe must contain 'Rainy' column."
+        print(error_message)  # Log error
+        raise HTTPException(status_code=400, detail=error_message)
+
+    # Calculate the counts of rainy and non-rainy days
+    try:
+        rainy_days_count = df[df['Rainy'] == 1].shape[0]  # Count of rainy days
+        non_rainy_days_count = df[df['Rainy'] == 0].shape[0]  # Count of non-rainy days
+    except Exception as e:
+        print(f"Error calculating distributions: {e}")  # Log error
+        raise HTTPException(status_code=500, detail="Error calculating distributions: " + str(e))
+
+    # Return the data as JSON
+    return {
+        "rainy_days": [rainy_days_count],      # Return counts as lists
+        "non_rainy_days": [non_rainy_days_count]
+    }
 @app.get("/testdata")
 def read_root(response: Response) -> Dict[str, Any]:
     """Retrieve training data for the temperature prediction model."""
@@ -220,6 +254,7 @@ class WeatherPredictionRequest(BaseModel):
     three_pm_humidity: Optional[float] = Field(None, ge=0, le=100, description="3 PM Relative Humidity in %")
     three_pm_cloud: Optional[float] = Field(None, ge=0, le=8, description="3 PM Cloud Amount in oktas")
     three_pm_wind_speed: Optional[float] = Field(None, ge=0, description="3 PM Wind Speed in km/h")
+    
 
 # Define a route for the weather condition prediction endpoint
 @app.post("/weather_prediction")
@@ -253,6 +288,7 @@ async def create_weather_prediction( conditions: WeatherPredictionRequest) -> Di
     except Exception as e:
         print(f"Error in create_weather_prediction: {e}")
         raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
+    
 
 # --------------- Heatwave model integration --------------------------------
 # Load the heatwave prediction model
@@ -298,6 +334,8 @@ async def create_heatwave_prediction(request: HeatwavePredictionRequest, date: s
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
+    
+    
 
 @app.get("/clusters_visualization")
 def visualize_clusters_endpoint() -> Dict[str, Any]:
@@ -337,7 +375,11 @@ def visualize_clusters_endpoint() -> Dict[str, Any]:
         }
 
         return cluster_data
+    
+    
 
     except Exception as e:
         print(f"Error in visualize_clusters_endpoint: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+    
+    

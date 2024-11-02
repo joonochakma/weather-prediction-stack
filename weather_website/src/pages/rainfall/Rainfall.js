@@ -1,18 +1,38 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "./Rainfall.css"; // Import the external CSS file
-import Modal from "react-modal";
+import React, { useState, useEffect } from "react"; // For building the component and managing state
+import axios from "axios"; // For making HTTP requests
+import Plot from 'react-plotly.js'; // For rendering Plotly charts
+import Modal from "react-modal"; // For displaying modal dialogs
+import "./Rainfall.css"; // For importing your CSS styles
 
 // Set the root element for the modal
 Modal.setAppElement("#root");
 
 function Rainfall() {
-  const [maxTemp, setMaxTemp] = useState("");
-  const [minTemp, setMinTemp] = useState("");
-  const [rainfall, setRainfall] = useState("");
-  const [prediction, setPrediction] = useState(null);
-  const [score, setScore] = useState(null);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [maxTemp, setMaxTemp] = useState(""); // State for maximum temperature input
+  const [minTemp, setMinTemp] = useState(""); // State for minimum temperature input
+  const [rainfall, setRainfall] = useState(""); // State for previous day's rainfall input
+  const [prediction, setPrediction] = useState(null); // State for the prediction result
+  const [score, setScore] = useState(null); // State for the confidence score
+  const [probabilities, setProbabilities] = useState({ rainy_days: [], non_rainy_days: [] }); // State to hold probabilities
+  const [loading, setLoading] = useState(true); // State to handle loading
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal visibility
+
+  // Fetch probability distribution when the component mounts
+  useEffect(() => {
+    const fetchProbabilityDistribution = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/probability_distribution");
+        console.log("Probability distribution data:", response.data);
+        setProbabilities(response.data);
+      } catch (error) {
+        console.error("Error fetching probability distribution:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProbabilityDistribution();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,6 +62,7 @@ function Rainfall() {
     }
   };
 
+
   // Function to close the modal
   const closeModal = () => {
     setModalIsOpen(false);
@@ -55,26 +76,46 @@ function Rainfall() {
       <section className="description-section">
         <h2 className="rainfall-section-title">Description</h2>
         <p className="rainfall-description-text">
-          Welcome to our Rainfall Prediction Model! Our cutting-edge tool
-          utilizes advanced binary classification machine learning techniques to
-          forecast the likelihood of rain based on the data you provide. Whether
-          you're planning a picnic, organizing an outdoor event, or just want to
-          stay dry, our model offers accurate predictions tailored to your
-          specific location and input data.
+          Welcome to our Rainfall Prediction Model! Our cutting-edge tool utilizes advanced binary classification machine learning techniques to forecast the likelihood of rain based on the data you provide. Whether you're planning a picnic, organizing an outdoor event, or just want to stay dry, our model offers accurate predictions tailored to your specific location and input data.
           <br />
           <br />
-          Simply enter the relevant details, and our system will analyze
-          historical weather patterns and current conditions to determine the
-          probability of rainfall. With user-friendly functionality and
-          real-time updates, you can make informed decisions and stay ahead of
-          the weather. Experience the power of data-driven forecasting and never
-          get caught in the rain again!
+          Simply enter the relevant details, and our system will analyze historical weather patterns and current conditions to determine the probability of rainfall. With user-friendly functionality and real-time updates, you can make informed decisions and stay ahead of the weather. Experience the power of data-driven forecasting and never get caught in the rain again!
         </p>
       </section>
 
       {/* Charts Section */}
       <section className="charts-section">
         <h2 className="rainfall-section-title">Charts</h2>
+
+        {/* Loading Indicator */}
+        {loading ? (
+          <div className="loading-indicator">
+            <p>Loading probability data, please wait...</p>
+          </div>
+        ) : (
+          <div className="probability-chart">
+            <h3>Probability Distribution</h3>
+            <Plot
+              data={[
+                {
+                  x: ['Rainy Days', 'Non-Rainy Days'],
+                  y: [
+                    probabilities.rainy_days.length > 0 ? probabilities.rainy_days[0] : 0,   // Count of rainy days
+                    probabilities.non_rainy_days.length > 0 ? probabilities.non_rainy_days[0] : 0 // Count of non-rainy days
+                  ],
+                  type: 'bar',
+                  marker: { color: ['blue', 'orange'] },
+                },
+              ]}
+              layout={{ 
+                title: 'Probability Distribution of Rainfall',
+                xaxis: { title: 'Weather Type' },
+                yaxis: { title: 'Count' },
+                barmode: 'group',
+              }}
+            />
+          </div>
+        )}
 
         {/* Will it Rain Tomorrow? Section */}
         <h2 className="rainfall-section-title">Will it Rain Tomorrow?</h2>
@@ -125,8 +166,8 @@ function Rainfall() {
         </form>
       </section>
 
-     {/* Modal for displaying prediction results */}
-     <Modal
+      {/* Modal for displaying prediction results */}
+      <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Prediction Result"
