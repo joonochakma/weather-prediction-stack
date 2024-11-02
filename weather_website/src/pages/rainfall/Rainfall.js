@@ -13,7 +13,7 @@ function Rainfall() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/predict_rain", {
+      const response = await axios.post("http://localhost:8000/rain_prediction", {
         max_temp: parseFloat(maxTemp),
         min_temp: parseFloat(minTemp),
         rainfall: parseFloat(rainfall),
