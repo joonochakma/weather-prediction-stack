@@ -8,6 +8,7 @@
     color: #1976d2;
     text-align: center; /* Center section titles */
     margin: 20px 0; /* Spacing above and below section titles */
+    font-size: xx-large;
 }
 
 .description-text {
@@ -24,12 +25,6 @@
     padding-left: 10%; /* Use percentage for responsive padding */
     padding-right: 10%; /* Use percentage for responsive padding */
     color: #000;
-}
-
-.prediction-title {
-    color: #1976d2;
-    text-align: center; /* Center prediction title */
-    margin-bottom: 20px; /* Space below the title */
 }
 
 .form-group {

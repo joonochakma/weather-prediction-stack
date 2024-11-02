@@ -34,7 +34,7 @@ function Rainfall() {
 
   return (
     <div className="rainfall-form">
-      <h2 className="rainfall-title">Rainfall Prediction Model</h2>
+      <h2 className="rainfall-title">RAINFALL PREDICTION MODEL</h2>
       
       {/* Description Section */}
       <section className="description-section">
@@ -52,7 +52,7 @@ function Rainfall() {
         <p className="charts-description">Use the form below to input your data:</p>
 
         {/* Will it Rain Tomorrow? Section */}
-        <h2 className="prediction-title">Will it Rain Tomorrow?</h2>
+        <h2 className="section-title">Will it Rain Tomorrow?</h2>
       
         <form onSubmit={handleSubmit} className="prediction-form">
           <div className="form-group">
