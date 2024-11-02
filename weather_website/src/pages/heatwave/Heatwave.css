@@ -167,7 +167,7 @@ input[type="date"] {
       width: stretch; 
       padding: 20px;
       margin: 0 20px;
-      max-width: 600px; /* Optional: Sets a max width for larger screens */
+      max-width: 600px; 
     }
   
     input[type="number"],
