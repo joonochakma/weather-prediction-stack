@@ -1,8 +1,8 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, model_validator
 import pandas as pd
 import joblib
 from typing import Dict, Any
@@ -17,7 +17,7 @@ app = FastAPI()
 # CORS middleware for handling requests from different origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Update to specific origins in production
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -66,8 +66,7 @@ def load_data(file_path: str) -> pd.DataFrame:
 
 def preprocess_data(data: pd.DataFrame) -> pd.DataFrame:
     """Preprocess data by removing outliers or scaling as necessary."""
-    # Example: Removing outliers or scaling could be implemented here
-    return data  # Modify this as per your preprocessing needs
+    return data 
 
 def apply_kmeans_clustering(data: pd.DataFrame, n_clusters: int = 2) -> pd.DataFrame:
     """Apply KMeans clustering to the data."""
@@ -77,6 +76,7 @@ def apply_kmeans_clustering(data: pd.DataFrame, n_clusters: int = 2) -> pd.DataF
 
 @app.get("/testdata")
 def read_root(response: Response) -> Dict[str, Any]:
+    """Retrieve training data for the temperature prediction model."""
     # Retrieve train data dynamically from the source
     train_data, y_pred, dates, y_test, y_train = get_temperature()
     
@@ -97,6 +97,7 @@ def read_root(response: Response) -> Dict[str, Any]:
 
 @app.post("/rain_prediction")
 async def create_rain_prediction(request: RainPredictionRequest) -> Dict[str, Any]:
+    """Predict the probability of rain based on temperature and rainfall."""
     # Prepare features for prediction
     features = prepare_rain_features(request.max_temp, request.min_temp, request.rainfall)
 
@@ -123,35 +124,80 @@ async def create_rain_prediction(request: RainPredictionRequest) -> Dict[str, An
         }
 
 # --------------- Temperature model integration ----------------
-temperature_model = joblib.load('model/temperature_model.joblib')
-scaler = joblib.load('model/temperature_scaler.joblib')
+# Load the temperature prediction model and scaler
+try:
+    model = joblib.load('model/temperature_model.joblib')
+    scaler = joblib.load('model/temperauture_scaler.joblib')
+    print("Model and scaler loaded successfully")
+except Exception as e:
+    print(f"Error loading model or scaler: {e}")
+    raise HTTPException(status_code=500, detail="Error loading model or scaler")
 
+# Define a Pydantic model for the prediction request
 class TemperaturePredictionRequest(BaseModel):
-    temperature_max: float
-    temperature_min: float
-    rain_sum: float
-    relative_humidity_mean: float
-    relative_humidity_max: float
-    relative_humidity_min: float
-    month: int
-    day: int
-    hour: int
+    # Define input fields with validation
+    temperature_max: float = Field(..., gt=-50, lt=60, description="Max temperature between -50 and 60°C")
+    temperature_min: float = Field(..., gt=-50, lt=60, description="Min temperature between -50 and 60°C")
+    rain_sum: float = Field(..., ge=0, description="Rain sum should be positive")
+    relative_humidity_mean: float = Field(..., ge=0, le=100, description="Humidity between 0 and 100%")
+    relative_humidity_max: float = Field(..., ge=0, le=100, description="Humidity between 0 and 100%")
+    relative_humidity_min: float = Field(..., ge=0, le=100, description="Humidity between 0 and 100%")
 
+    # Cross-field validation to ensure min/max relationships
+    @model_validator(mode="after")
+    def check_min_max_relationships(cls, values):
+        temp_min = values.temperature_min
+        temp_max = values.temperature_max
+        hum_min = values.relative_humidity_min
+        hum_max = values.relative_humidity_max
+        
+        if temp_min > temp_max:
+            raise ValueError("Minimum temperature must be less than or equal to maximum temperature")
+        if hum_min > hum_max:
+            raise ValueError("Minimum humidity must be less than or equal to maximum humidity")
+        
+        return values
 
+# Define a route for the temperature prediction endpoint
 @app.post("/temperature_prediction")
 async def create_temperature_prediction(request: TemperaturePredictionRequest):
+    """Predict the average temperature for tomorrow."""
     try:
+        # Determine the date for tomorrow
+        today = datetime.now()
+        tomorrow = today + timedelta(days=1)
+
         # Prepare the feature vector
-        features = np.array([[request.temperature_max, request.temperature_min, request.rain_sum,
-                              request.relative_humidity_mean, request.relative_humidity_max,
-                              request.relative_humidity_min, request.month, request.day, request.hour]])
+        features = np.array([[request.temperature_max, 
+                              request.temperature_min, 
+                              request.rain_sum,
+                              request.relative_humidity_mean, 
+                              request.relative_humidity_max,
+                              request.relative_humidity_min, 
+                              tomorrow.month,
+                              tomorrow.day,
+                              0 # Hour is set to 0 as placeholder for "Hour" for a daily average prediction
+                              ]])
         
         # Scale the features
-        features_scaled = scaler.transform(features)
+        try:   
+            scaler = StandardScaler()
+            features_scaled = scaler.fit_transform(features)
+        except Exception as e:
+            print(f"Scaler error: {e}")
+            raise HTTPException(status_code=500, detail="Error scaling input data")
         
         # Predict the temperature
-        prediction = model.predict(features_scaled)
-        return {"predicted_temperature": prediction[0]}
+        try:
+            prediction = model.predict(features_scaled)
+        except Exception as e:
+            print(f"Prediction error: {e}")
+            raise HTTPException(status_code=500, detail="Error making prediction")
+        
+        # Round the prediction to the nearest integer
+        rounded_prediction = round(prediction[0])
+        
+        return {"predicted_temperature": rounded_prediction}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -164,10 +210,12 @@ async def create_temperature_prediction(request: TemperaturePredictionRequest):
 heatwave_model = joblib.load('model/heatwave_model.joblib')
 scaler = StandardScaler()
 
+# Define a Pydantic model for the prediction request
 class HeatwavePredictionRequest(BaseModel):
     min_temp: float
     max_temp: float
 
+# Define a route for the heatwave prediction endpoint
 @app.post("/heatwave_prediction")
 async def create_heatwave_prediction(request: HeatwavePredictionRequest, date: str = Query(None)) -> Dict[str, Any]:
     """Predict heatwave conditions based on temperature inputs."""
@@ -204,6 +252,7 @@ async def create_heatwave_prediction(request: HeatwavePredictionRequest, date: s
 
 @app.get("/clusters_visualization")
 def visualize_clusters_endpoint() -> Dict[str, Any]:
+    """Visualize clusters using PCA and KMeans clustering."""
     try:
         print("Loading data...")
         data = load_data('rainfall/temperature_rainfall.csv')

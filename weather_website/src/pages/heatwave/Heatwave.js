@@ -162,10 +162,11 @@ const Heatwave = () => {
                     alignItems: 'center',
                     cursor: 'pointer',
                     padding: '1em',
-                    backgroundColor: '#f0f0f0',
                     border: '1px solid #ccc',
                     fontWeight: 'bold',
-                    marginTop: '20px'
+                    marginTop: '20px',
+                    backgroundColor: '#ECF6FE',
+                    color: '#1870C9'
                 }}
             >
                 {isOpen ? 'Hide Prediction and Cluster Visualization' : 'Show Prediction and Cluster Visualization'}

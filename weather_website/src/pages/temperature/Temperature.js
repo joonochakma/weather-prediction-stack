@@ -3,7 +3,8 @@ import getTestData from "../../services/test-data";
 import Plot from 'react-plotly.js';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import axios from 'axios';
-import { Modal } from 'react-modal';
+import Modal from 'react-modal';
+import './Temperature.css';
 
 function Temperature() {
   const [data, setData] = useState(null);
@@ -16,14 +17,53 @@ function Temperature() {
   const [humidityMean, setHumidityMean] = useState('');
   const [humidityMax, setHumidityMax] = useState('');
   const [humidityMin, setHumidityMin] = useState('');
-  const [month, setMonth] = useState('');
-  const [day, setDay] = useState('');
-  const [hour, setHour] = useState('');
   const [predictedTemperature, setPredictedTemperature] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [errors, setErrors] = useState({});
 
+  // Input validation 
+  const ValidateInputs = () => {
+    const errors = {}; // Initialize as an object
+
+    if (temperatureMax === '' || isNaN(temperatureMax) || temperatureMax < -50 || temperatureMax > 60) {
+        errors.temperatureMax = 'Maximum temperature must be a number between -50 and 60.';
+    }
+    if (temperatureMin === '' || isNaN(temperatureMin) || temperatureMin < -50 || temperatureMin > 60) {
+        errors.temperatureMin = 'Minimum temperature must be a number between -50 and 60.';
+    }
+    if (parseFloat(temperatureMax) < parseFloat(temperatureMin)) {
+        errors.temperatureMin = 'Minimum temperature must be less than maximum temperature.';
+        errors.temperatureMax = 'Maximum temperature must be greater than minimum temperature.';
+    }
+    if (rainSum === '' || isNaN(rainSum) || rainSum < 0) {
+        errors.rainSum = 'Rain sum must be a positive number.';
+    }
+    if (humidityMean === '' || isNaN(humidityMean) || humidityMean < 0 || humidityMean > 100) {
+        errors.humidityMean = 'Mean relative humidity must be a number between 0 and 100.';
+    }
+    if (humidityMax === '' || isNaN(humidityMax) || humidityMax < 0 || humidityMax > 100) {
+        errors.humidityMax = 'Maximum relative humidity must be a number between 0 and 100.';
+    }
+    if (humidityMin === '' || isNaN(humidityMin) || humidityMin < 0 || humidityMin > 100) {
+        errors.humidityMin = 'Minimum relative humidity must be a number between 0 and 100.';
+    }
+    if (parseFloat(humidityMax) < parseFloat(humidityMin)) {
+        errors.humidityMin = 'Minimum relative humidity must be less than maximum relative humidity.';
+        errors.humidityMax = 'Maximum relative humidity must be greater than minimum relative humidity.';
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+};
+
+
+  // Handle form submission and fetch prediction
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!ValidateInputs()) {
+      return; // Prevent submission if inputs are invalid
+    }
 
     try {
       const response = await axios.post("http://localhost:8000/temperature_prediction", {
@@ -33,9 +73,6 @@ function Temperature() {
         relative_humidity_mean: parseFloat(humidityMean),
         relative_humidity_max: parseFloat(humidityMax),
         relative_humidity_min: parseFloat(humidityMin),
-        month: parseInt(month),
-        day: parseInt(day),
-        hour: parseInt(hour)
       });
 
       // Log the response to check its structure
@@ -103,46 +140,40 @@ function Temperature() {
 
   return (
     <div style={{ maxWidth: '100%', padding: '1em', boxSizing: 'border-box' }}>
-      <h2 className='model-title'>Temperature Prediction</h2>
-      <p className='model-description'>Predict the temperature based on the provided data.</p>
+      <h2 className="model_title">Temperature Prediction</h2>
+      <p className="model_description">Predict the temperature based on the provided data.</p>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Maximum Temperature (°C): </label>
           <input type="number" value={temperatureMax} onChange={(e) => setTemperatureMax(e.target.value)} required />
+          {errors.temperatureMax && <p className='error-message'>{errors.temperatureMax}</p>}
         </div>
         <div>
           <label>Minimum Temperature (°C): </label>
           <input type="number" value={temperatureMin} onChange={(e) => setTemperatureMin(e.target.value)} required />
+          {errors.temperatureMin && <p className='error-message'>{errors.temperatureMin}</p>}
         </div>
         <div>
           <label>Rain Sum (mm): </label>
           <input type="number" value={rainSum} onChange={(e) => setRainSum(e.target.value)} required />
+          {errors.rainSum && <p className='error-message'>{errors.rainSum}</p>}
         </div>
         <div>
           <label>Mean Relative Humidity (%): </label>
           <input type="number" value={humidityMean} onChange={(e) => setHumidityMean(e.target.value)} required />
+          {errors.humidityMean && <p className='error-message'>{errors.humidityMean}</p>}
         </div>
         <div>
           <label>Max Relative Humidity (%): </label>
           <input type="number" value={humidityMax} onChange={(e) => setHumidityMax(e.target.value)} required />
+          {errors.humidityMax && <p className='error-message'>{errors.humidityMax}</p>}
         </div>
         <div>
           <label>Min Relative Humidity (%): </label>
           <input type="number" value={humidityMin} onChange={(e) => setHumidityMin(e.target.value)} required />
+          {errors.humidityMin && <p className='error-message'>{errors.humidityMin}</p>}
         </div>
-        <div>
-          <label>Month: </label>
-          <input type="number" value={month} onChange={(e) => setMonth(e.target.value)} required />
-        </div>
-        <div>
-          <label>Day: </label>
-          <input type="number" value={day} onChange={(e) => setDay(e.target.value)} required />
-        </div>
-        <div>
-          <label>Hour: </label>
-          <input type="number" value={hour} onChange={(e) => setHour(e.target.value)} required />
-        </div>
-          <button type="submit">Predict</button>
+        <button type="submit" className='submit-button'>Predict</button>
       </form>
 
       {/* Modal for displaying prediction */}
@@ -150,10 +181,13 @@ function Temperature() {
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
         contentLabel="Prediction Result"
+        className="result"
       >
+        <div className="result">
         <h2>Prediction Result</h2>
-        <p>Predicted Temperature for Next Day: <strong>{predictedTemperature}°C</strong></p>
-        <button onClick={() => setModalIsOpen(false)}>Close</button>
+        <p>Predicted Temperature for Next Day: <strong>{Math.round(predictedTemperature)}°C</strong></p>
+        <button className="close-button" onClick={() => setModalIsOpen(false)}>Close</button>
+        </div>
       </Modal>
 
       {/* Scatter Plot Accordion */}
@@ -164,10 +198,11 @@ function Temperature() {
           alignItems: 'center',
           cursor: 'pointer',
           padding: '1em',
-          backgroundColor: '#f0f0f0',
+          backgroundColor: '#ECF6FE',
           border: '1px solid #ccc',
           fontWeight: 'bold',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          color: '#1870C9'
         }}
       >
         {isScatterOpen ? 'Hide Scatter Plot' : 'Show Scatter Plot for Temperature Features'}
@@ -206,10 +241,11 @@ function Temperature() {
           alignItems: 'center',
           cursor: 'pointer',
           padding: '1em',
-          backgroundColor: '#f0f0f0',
+          backgroundColor: '#ECF6FE',
           border: '1px solid #ccc',
           fontWeight: 'bold',
-          marginBottom: '10px'
+          marginBottom: '10px',
+          color: '#1870C9'
         }}
       >
         {isHistogramOpen ? 'Hide Histogram' : 'Show Histogram for Actual vs Predicted Temperature'}
@@ -243,6 +279,6 @@ function Temperature() {
   );
 }
 
-//Modal.setAppElement('#root');
+Modal.setAppElement('#root'); // Set the root element for accessibility
 
 export default Temperature;
