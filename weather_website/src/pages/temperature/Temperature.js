@@ -98,9 +98,17 @@ function Temperature() {
       return;
     }
 
+    console.log("Sending data to API:", {
+      temperature_max: parseFloat(temperatureMax),
+      temperature_min: parseFloat(temperatureMin),
+      rain_sum: parseFloat(rainSum),
+      relative_humidity_mean: parseFloat(humidityMean),
+      relative_humidity_max: parseFloat(humidityMax),
+      relative_humidity_min: parseFloat(humidityMin),
+   });
+
     try {
-      const response = await axios.post(
-        "http://localhost:8000/temperature_prediction",
+      const response = await axios.post("http://localhost:8000/temperature_prediction",
         {
           temperature_max: parseFloat(temperatureMax),
           temperature_min: parseFloat(temperatureMin),

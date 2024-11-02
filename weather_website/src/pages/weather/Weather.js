@@ -83,17 +83,6 @@ function Weather() {
       return;
     }
 
-    //Default values for optional fields in the request, these will be used if the user does not provide them
-    //These values are the mean values from the training data
-    const DEFAULT_9AM_TEMP = 14.29;
-    const DEFAULT_9AM_HUMIDITY = 73.47;
-    const DEFAULT_9AM_CLOUD = 5.14;
-    const DEFAULT_9AM_WIND_SPEED = 9.7;
-    const DEFAULT_3PM_TEMP = 18.64;
-    const DEFAULT_3PM_HUMIDITY = 57.28;
-    const DEFAULT_3PM_CLOUD = 4.82;
-    const DEFAULT_3PM_WIND_SPEED = 13.57;
-
     const preparedData = {
       minimum_temp: formData.minimum_temp
         ? parseFloat(formData.minimum_temp)

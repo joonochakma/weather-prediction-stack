@@ -119,14 +119,17 @@ async def create_rain_prediction(request: RainPredictionRequest) -> Dict[str, An
 
         # Handle non-probabilistic case
         return {
-            "will_rain": result,
-            "score": probability  # This will be 'N/A' if no score is available
+           "will_rain": result,
+          "score": probability  # This will be 'N/A' if no score is available
         }
+    except Exception as e:
+        print(f"General error in /rain_prediction: {e}")
+        raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
 
 # --------------- Temperature model integration ----------------
 # Load the temperature prediction model and scaler
 try:
-    model = joblib.load('model/temperature_model.joblib')
+    temperature_model = joblib.load('model/temperature_model.joblib')
     scaler = joblib.load('model/temperauture_scaler.joblib')
     print("Model and scaler loaded successfully")
 except Exception as e:
@@ -181,7 +184,6 @@ async def create_temperature_prediction(request: TemperaturePredictionRequest):
         
         # Scale the features
         try:   
-            scaler = StandardScaler()
             features_scaled = scaler.fit_transform(features)
         except Exception as e:
             print(f"Scaler error: {e}")
@@ -189,7 +191,8 @@ async def create_temperature_prediction(request: TemperaturePredictionRequest):
         
         # Predict the temperature
         try:
-            prediction = model.predict(features_scaled)
+            prediction = temperature_model.predict(features_scaled)
+            print("Raw prediction output:", prediction)
         except Exception as e:
             print(f"Prediction error: {e}")
             raise HTTPException(status_code=500, detail="Error making prediction")
@@ -201,9 +204,8 @@ async def create_temperature_prediction(request: TemperaturePredictionRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
 
-
 # --------------- Weather condition model integration -----------------------
-model = joblib.load('model/weather_classifier_model.joblib')
+weather_model = joblib.load('model/weather_classifier_model.joblib')
 
 # Define a Pydantic model for the prediction request
 class WeatherPredictionRequest(BaseModel):
@@ -245,7 +247,7 @@ async def create_weather_prediction( conditions: WeatherPredictionRequest) -> Di
         features_df = pd.DataFrame([features])
 
         # Predict the weather condition
-        prediction = model.predict(features_df)[0]
+        prediction = weather_model.predict(features_df)[0]
         
         return {"predicted_weather_condition": prediction}
     except Exception as e:

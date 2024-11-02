@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Rainfall.css"; // Import the external CSS file
+import Modal from "react-modal";
+
+// Set the root element for the modal
+Modal.setAppElement("#root");
 
 function Rainfall() {
   const [maxTemp, setMaxTemp] = useState("");
@@ -8,13 +12,13 @@ function Rainfall() {
   const [rainfall, setRainfall] = useState("");
   const [prediction, setPrediction] = useState(null);
   const [score, setScore] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/rain_prediction",
+      const response = await axios.post("http://localhost:8000/rain_prediction",
         {
           max_temp: parseFloat(maxTemp),
           min_temp: parseFloat(minTemp),
@@ -28,11 +32,19 @@ function Rainfall() {
       // Update prediction and score directly from the response
       setPrediction(response.data.will_rain);
       setScore(response.data.score); // No conversion needed here
+      // Open the modal to show the prediction result
+      setModalIsOpen(true);
     } catch (error) {
       console.error("Error fetching prediction:", error);
       setPrediction("Error");
       setScore(null);
+      setModalIsOpen(true); // Open the modal to show the error message
     }
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
@@ -113,19 +125,27 @@ function Rainfall() {
         </form>
       </section>
 
-      {/* Prediction Section */}
-      {prediction !== null && (
-        <section className="prediction-result">
-          <p className="prediction-text">
-            {prediction === "Yes"
-              ? "Yes, it will rain."
-              : "No, it will not rain."}
-          </p>
-          {score !== null && (
-            <p className="confidence-score">Confidence Score: {score}</p>
-          )}
-        </section>
-      )}
+     {/* Modal for displaying prediction results */}
+     <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Prediction Result"
+        className="prediction-modal"
+        overlayClassName="prediction-modal-overlay"
+      >
+        <h2>Prediction Result</h2>
+        <p className="prediction-text">
+          {prediction === "Yes"
+            ? "Yes, it will rain."
+            : prediction === "No"
+            ? "No, it will not rain."
+            : "Error in prediction"}
+        </p>
+        {score !== null && (
+          <p className="confidence-score">Confidence Score: {score.toFixed(2)}</p>
+        )}
+        <button onClick={closeModal} className="close-button">Close</button>
+      </Modal>
     </div>
   );
 }
