@@ -243,6 +243,6 @@ function Temperature() {
   );
 }
 
-Modal.setAppElement('#root');
+//Modal.setAppElement('#root');
 
 export default Temperature;
