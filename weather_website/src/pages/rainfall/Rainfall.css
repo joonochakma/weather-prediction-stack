@@ -4,14 +4,14 @@
     margin-bottom: 20px; /* Space below the title */
 }
 
-.section-title {
+.rainfall-section-title {
     color: #1976d2;
     text-align: center; /* Center section titles */
     margin: 20px 0; /* Spacing above and below section titles */
     font-size: xx-large;
 }
 
-.description-text {
+.rainfall-description-text {
     text-align: left; /* Align description text */
     margin-bottom: 20px; /* Space below the description */
     padding-left: 10%; /* Use percentage for responsive padding */

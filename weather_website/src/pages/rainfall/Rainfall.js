@@ -38,8 +38,8 @@ function Rainfall() {
       
       {/* Description Section */}
       <section className="description-section">
-        <h2 className="section-title">Description</h2>
-        <p className="description-text">
+        <h2 className="rainfall-section-title">Description</h2>
+        <p className="rainfall-description-text">
           Welcome to our Rainfall Prediction Model! Our cutting-edge tool utilizes advanced binary classification machine learning techniques to forecast the likelihood of rain based on the data you provide. Whether you're planning a picnic, organizing an outdoor event, or just want to stay dry, our model offers accurate predictions tailored to your specific location and input data.
           <br /><br />
           Simply enter the relevant details, and our system will analyze historical weather patterns and current conditions to determine the probability of rainfall. With user-friendly functionality and real-time updates, you can make informed decisions and stay ahead of the weather. Experience the power of data-driven forecasting and never get caught in the rain again!
@@ -48,10 +48,10 @@ function Rainfall() {
       
       {/* Charts Section */}
       <section className="charts-section">
-        <h2 className="section-title">Charts</h2>
+        <h2 className="rainfall-section-title">Charts</h2>
 
         {/* Will it Rain Tomorrow? Section */}
-        <h2 className="section-title">Will it Rain Tomorrow?</h2>
+        <h2 className="rainfall-section-title">Will it Rain Tomorrow?</h2>
       
         <form onSubmit={handleSubmit} className="prediction-form">
           <div className="form-group">
