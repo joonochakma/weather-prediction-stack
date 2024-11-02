@@ -44,7 +44,7 @@ function About() {
       <Typography variant="h3" component="h3" align="center" className="team-description">
         Our Team
       </Typography>
-      <Typography variant="body1" align="left" className="team-description">
+      <Typography variant="body1" align="center" className="team-description">
         We are a dedicated team of three members working on this project, each bringing unique skills and perspectives:
       </Typography>
 
