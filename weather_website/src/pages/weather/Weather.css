@@ -1,43 +1,44 @@
-/* General Styles */
-.model_title {
-    color: #1976d2; 
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    font-weight: bold; 
-    text-align: center;
+.weather-title {
+  color: #1976d2;
+  text-align: center; /* Center the title */
+  margin-bottom: 20px;
 }
 
-.model_description {
-    font-size: 1.1rem;
-    color: #0077c2; 
-    text-align: center;
-    margin: 10px 0; 
-    padding: 0 20px; 
-    line-height: 1.5; 
-    margin-bottom: 20px;
+.weather-section-title {
+  color: #1976d2;
+  text-align: center; /* Center section titles */
+  margin: 20px 0; /* Spacing above and below section titles */
+  font-size: xx-large;
+}
+.weather-description {
+  text-align: left; /* Align description text */
+  margin-bottom: 20px; /* Space below the description */
+  padding-left: 10%; /* Use percentage for responsive padding */
+  padding-right: 10%; /* Use percentage for responsive padding */
+  color: #000;
 }
 
 /* Responsive Design */
 @media (max-width: 680px) {
-    .model_title {
-      font-size: 2rem; 
-    }
-
-    .model_description {
-      font-size: 1rem; 
-    }
-    
-    form {
-      padding: 10px; 
-      width: stretch; 
-      padding: 20px;
-      margin: 0 20px;
-      max-width: 600px; /* Optional: Sets a max width for larger screens */
-    }
-  
-    input[type="number"],
-    input[type="date"],
-    button {
-      width: stretch; 
-    }
+  .model_title {
+    font-size: 2rem;
   }
+
+  .model_description {
+    font-size: 1rem;
+  }
+
+  form {
+    padding: 10px;
+    width: stretch;
+    padding: 20px;
+    margin: 0 20px;
+    max-width: 600px; /* Optional: Sets a max width for larger screens */
+  }
+
+  input[type="number"],
+  input[type="date"],
+  button {
+    width: stretch;
+  }
+}

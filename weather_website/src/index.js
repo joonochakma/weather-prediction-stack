@@ -1,24 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import Home from './pages/home/Home';
-import { Heatwave, Rainfall } from './pages';
-import Weather from './pages/weather/Weather';
-import Temperature from './pages/temperature/Temperature';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import Home from "./pages/home/Home";
+import { Heatwave, Rainfall } from "./pages";
+import Weather from "./pages/weather/Weather";
+import Temperature from "./pages/temperature/Temperature";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NoPage from './NoPage';
-import Layout from './Layout';
-import FAQ from './pages/faq/FAQ';
-import About from './pages/about/About';
+import NoPage from "./NoPage";
+import Layout from "./Layout";
+import FAQ from "./pages/faq/FAQ";
+import About from "./pages/about/About";
 
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout/>}>
+        <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />
           <Route path="temperature" element={<Temperature />} />
@@ -28,7 +27,6 @@ root.render(
           <Route path="about" element={<About />} />
           <Route path="faq" element={<FAQ />} />
 
-          
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

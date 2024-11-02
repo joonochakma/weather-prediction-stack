@@ -1,7 +1,7 @@
 /* General Styles */
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f0f0;
   color: #333;
 }
@@ -14,7 +14,8 @@ body {
   padding: 20px;
 }
 
-h1, h2{
+h1,
+h2 {
   color: #fff;
   font-size: 2.5rem;
   margin-bottom: 20px;
@@ -39,7 +40,7 @@ h1, h2{
 }
 
 .background {
-  background-color:#0095fd ;
+  background-color: #0095fd;
   border-radius: 15px;
   padding: 20px;
   max-width: 500px;
@@ -47,7 +48,6 @@ h1, h2{
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
-
 
 .search-bar {
   margin-top: 20px;
@@ -85,11 +85,11 @@ button:hover {
   font-size: 1rem;
   font-weight: bolder;
   background-color: #d32f2f;
-  border: 1px solid white; 
-  border-radius: 8px; 
-  padding: 15px; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-  text-align: center; 
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .weather-info {
@@ -126,7 +126,8 @@ button:hover {
     flex-direction: column;
   }
 
-  select, button {
+  select,
+  button {
     width: 100%;
   }
 
@@ -148,7 +149,7 @@ button:hover {
 }
 
 button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4caf50; /* Green */
   color: white;
   font-weight: bold;
   border: none;

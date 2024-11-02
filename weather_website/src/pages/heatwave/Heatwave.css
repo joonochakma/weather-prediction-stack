@@ -1,178 +1,180 @@
 /* General Styles */
-.model_title {
-    color: #1976d2; 
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    font-weight: bold; 
-    text-align: center;
+.heatwave-title {
+  color: #1976d2;
+  text-align: center; /* Center the title */
+  margin-bottom: 20px;
 }
 
-.model_description {
-    font-size: 1.1rem;
-    color: #0077c2; 
-    text-align: center;
-    margin: 10px 0; 
-    padding: 0 20px; 
-    line-height: 1.5; 
-    margin-bottom: 20px;
+.heatwave-section-title {
+  color: #1976d2;
+  text-align: center; /* Center section titles */
+  margin: 20px 0; /* Spacing above and below section titles */
+  font-size: xx-large;
 }
-  
+.heatwave-description {
+  text-align: left; /* Align description text */
+  margin-bottom: 20px; /* Space below the description */
+  padding-left: 10%; /* Use percentage for responsive padding */
+  padding-right: 10%; /* Use percentage for responsive padding */
+  color: #000;
+}
+
 label {
-    color: #fff; 
-    font-size: 1rem;
-    font-weight: 500;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
 }
-  
+
 /* Container for the prediction form */
 form {
-    background-color: #0095fd; 
-    border-radius: 15px;
-    padding: 20px;
-    max-width: 600px; 
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; 
+  background-color: #0095fd;
+  border-radius: 15px;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
-  
+
 /* Input Styles */
 input[type="number"],
 input[type="date"] {
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    width: stretch; 
-    margin-top: 10px;
-    margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  width: stretch;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-  
+
 .submit-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #4CAF50; 
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px; 
-    width: 100%; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  width: 100%;
 }
-  
+
 .submit-button:hover {
-    background-color: #45a049; 
+  background-color: #45a049;
 }
 
 .button-container {
-    margin-top: 20px; 
-    display: flex;
-    justify-content: space-between; 
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .detail-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #0095fd;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px; 
-    width: 100%; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #0095fd;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .detail-button:hover {
-    background-color: #0077c2; 
+  background-color: #0077c2;
 }
 
 /* Error message styles */
 .error-message {
-    margin-top: 20px;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    background-color: #d32f2f; 
-    border: 1px solid white; 
-    border-radius: 8px; 
-    padding: 15px; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-    text-align: center; 
+  margin-top: 20px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #d32f2f;
+  border: 1px solid white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-  
+
 /* Prediction result styles */
 .result {
-    margin-top: 30px;
-    padding: 15px;
-    background-color: #e3f2fd;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s; 
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
 .result:hover {
-    transform: translateY(-5px); 
+  transform: translateY(-5px);
 }
-  
+
 .result h3 {
-    color: #1976d2; 
-    margin-bottom: 15px;
+  color: #1976d2;
+  margin-bottom: 15px;
 }
-  
+
 .result p {
-    margin: 5px 0; 
-    color: #2b2b2b;
+  margin: 5px 0;
+  color: #2b2b2b;
 }
 
 /* Modal styling */
 .ReactModal__Overlay {
-    background-color: rgba(0, 0, 0, 0.75); 
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    position: fixed; 
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .ReactModal__Content {
-    top: auto !important; /* Override top style */
-    left: auto !important; /* Override left style */
-    right: auto !important; /* Override right style */
-    bottom: auto !important; /* Override bottom style */
-    transform: none; 
-    position: relative;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    background-color: #ffffff; 
-    max-width: 500px; 
-    width: 90%;
+  top: auto !important; /* Override top style */
+  left: auto !important; /* Override left style */
+  right: auto !important; /* Override right style */
+  bottom: auto !important; /* Override bottom style */
+  transform: none;
+  position: relative;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  max-width: 500px;
+  width: 90%;
 }
-  
+
 /* Responsive Design */
 @media (max-width: 680px) {
-    .model_title {
-      font-size: 2rem; 
-    }
-
-    .model_description {
-      font-size: 1rem; 
-    }
-    
-    form {
-      padding: 10px; 
-      width: stretch; 
-      padding: 20px;
-      margin: 0 20px;
-      max-width: 600px; 
-    }
-  
-    input[type="number"],
-    input[type="date"],
-    button {
-      width: stretch; 
-    }
+  .model_title {
+    font-size: 2rem;
   }
+
+  .model_description {
+    font-size: 1rem;
+  }
+
+  form {
+    padding: 10px;
+    width: stretch;
+    padding: 20px;
+    margin: 0 20px;
+    max-width: 600px;
+  }
+
+  input[type="number"],
+  input[type="date"],
+  button {
+    width: stretch;
+  }
+}
