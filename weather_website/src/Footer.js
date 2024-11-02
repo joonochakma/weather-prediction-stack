@@ -23,9 +23,13 @@ function Footer() {
           <h3>Site Map</h3>
           <ul>
             <li><a href="/home">Home</a></li>
-            <li><a href="#models">Models</a></li>
-            <li><a href="#FAQ">FAQ</a></li>
-            <li><a href="#About Us">About Us</a></li>
+            <li><a href="temperature">Temperature</a></li>
+            <li><a href="about">About Us</a></li>
+            <li><a href="rainfall">Eainfall</a></li>
+            <li><a href="heatwave">Heatwave</a></li>
+            <li><a href="weather">Weather</a></li>
+            <li><a href="faq">FAQ</a></li>
+
           </ul>
         </div>
       </div>
