@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Rainfall.css';
+import './Rainfall.css'; // Import the external CSS file
 
 function Rainfall() {
   const [maxTemp, setMaxTemp] = useState('');
@@ -33,53 +33,79 @@ function Rainfall() {
   };
 
   return (
-    <div className="rainfall-form" style={{ textAlign: 'center', padding: '20px' }}>
-      <h2 className="rainfall-title">Will it Rain Tomorrow?</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Maximum Temperature (°C):
-            <input
-              type="number"
-              value={maxTemp}
-              onChange={(e) => setMaxTemp(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Minimum Temperature (°C):
-            <input
-              type="number"
-              value={minTemp}
-              onChange={(e) => setMinTemp(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Previous Day Rainfall (mm):
-            <input
-              type="number"
-              value={rainfall}
-              onChange={(e) => setRainfall(e.target.value)}
-              required
-            />
-          </label>
-        </div>
-        <button type="submit">Predict</button>
-      </form>
+    <div className="rainfall-form">
+      <h2 className="rainfall-title">Rainfall Prediction Model</h2>
+      
+      {/* Description Section */}
+      <section className="description-section">
+        <h2 className="section-title">Description</h2>
+        <p className="description-text">
+          Welcome to our Rainfall Prediction Model! Our cutting-edge tool utilizes advanced binary classification machine learning techniques to forecast the likelihood of rain based on the data you provide. Whether you're planning a picnic, organizing an outdoor event, or just want to stay dry, our model offers accurate predictions tailored to your specific location and input data.
+          <br /><br />
+          Simply enter the relevant details, and our system will analyze historical weather patterns and current conditions to determine the probability of rainfall. With user-friendly functionality and real-time updates, you can make informed decisions and stay ahead of the weather. Experience the power of data-driven forecasting and never get caught in the rain again!
+        </p>
+      </section>
+      
+      {/* Charts Section */}
+      <section className="charts-section">
+        <h2 className="section-title">Charts</h2>
+        <p className="charts-description">Use the form below to input your data:</p>
 
-      {prediction && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>Prediction:</h3>
-          <p>{prediction === "Yes" ? "Yes, it will rain." : "No, it will not rain."}</p>
+        {/* Will it Rain Tomorrow? Section */}
+        <h2 className="prediction-title">Will it Rain Tomorrow?</h2>
+      
+        <form onSubmit={handleSubmit} className="prediction-form">
+          <div className="form-group">
+            <label htmlFor="maxTemp">
+              Maximum Temperature (°C):
+              <input
+                type="number"
+                id="maxTemp"
+                value={maxTemp}
+                onChange={(e) => setMaxTemp(e.target.value)}
+                required
+                className="input-field"
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="minTemp">
+              Minimum Temperature (°C):
+              <input
+                type="number"
+                id="minTemp"
+                value={minTemp}
+                onChange={(e) => setMinTemp(e.target.value)}
+                required
+                className="input-field"
+              />
+            </label>
+          </div>
+          <div className="form-group">
+            <label htmlFor="rainfall">
+              Previous Day Rainfall (mm):
+              <input
+                type="number"
+                id="rainfall"
+                value={rainfall}
+                onChange={(e) => setRainfall(e.target.value)}
+                required
+                className="input-field"
+              />
+            </label>
+          </div>
+          <button type="submit" className="submit-button">Predict</button>
+        </form>
+      </section>
+
+      {/* Prediction Section */}
+      {prediction !== null && (
+        <section className="prediction-result">
+          <p className="prediction-text">{prediction === "Yes" ? "Yes, it will rain." : "No, it will not rain."}</p>
           {score !== null && (
-            <p>Confidence Score: {score}</p> 
+            <p className="confidence-score">Confidence Score: {score}</p> 
           )}
-        </div>
+        </section>
       )}
     </div>
   );

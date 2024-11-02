@@ -1,3 +1,86 @@
 .rainfall-title {
     color: #1976d2;
+    text-align: center; /* Center the title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.section-title {
+    color: #1976d2;
+    text-align: center; /* Center section titles */
+    margin: 20px 0; /* Spacing above and below section titles */
+}
+
+.description-text {
+    text-align: left; /* Align description text */
+    margin-bottom: 20px; /* Space below the description */
+    padding-left: 10%; /* Use percentage for responsive padding */
+    padding-right: 10%; /* Use percentage for responsive padding */
+    color: #000;
+}
+
+.charts-description {
+    text-align: left; /* Align the charts description */
+    margin-bottom: 20px; /* Space below the description */
+    padding-left: 10%; /* Use percentage for responsive padding */
+    padding-right: 10%; /* Use percentage for responsive padding */
+    color: #000;
+}
+
+.prediction-title {
+    color: #1976d2;
+    text-align: center; /* Center prediction title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.form-group {
+    margin-bottom: 15px; /* Space between form fields */
+    text-align: center; /* Center-align form labels and inputs */
+}
+
+.input-field {
+    padding: 10px; /* Padding inside input fields */
+    margin-top: 5px; /* Space above input fields */
+    width: 80%; /* Make input fields take up most of the width */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners for input fields */
+}
+
+.submit-button {
+    background-color: #0fa225; /* Primary button color */
+    color: white; /* Text color */
+    padding: 10px 20px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Increase button text size */
+}
+
+.submit-button:hover {
+    background-color: #1565c0; /* Darken button on hover */
+}
+
+.prediction-result {
+    text-align: center; /* Center prediction results */
+    margin-top: 20px; /* Space above prediction results */
+}
+
+.prediction-text {
+    font-size: 18px; /* Slightly larger font for the prediction text */
+}
+
+.confidence-score {
+    font-size: 16px; /* Font size for the confidence score */
+    color: #555; /* Grey color for score */
+}
+
+/* Optional: Add media queries for finer control */
+@media (max-width: 768px) {
+    .description-text, .charts-description {
+        padding-left: 5%; /* Adjust padding for smaller screens */
+        padding-right: 5%; /* Adjust padding for smaller screens */
+    }
+
+    .input-field {
+        width: 90%; /* Allow input fields to take up more width on smaller screens */
+    }
 }
