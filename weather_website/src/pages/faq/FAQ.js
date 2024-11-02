@@ -34,7 +34,7 @@ const FAQ = () => {
 
   return (
     <Box id="faq-section" className="faq-container">
-      <h4 className="faq-title">FAQ</h4>
+      <h2 className="faq-title">FAQ</h2>
       <p className="faq-description">Here are some frequently asked questions:</p>
       {faqs.map((faq, index) => ( // Loop through the FAQ array
         <Accordion key={index} className="accordion">

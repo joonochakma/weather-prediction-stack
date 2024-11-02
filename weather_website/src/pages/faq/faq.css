@@ -7,13 +7,14 @@
 .faq-title {
     color: #1976d2;
     font-weight: bold;
-    font-size: 2rem; 
+    text-align: center;
 }
   
 .faq-description {
     color: #1976d2;
-    font-size: 1.2rem; 
+    font-size: 1.4rem; 
     margin-bottom: 20px;
+    text-align: center;
 }
   
 .faq-question {

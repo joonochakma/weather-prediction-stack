@@ -19,14 +19,6 @@
     color: #000;
 }
 
-.charts-description {
-    text-align: left; /* Align the charts description */
-    margin-bottom: 20px; /* Space below the description */
-    padding-left: 10%; /* Use percentage for responsive padding */
-    padding-right: 10%; /* Use percentage for responsive padding */
-    color: #000;
-}
-
 .form-group {
     margin-bottom: 15px; /* Space between form fields */
     text-align: center; /* Center-align form labels and inputs */

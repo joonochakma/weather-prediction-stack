@@ -23,7 +23,7 @@ function Temperature() {
 
   // Input validation 
   const ValidateInputs = () => {
-    const errors = {}; // Initialize as an object
+    const errors = {};
 
     if (temperatureMax === '' || isNaN(temperatureMax) || temperatureMax < -50 || temperatureMax > 60) {
         errors.temperatureMax = 'Maximum temperature must be a number between -50 and 60.';
@@ -54,15 +54,14 @@ function Temperature() {
 
     setErrors(errors);
     return Object.keys(errors).length === 0;
-};
-
+  };
 
   // Handle form submission and fetch prediction
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!ValidateInputs()) {
-      return; // Prevent submission if inputs are invalid
+      return;
     }
 
     try {
@@ -75,12 +74,9 @@ function Temperature() {
         relative_humidity_min: parseFloat(humidityMin),
       });
 
-      // Log the response to check its structure
       console.log("Response from API:", response.data);
-
-      // Update prediction directly from the response
       setPredictedTemperature(response.data.predicted_temperature);
-      setModalIsOpen(true); // Open the modal on success
+      setModalIsOpen(true);
     } catch (error) {
       console.error("Error fetching prediction:", error);
       setPredictedTemperature("Error");
@@ -95,15 +91,15 @@ function Temperature() {
     fetchData();
 
     const handleResize = () => {
-      setPlotWidth(window.innerWidth * 0.9); // Adjust plot width based on window size
+      setPlotWidth(window.innerWidth * 0.9);
     };
-    
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   if (!data) {
-    return <div>Loading...</div>; // Handle loading state
+    return <div>Loading...</div>;
   }
 
   if (!data.X_train || !data.y_train || !data.y_pred) {
@@ -139,59 +135,26 @@ function Temperature() {
   ];
 
   return (
-    <div style={{ maxWidth: '100%', padding: '1em', boxSizing: 'border-box' }}>
-      <h2 className="model_title">Temperature Prediction</h2>
-      <p className="model_description">Predict the temperature based on the provided data.</p>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Maximum Temperature (°C): </label>
-          <input type="number" value={temperatureMax} onChange={(e) => setTemperatureMax(e.target.value)} required />
-          {errors.temperatureMax && <p className='error-message'>{errors.temperatureMax}</p>}
-        </div>
-        <div>
-          <label>Minimum Temperature (°C): </label>
-          <input type="number" value={temperatureMin} onChange={(e) => setTemperatureMin(e.target.value)} required />
-          {errors.temperatureMin && <p className='error-message'>{errors.temperatureMin}</p>}
-        </div>
-        <div>
-          <label>Rain Sum (mm): </label>
-          <input type="number" value={rainSum} onChange={(e) => setRainSum(e.target.value)} required />
-          {errors.rainSum && <p className='error-message'>{errors.rainSum}</p>}
-        </div>
-        <div>
-          <label>Mean Relative Humidity (%): </label>
-          <input type="number" value={humidityMean} onChange={(e) => setHumidityMean(e.target.value)} required />
-          {errors.humidityMean && <p className='error-message'>{errors.humidityMean}</p>}
-        </div>
-        <div>
-          <label>Max Relative Humidity (%): </label>
-          <input type="number" value={humidityMax} onChange={(e) => setHumidityMax(e.target.value)} required />
-          {errors.humidityMax && <p className='error-message'>{errors.humidityMax}</p>}
-        </div>
-        <div>
-          <label>Min Relative Humidity (%): </label>
-          <input type="number" value={humidityMin} onChange={(e) => setHumidityMin(e.target.value)} required />
-          {errors.humidityMin && <p className='error-message'>{errors.humidityMin}</p>}
-        </div>
-        <button type="submit" className='submit-button'>Predict</button>
-      </form>
+    <div className="temperature-form">
+      <h2 className="temperature-title">Temperature Prediction Model</h2>
+      
+      {/* Description Section */}
+      <section className="description-section">
+        <h2 className="temperature-section-title">Description</h2>
+        <p className="temperature-description">
+        Welcome to our Temperature Prediction Model! Our platform uses advanced machine learning algorithms, 
+        specifically a linear regression model, to forecast temperature trends accurately. Designed for both 
+        researchers and weather enthusiasts, our tool leverages historical data to predict future temperatures. 
+        Whether you’re tracking climate patterns or planning for weather-dependent projects, our user-friendly 
+        interface and precise predictions can provide insights to help you stay prepared.
+        </p>
+      </section>
 
-      {/* Modal for displaying prediction */}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Prediction Result"
-        className="result"
-      >
-        <div className="result">
-        <h2>Prediction Result</h2>
-        <p>Predicted Temperature for Next Day: <strong>{Math.round(predictedTemperature)}°C</strong></p>
-        <button className="close-button" onClick={() => setModalIsOpen(false)}>Close</button>
-        </div>
-      </Modal>
-
-      {/* Scatter Plot Accordion */}
-      <div 
+      {/* Charts Section */}
+      <section className="charts-section">
+        <h2 className="temperature-section-title">Charts</h2>
+       {/* Scatter Plot Accordion */}
+       <div 
         onClick={() => setIsScatterOpen(!isScatterOpen)}
         style={{
           display: 'flex',
@@ -275,10 +238,63 @@ function Temperature() {
           />
         </div>
       )}
+      </section>
+
+      {/* Prediction Model Section */}
+      <section className="prediction-model">
+        <h2 className="temperature-section-title">Prediction Model</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Maximum Temperature (°C): </label>
+            <input type="number" value={temperatureMax} onChange={(e) => setTemperatureMax(e.target.value)} required />
+            {errors.temperatureMax && <p className='error-message'>{errors.temperatureMax}</p>}
+          </div>
+          <div>
+            <label>Minimum Temperature (°C): </label>
+            <input type="number" value={temperatureMin} onChange={(e) => setTemperatureMin(e.target.value)} required />
+            {errors.temperatureMin && <p className='error-message'>{errors.temperatureMin}</p>}
+          </div>
+          <div>
+            <label>Rain Sum (mm): </label>
+            <input type="number" value={rainSum} onChange={(e) => setRainSum(e.target.value)} required />
+            {errors.rainSum && <p className='error-message'>{errors.rainSum}</p>}
+          </div>
+          <div>
+            <label>Mean Relative Humidity (%): </label>
+            <input type="number" value={humidityMean} onChange={(e) => setHumidityMean(e.target.value)} required />
+            {errors.humidityMean && <p className='error-message'>{errors.humidityMean}</p>}
+          </div>
+          <div>
+            <label>Max Relative Humidity (%): </label>
+            <input type="number" value={humidityMax} onChange={(e) => setHumidityMax(e.target.value)} required />
+            {errors.humidityMax && <p className='error-message'>{errors.humidityMax}</p>}
+          </div>
+          <div>
+            <label>Min Relative Humidity (%): </label>
+            <input type="number" value={humidityMin} onChange={(e) => setHumidityMin(e.target.value)} required />
+            {errors.humidityMin && <p className='error-message'>{errors.humidityMin}</p>}
+          </div>
+          <button type="submit" className='submit-button'>Predict</button>
+        </form>
+      </section>
+
+      {/* Modal for displaying prediction */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        contentLabel="Prediction Result"
+        className="result"
+      >
+        <div className="result">
+          <h2>Prediction Result</h2>
+          <p>Predicted Temperature for Next Day: <strong>{Math.round(predictedTemperature)}°C</strong></p>
+          <button className="close-button" onClick={() => setModalIsOpen(false)}>Close</button>
+        </div>
+      </Modal>
+
+      
     </div>
   );
 }
-
-Modal.setAppElement('#root'); // Set the root element for accessibility
 
 export default Temperature;
