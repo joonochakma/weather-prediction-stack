@@ -28,10 +28,16 @@ const Header = () => {
   const scrollToFAQ = () => {
     const element = document.getElementById("faq-section"); // Ensure this matches your FAQ section ID
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      toggleDrawer(false)(); // Close the drawer after scrolling
+        // Close the drawer first
+        setDrawerOpen(false);
+        
+        // Use a slight delay to ensure the drawer closes before scrolling
+        setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth" });
+        }, 0); // Using 0 milliseconds as a delay to push it to the end of the event loop
     }
-  };
+};
+
 
   const renderDrawerMenu = () => (
     <List className="drawer-list">
