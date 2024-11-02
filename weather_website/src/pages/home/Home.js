@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "./Home.css";
+import australianCities from "./australian_cities.json"; // Import the list of cities and towns
 
 function Home() {
   const [city, setCity] = useState("");
+  const [filteredCities, setFilteredCities] = useState([]);
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [error, setError] = useState("");
   const [forecastIndex, setForecastIndex] = useState(0);
-  const API_KEY = "b46fb33a5a464949a51160836242510"; // replace whenever key is expired
+  const API_KEY = "b46fb33a5a464949a51160836242510"; // Replace with your actual API key
 
   const weatherIcons = {
     Sunny: "sunny.svg",
@@ -15,31 +17,29 @@ function Home() {
     Rainy: "rainy.svg",
   };
 
-  const cities = [
-    { name: "Sydney", value: "Sydney" },
-    { name: "Melbourne", value: "Melbourne" },
-    { name: "Brisbane", value: "Brisbane" },
-    { name: "Perth", value: "Perth" },
-    { name: "Adelaide", value: "Adelaide" },
-    { name: "Hobart", value: "Hobart" },
-    { name: "Canberra", value: "Canberra" },
-    { name: "Darwin", value: "Darwin" },
-  ];
+  const handleCityInput = (e) => {
+    const input = e.target.value;
+    setCity(input);
 
-  const handleCityChange = (e) => {
-    setCity(e.target.value);
+    // Filter cities based on input
+    const filtered = australianCities.filter((cityName) =>
+      cityName.toLowerCase().startsWith(input.toLowerCase())
+    );
+    setFilteredCities(filtered);
+  };
+
+  const handleCitySelect = (selectedCity) => {
+    setCity(selectedCity);
+    setFilteredCities([]); // Hide suggestions after selecting
   };
 
   const handleSearch = async () => {
     if (city) {
       try {
-        console.log(`Searching for weather in: ${city}`);
         const response = await fetch(
           `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`
         );
         const data = await response.json();
-
-        console.log("API Response:", data);
 
         if (data.error) {
           setError("City not found. Please try again.");
@@ -48,7 +48,6 @@ function Home() {
           return;
         }
 
-        // Set current weather data
         setWeatherData({
           temp_min: data.current.temp_c,
           temp_max: data.current.temp_c,
@@ -101,10 +100,9 @@ function Home() {
     return null;
   };
 
-  // Function to format the current date as "Today, 23 Oct"
   const formatDate = (date = new Date()) => {
     const day = date.getDate();
-    const month = date.toLocaleString("default", { month: "short" }); // e.g., "Oct"
+    const month = date.toLocaleString("default", { month: "short" });
     return `${day} ${month}`;
   };
 
@@ -125,22 +123,29 @@ function Home() {
       <header className="App-header">
         <div className="background">
           <h1>Australian Cities Weather App</h1>
-          <div className="search-bar">
-            <select value={city} onChange={handleCityChange}>
-              <option value="">Select a city</option>
-              {cities.map((city) => (
-                <option key={city.value} value={city.value}>
-                  {city.name}
-                </option>
-              ))}
-            </select>
+          <div className="search-bar-container">
+            <input
+              type="text"
+              value={city}
+              onChange={handleCityInput}
+              placeholder="Search for an Australian city or town"
+            />
+            {filteredCities.length > 0 && (
+              <ul className="dropdown">
+                {filteredCities.slice(0, 5).map((cityName) => (
+                  <li key={cityName} onClick={() => handleCitySelect(cityName)}>
+                    {cityName}
+                  </li>
+                ))}
+              </ul>
+            )}
             <button onClick={handleSearch}>Search</button>
             <button onClick={fetchForecast}>Get 3-Day Forecast</button>
           </div>
           {error && <p className="error-message">{error}</p>}
           {!forecastData && weatherData && (
             <div className="weather-info">
-              <p>{formatDate(new Date())}</p> {/* Display today's date */}
+              <p>{formatDate(new Date())}</p>
               <p>Temperature: {weatherData.temp_min}°C</p>
               <p className="icon">
                 {getWeatherIcon(weatherData.weather_state) && (
@@ -149,7 +154,7 @@ function Home() {
                     alt={weatherData.weather_state}
                     className="weather-icon"
                   />
-                )}{" "}
+                )}
                 {weatherData.weather_state}
               </p>
             </div>
@@ -162,16 +167,14 @@ function Home() {
                   Previous
                 </button>
                 <div className="forecast-day">
-                  <p>
-                    {formatDate(new Date(forecastData[forecastIndex].date))}
-                  </p>
+                  <p className="text-white">{formatDate(new Date(forecastData[forecastIndex].date))}</p>
                   <p className="text-white">
                     Min: {forecastData[forecastIndex].day.mintemp_c}°C
                   </p>
                   <p className="text-white">
                     Max: {forecastData[forecastIndex].day.maxtemp_c}°C
                   </p>
-                  <p className="icon">
+                  <p className="icon" >
                     <img
                       src={getWeatherIcon(
                         forecastData[forecastIndex].day.condition.text

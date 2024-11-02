@@ -49,42 +49,81 @@ h2 {
   text-align: center;
 }
 
-.search-bar {
+/* Search Bar with Dropdown */
+.search-bar-container {
+  position: relative;
   margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  align-items: center;
+
+  width: 95%;
 }
 
-select {
+.search-bar-container input {
+  width: 100%;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 1rem;
-  width: 70%;
 }
 
+/* Dropdown */
+.dropdown {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 0 0;
+  position: absolute;
+  top: 100%; /* Positioned directly below the input */
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.dropdown li {
+  padding: 8px 10px;
+  cursor: pointer;
+  white-space: nowrap; /* Prevents text from wrapping */
+}
+
+.dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Button styles */
 button {
   padding: 10px 20px;
   border: none;
   border-radius: 10px;
-  background-color: #0069d9;
+  background-color: #28a745; /* Green color */
   color: white;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #218838; /* Darker green for hover */
 }
 
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Error Message */
 .error-message {
   margin-top: 20px;
   color: white;
   font-size: 1rem;
-  font-weight: bolder;
-  background-color: #d32f2f;
+  font-weight: bold;
+  background-color: #d32f2f; /* Red color for error messages */
   border: 1px solid white;
   border-radius: 8px;
   padding: 15px;
@@ -92,6 +131,7 @@ button:hover {
   text-align: center;
 }
 
+/* Weather Info */
 .weather-info {
   margin-top: 30px;
   font-size: 1.2rem;
@@ -114,6 +154,19 @@ button:hover {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  color: white;
+}
+
+/* Carousel for Forecast */
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast-day {
+  margin: 0 20px;
+  text-align: center;
 }
 
 /* Responsive Design */
@@ -122,11 +175,10 @@ button:hover {
     font-size: 2rem;
   }
 
-  .search-bar {
-    flex-direction: column;
+  .search-bar-container {
+    width: 100%;
   }
 
-  select,
   button {
     width: 100%;
   }
@@ -135,32 +187,4 @@ button:hover {
     width: 40px;
     height: 40px;
   }
-}
-
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.forecast-day {
-  margin: 0 20px; /* Adjust spacing between items */
-  text-align: center;
-}
-
-button {
-  background-color: #4caf50; /* Green */
-  color: white;
-  font-weight: bold;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-  margin: 0 5px;
-}
-
-button:disabled {
-  background-color: #ccc; /* Gray */
-  cursor: not-allowed;
 }
