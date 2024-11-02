@@ -1,5 +1,12 @@
 import React from 'react';
-import './Footer.css'; // Assuming you have a CSS file for styling
+import './Footer.css'; 
+
+const scrollToFAQ = () => {
+  const element = document.getElementById('faq-section'); 
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 function Footer() {
   return (
@@ -23,13 +30,12 @@ function Footer() {
           <h3>Site Map</h3>
           <ul>
             <li><a href="/home">Home</a></li>
+            <li><a href="rainfall">Rainfall</a></li>
             <li><a href="temperature">Temperature</a></li>
-            <li><a href="about">About Us</a></li>
-            <li><a href="rainfall">Eainfall</a></li>
+            <li><a href="weather">Weather Conditions</a></li>
             <li><a href="heatwave">Heatwave</a></li>
-            <li><a href="weather">Weather</a></li>
-            <li><a href="faq">FAQ</a></li>
-
+            <li><a href="#faq-section" onClick={scrollToFAQ}>FAQ</a></li>
+            <li><a href="about">About Us</a></li>
           </ul>
         </div>
       </div>
@@ -46,9 +52,9 @@ function Footer() {
         </div>
         <div className="footer-center">
           <ul className="social-media-links">
-            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/facebook.png"></img></a></li>
-            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/x.png"></img></a></li>
-            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/instagram.png"></img></a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/facebook.png" alt="Facebook"></img></a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/x.png" alt="Twitter"></img></a></li>
+            <li><a href="" target="_blank" rel="noopener noreferrer"><img src="/instagram.png" alt="Instagram"></img></a></li>
           </ul>
         </div>
         <div className="footer-right">
