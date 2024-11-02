@@ -16,7 +16,7 @@ const Heatwave = () => {
         event.preventDefault(); // Prevent default form submission
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/predict_heatwave?date=' + date, {
+            const response = await fetch('http://127.0.0.1:8000/heatwave_prediction?date=' + date, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const Heatwave = () => {
                         />
                     </label>
                 </div>
-                <button className="submit-button" type="submit">Predict Heatwave</button>
+                <button className="submit-button" type="submit">Predict</button>
             </form>
 
             {error && <p className="error-message">{error}</p>}
@@ -108,7 +108,6 @@ const Heatwave = () => {
                         <p>{prediction.predicted_cluster === 1 ? "Heatwave is occurring!" : "No heatwave."}</p>
                         <div className="button-container">
                             <button className="detail-button" onClick={openDetailsModal}>More Details</button>
-                            <button className="reset-button" onClick={() => setPrediction(null)}>Reset</button>
                         </div>
                     </div>
                 )}

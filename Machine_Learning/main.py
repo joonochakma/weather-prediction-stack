@@ -1,6 +1,7 @@
 from datetime import datetime
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+import numpy as np
 from pydantic import BaseModel
 import pandas as pd
 import joblib
@@ -19,6 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --------------- Rainfall prediction integration ----------------
 # Load the pre-trained rainfall prediction model
 model = joblib.load('model/rainfall_model.joblib')
 
@@ -78,8 +80,8 @@ def read_root(response: Response) -> Dict[str, Any]:
         "y_pred": y_pred.tolist()  # Convert Series to list
     }
 
-@app.post("/predict_rain")
-async def predict_rain(request: RainPredictionRequest) -> Dict[str, Any]:
+@app.post("/rain_prediction")
+async def create_rain_prediction(request: RainPredictionRequest) -> Dict[str, Any]:
     # Prepare features for prediction
     features = prepare_rain_features(request.max_temp, request.min_temp, request.rainfall)
 
@@ -104,7 +106,44 @@ async def predict_rain(request: RainPredictionRequest) -> Dict[str, Any]:
             "will_rain": result,
             "score": probability  # This will be 'N/A' if no score is available
         }
-    
+
+# --------------- Temperature prediction integration ----------------
+temperature_model = joblib.load('model/temperature_model.joblib')
+scaler = joblib.load('model/temperature_scaler.joblib')
+
+class TemperaturePredictionRequest(BaseModel):
+    temperature_max: float
+    temperature_min: float
+    rain_sum: float
+    relative_humidity_mean: float
+    relative_humidity_max: float
+    relative_humidity_min: float
+    month: int
+    day: int
+    hour: int
+
+
+@app.post("/temperature_prediction")
+async def create_temperature_prediction(request: TemperaturePredictionRequest):
+    try:
+        # Prepare the feature vector
+        features = np.array([[request.temperature_max, request.temperature_min, request.rain_sum,
+                              request.relative_humidity_mean, request.relative_humidity_max,
+                              request.relative_humidity_min, request.month, request.day, request.hour]])
+        
+        # Scale the features
+        features_scaled = scaler.transform(features)
+        
+        # Predict the temperature
+        prediction = model.predict(features_scaled)
+        return {"predicted_temperature": prediction[0]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# --------------- Weather condition prediction integration ----------------
+
+
 # --------------- Heatwave prediction integration ----------------
 # Load the heatwave prediction model
 heatwave_model = joblib.load('model/heatwave_model.joblib')
@@ -114,8 +153,8 @@ class HeatwavePredictionRequest(BaseModel):
     min_temp: float
     max_temp: float
 
-@app.post("/predict_heatwave")
-async def predict_heatwave(request: HeatwavePredictionRequest, date: str = Query(None)) -> Dict[str, Any]:
+@app.post("/heatwave_prediction")
+async def create_heatwave_prediction(request: HeatwavePredictionRequest, date: str = Query(None)) -> Dict[str, Any]:
     """Predict heatwave conditions based on temperature inputs."""
     try:
         # Prepare features for heatwave prediction

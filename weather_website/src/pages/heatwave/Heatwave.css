@@ -86,23 +86,6 @@ input[type="date"] {
     background-color: #0077c2; 
 }
 
-.reset-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    background-color: #d32f2f; 
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px; 
-    width: 100%; 
-}
-
-.reset-button:hover {
-    background-color: #9a0007; 
-}
-
 /* Error message styles */
 .error-message {
     margin-top: 20px;
