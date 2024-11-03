@@ -172,7 +172,7 @@ const [chartData, setChartData] = useState([]); // State for chart data
   return (
     <div className="weather-form">
       <h2 className="weather-title">Weather Prediction Model</h2>
-
+      <hr />
       {/* Description Section */}
       <section className="description-section">
         <h2 className="weather-section-title">Description</h2>
