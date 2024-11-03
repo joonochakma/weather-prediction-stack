@@ -54,12 +54,11 @@ h2 {
   position: relative;
   margin-top: 20px;
   align-items: center;
-
   width: 95%;
 }
 
 .search-bar-container input {
-  width: 100%;
+  width: stretch;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #ddd;
@@ -172,7 +171,7 @@ button:disabled {
 /* Responsive Design */
 @media (max-width: 768px) {
   h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .search-bar-container {
@@ -186,5 +185,9 @@ button:disabled {
   .weather-icon {
     width: 40px;
     height: 40px;
+  }
+
+  .forecast-info h2 {
+    font-size: 1.4rem;
   }
 }

@@ -4,6 +4,8 @@ import Plot from "react-plotly.js";
 import "./Heatwave.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+Modal.setAppElement("#root"); // Set the root element for accessibility
+
 const Heatwave = () => {
   const [minTemp, setMinTemp] = useState("");
   const [maxTemp, setMaxTemp] = useState("");
@@ -100,11 +102,11 @@ const Heatwave = () => {
       <section className="description-section">
         <h2 className="heatwave-section-title">Description</h2>
         <p className="heatwave-description">
-          Our Heatwave Prediction Model is designed to help communities,
+          Our <strong>Heatwave Prediction Model</strong> is designed to help communities,
           industries, and individuals prepare for extreme weather events.
-          Leveraging advanced machine learning techniques, this model uses the
-          K-Means clustering algorithm to accurately forecast heatwave
-          occurrences. By analyzing large datasets of historical weather
+          Leveraging <em>advanced machine learning techniques</em>, this model uses the
+          <strong> K-Means clustering algorithm</strong> to accurately forecast 
+          <strong> heatwave occurrences</strong>. By analyzing large datasets of historical weather
           patterns, temperature trends, and geographical factors, our model
           identifies key indicators of impending heatwaves.
         </p>
@@ -197,6 +199,8 @@ const Heatwave = () => {
           </div>
         )}
       </section>
+
+      {/* Prediction Model Section */}
       <section className="prediction-model">
         <h2 className="temperature-section-title">Prediction Model</h2>
         <form onSubmit={handleSubmit}>
@@ -246,7 +250,7 @@ const Heatwave = () => {
           contentLabel="Prediction Result"
         >
           {prediction && (
-            <div className="result">
+            <div className="heatwave-result">
               <h3>Prediction Result</h3>
               <p>Date: {prediction.date}</p>
               <p>Minimum Temperature: {prediction.minimum_temperature} °C</p>
@@ -289,7 +293,5 @@ const Heatwave = () => {
     </div>
   );
 };
-
-Modal.setAppElement("#root"); // Set the root element for accessibility
 
 export default Heatwave; // Ensure this line is present

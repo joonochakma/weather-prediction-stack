@@ -188,14 +188,14 @@ function Temperature() {
       <section className="description-section">
         <h2 className="temperature-section-title">Description</h2>
         <p className="temperature-description">
-          Welcome to our Temperature Prediction Model! Our platform uses
-          advanced machine learning algorithms, specifically a linear regression
-          model, to forecast temperature trends accurately. Designed for both
-          researchers and weather enthusiasts, our tool leverages historical
-          data to predict future temperatures. Whether you’re tracking climate
-          patterns or planning for weather-dependent projects, our user-friendly
-          interface and precise predictions can provide insights to help you
-          stay prepared.
+          Welcome to our <strong>Temperature Prediction Model!</strong> Our platform uses
+          advanced machine learning algorithms, specifically <em>linear regression model</em>, 
+          to forecast temperature trends accurately. Designed for both
+          <strong> researchers</strong> and <strong>weather enthusiasts</strong>, 
+          our tool leverages historical data to predict future temperatures. 
+          Whether you’re tracking climate patterns or planning for 
+          weather-dependent projects, our user-friendly interface and 
+          precise predictions can provide insights to help you stay prepared.
         </p>
       </section>
 

@@ -74,18 +74,18 @@ function Rainfall() {
       <section className="description-section">
         <h2 className="rainfall-section-title">Description</h2>
         <p className="rainfall-description-text">
-          Welcome to our Rainfall Prediction Model! Our cutting-edge tool
-          utilizes advanced binary classification machine learning techniques to
-          forecast the likelihood of rain based on the data you provide. Whether
+          Welcome to our <strong>Rainfall Prediction Model!</strong> Our cutting-edge tool
+          utilizes <em>advanced binary classification</em> machine learning techniques to
+          forecast the <strong>likelihood of rain</strong> based on the data you provide. Whether
           you're planning a picnic, organizing an outdoor event, or just want to
           stay dry, our model offers accurate predictions tailored to your
           specific location and input data.
           <br />
           <br />
           Simply enter the relevant details, and our system will analyze
-          historical weather patterns and current conditions to determine the
-          probability of rainfall. With user-friendly functionality and
-          real-time updates, you can make informed decisions and stay ahead of
+          historical weather patterns and current conditions to determine the 
+          <strong> probability of rainfall</strong>. With user-friendly functionality and
+          real-time updates, you can make <em>informed decisions</em> and stay ahead of
           the weather. Experience the power of data-driven forecasting and never
           get caught in the rain again!
         </p>

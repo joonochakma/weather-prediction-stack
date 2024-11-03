@@ -14,9 +14,24 @@
 .rainfall-description-text {
   text-align: left; /* Align description text */
   margin-bottom: 20px; /* Space below the description */
-  padding-left: 10%; /* Use percentage for responsive padding */
-  padding-right: 10%; /* Use percentage for responsive padding */
+  padding: 3%; 
   color: #000;
+  background-color: #f0f8ff;
+  border-left: 4px solid #1e90ff;
+  border-radius: 8px;
+  line-height: 1.6;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for introductory and highlighted phrases */
+.rainfall-description-text strong {
+  color: #1e90ff;
+  font-weight: bold;
+}
+
+.rainfall-description-text em {
+  color: #1e90ff;
+  font-style: italic;
 }
 
 .form-group {
@@ -47,7 +62,6 @@
 }
 
 .prediction-result {
-  text-align: center; /* Center prediction results */
   margin-top: 20px; /* Space above prediction results */
   color: #1976d2;
 }
@@ -61,7 +75,7 @@
   color: #555; /* Grey color for score */
 }
 
-/* Optional: Add media queries for finer control */
+/* Responsive styling */
 @media (max-width: 768px) {
   .description-text,
   .charts-description {
@@ -71,5 +85,22 @@
 
   .input-field {
     width: 90%; /* Allow input fields to take up more width on smaller screens */
+  }
+
+  .rainfall-title {
+    font-size: 2rem;
+  }
+
+  .rainfall-section-title {
+    font-size: 1.5rem; 
+  }
+
+  .rainfall-description-text {
+    font-size: 1rem; 
+    padding: 10%;
+  }
+
+  .prediction-result {
+    font-size: 1.5rem; 
   }
 }

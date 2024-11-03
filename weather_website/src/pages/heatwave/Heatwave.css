@@ -11,12 +11,28 @@
   margin: 20px 0; /* Spacing above and below section titles */
   font-size: xx-large;
 }
+
 .heatwave-description {
   text-align: left; /* Align description text */
   margin-bottom: 20px; /* Space below the description */
-  padding-left: 10%; /* Use percentage for responsive padding */
-  padding-right: 10%; /* Use percentage for responsive padding */
-  color: #000;
+  color: #000;  
+  padding: 3%; 
+  background-color: #f0f8ff;
+  border-left: 4px solid #1e90ff;
+  border-radius: 8px;
+  line-height: 1.6;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for introductory and highlighted phrases */
+.heatwave-description strong {
+  color: #1e90ff;
+  font-weight: bold;
+}
+
+.heatwave-description em {
+  color: #1e90ff;
+  font-style: italic;
 }
 
 label {
@@ -103,7 +119,7 @@ input[type="date"] {
 }
 
 /* Prediction result styles */
-.result {
+.heatwave-result {
   margin-top: 30px;
   padding: 15px;
   background-color: #e3f2fd;
@@ -112,16 +128,16 @@ input[type="date"] {
   transition: transform 0.2s;
 }
 
-.result:hover {
+.heatwave-result:hover {
   transform: translateY(-5px);
 }
 
-.result h3 {
+.heatwave-result h3 {
   color: #1976d2;
   margin-bottom: 15px;
 }
 
-.result p {
+.heatwave-result p {
   margin: 5px 0;
   color: #2b2b2b;
 }
@@ -176,5 +192,26 @@ input[type="date"] {
   input[type="date"],
   button {
     width: stretch;
+  }
+
+  .heatwave-result h3 {
+    font-size: 1.3em;
+  }
+
+  .heatwave-result p {
+    font-size: 1rem;
+  }
+
+  .heatwave-title {
+    font-size: 2rem;
+  }
+
+  .heatwave-section-title {
+    font-size: 1.5rem; 
+  }
+
+  .heatwave-description {
+    font-size: 1rem; 
+    padding: 5%;
   }
 }

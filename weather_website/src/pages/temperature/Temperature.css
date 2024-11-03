@@ -11,12 +11,28 @@
   margin: 20px 0; /* Spacing above and below section titles */
   font-size: xx-large;
 }
+
 .temperature-description {
   text-align: left; /* Align description text */
   margin-bottom: 20px; /* Space below the description */
-  padding-left: 10%; /* Use percentage for responsive padding */
-  padding-right: 10%; /* Use percentage for responsive padding */
+  padding: 3%; 
   color: #000;
+  background-color: #f0f8ff;
+  border-left: 4px solid #1e90ff;
+  border-radius: 8px;
+  line-height: 1.6;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for introductory and highlighted phrases */
+.temperature-description strong {
+  color: #1e90ff;
+  font-weight: bold;
+}
+
+.temperature-description em {
+  color: #1e90ff;
+  font-style: italic;
 }
 
 label {
@@ -168,5 +184,30 @@ input[type="date"] {
   input[type="date"],
   button {
     width: stretch;
+  }
+
+  .temperature-title {
+    font-size: 2rem;
+  }
+
+  .temperature-section-title {
+    font-size: 1.5rem; 
+  }
+
+  .temperature-description {
+    font-size: 1rem; 
+    padding: 5%;
+  }
+
+  .prediction-result {
+    font-size: 1.5rem; 
+  }
+
+  .result h2 {
+    font-size: 1.3em;
+  }
+
+  .result p {
+    font-size: 1rem;
   }
 }
