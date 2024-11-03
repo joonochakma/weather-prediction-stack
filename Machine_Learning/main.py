@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import numpy as np
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 import pandas as pd
 import joblib
 from typing import Dict, Any, Optional , List
@@ -14,6 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 import numpy as np
+import logging
 
 
 app = FastAPI()
@@ -35,9 +36,37 @@ scaler = StandardScaler()
 
 # Define a Pydantic model for the prediction request
 class RainPredictionRequest(BaseModel):
-    max_temp: float
-    min_temp: float
-    rainfall: float
+    max_temp: float = Field(..., gt=-50, lt=60, description="Maximum temperature between -50 and 60°C")
+    min_temp: float = Field(..., gt=-50, lt=60, description="Minimum temperature between -50 and 60°C")
+    rainfall: float = Field(..., ge=0, description="Rainfall must be non-negative")
+
+    # Validate minimum and maximum temperature ranges
+    @field_validator("max_temp", "min_temp")
+    def check_temperature_range(cls, value, info):
+        logging.info(f"Validating {info.field_name} range: {value}")
+        if not -50 < value < 60:
+            raise ValueError(f"{info.field_name.replace('_', ' ').capitalize()} must be between -50 and 60°C.")
+        return value
+
+    # Validate rainfall is a positive number
+    @field_validator("rainfall")
+    def check_rainfall_positive(cls, value):
+        logging.info(f"Validating rainfall: {value}")
+        if value < 0:
+            raise ValueError("Rainfall must be a positive number.")
+        return value
+
+    # Cross-field validation to ensure max_temp > min_temp
+    @model_validator(mode="after")
+    def check_min_max_relationship(cls, values):
+        # Access values directly as attributes
+        max_temp = values.max_temp
+        min_temp = values.min_temp
+        
+        if max_temp is not None and min_temp is not None and min_temp >= max_temp:
+            raise ValueError("Maximum temperature must be greater than minimum temperature.")
+        
+        return values
 
 class HeatwavePredictionRequest(BaseModel):
     min_temp: float
@@ -246,9 +275,12 @@ weather_model = joblib.load('model/weather_classifier_model.joblib')
 
 # Define a Pydantic model for the prediction request
 class WeatherPredictionRequest(BaseModel):
+    # Required fields
     minimum_temp: float = Field(..., ge=-50, le=60, description="Minimum Temperature in °C")
     maximum_temp: float = Field(..., ge=-50, le=60, description="Maximum Temperature in °C")
     rainfall: float = Field(..., ge=0, description="Rainfall in mm")
+
+    # Optional fields with constraints
     nine_am_temp: Optional[float] = Field(None, ge=-50, le=60, description="9 AM Temperature in °C")
     nine_am_humidity: Optional[float] = Field(None, ge=0, le=100, description="9 AM Relative Humidity in %")
     nine_am_cloud: Optional[float] = Field(None, ge=0, le=8, description="9 AM Cloud Amount in oktas")
@@ -257,7 +289,31 @@ class WeatherPredictionRequest(BaseModel):
     three_pm_humidity: Optional[float] = Field(None, ge=0, le=100, description="3 PM Relative Humidity in %")
     three_pm_cloud: Optional[float] = Field(None, ge=0, le=8, description="3 PM Cloud Amount in oktas")
     three_pm_wind_speed: Optional[float] = Field(None, ge=0, description="3 PM Wind Speed in km/h")
-    
+
+    # Validate temperature range for both minimum and maximum temperature
+    @field_validator("minimum_temp", "maximum_temp")
+    def check_temperature_range(cls, value, info):
+        if not -50 <= value <= 60:
+            raise ValueError(f"{info.field_name.replace('_', ' ').capitalize()} must be between -50 and 60 °C.")
+        return value
+
+    # Validate rainfall to be a non-negative value
+    @field_validator("rainfall")
+    def check_rainfall_positive(cls, value):
+        if value < 0:
+            raise ValueError("Rainfall must be a non-negative number.")
+        return value
+
+    # Cross-field validation to ensure max_temp > min_temp
+    @model_validator(mode="after")
+    def check_min_max_relationship(cls, values):
+        max_temp = values.maximum_temp
+        min_temp = values.minimum_temp
+        
+        if max_temp is not None and min_temp is not None and min_temp >= max_temp:
+            raise ValueError("Maximum temperature must be greater than minimum temperature.")
+        
+        return values
 
 # Define a route for the weather condition prediction endpoint
 @app.post("/weather_prediction")

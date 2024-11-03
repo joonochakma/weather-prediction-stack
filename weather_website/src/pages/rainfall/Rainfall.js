@@ -22,6 +22,36 @@ function Rainfall() {
   const [loading, setLoading] = useState(true); // Loading state for data fetching
   const [modalIsOpen, setModalIsOpen] = useState(false); // Modal open state
   const [isChartOpen, setIsChartOpen] = useState(false); // State for chart visibility
+  const [errors, setErrors] = useState({}); // Error state for form validation
+
+  // Function to validate the input fields
+  const validateInputs = () => {
+    const errors = {};
+
+    // Validate maximum temperature
+    if (maxTemp === "" || isNaN(maxTemp) || maxTemp < -50 || maxTemp > 60) {
+      errors.maxTemp = "Maximum temperature must be between -50 and 60°C.";
+    }
+
+    // Validate minimum temperature
+    if (minTemp === "" || isNaN(minTemp) || minTemp < -50 || minTemp > 60) {
+      errors.minTemp = "Minimum temperature must be between -50 and 60°C.";
+    }
+
+    // Validate that maxTemp is greater than minTemp
+    if (parseFloat(maxTemp) <= parseFloat(minTemp)) {
+      errors.minTemp = "Minimum temperature must be less than maximum temperature.";
+      errors.maxTemp = "Maximum temperature must be greater than minimum temperature.";
+    }
+
+    // Validate rainfall
+    if (rainfall === "" || isNaN(rainfall) || rainfall < 0) {
+      errors.rainfall = "Rainfall must be a non-negative number.";
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   // Fetching the probability distribution data on component mount
   useEffect(() => {
@@ -46,10 +76,11 @@ function Rainfall() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Preventing the default form submission behavior
 
+    if (!validateInputs()) return; // Prevent submission if validation fails
+
     try {
       // Sending a POST request with the temperature and rainfall data
-      const response = await axios.post(
-        "http://localhost:8000/rain_prediction",
+      const response = await axios.post("http://localhost:8000/rain_prediction",
         {
           max_temp: parseFloat(maxTemp), 
           min_temp: parseFloat(minTemp),
@@ -160,6 +191,7 @@ function Rainfall() {
               required
               className="input-field" // Styling for input
             />
+             {errors.maxTemp && <p className="error-message">{errors.maxTemp}</p>} {/* Error message for invalid input */}
           </div>
           <div className="form-group">
             <label htmlFor="minTemp">Minimum Temperature (°C):</label>
@@ -171,6 +203,7 @@ function Rainfall() {
               required
               className="input-field"
             />
+            {errors.minTemp && <p className="error-message">{errors.minTemp}</p>} {/* Error message for invalid input */}
           </div>
           <div className="form-group">
             <label htmlFor="rainfall">Previous Day Rainfall (mm):</label>
@@ -182,10 +215,12 @@ function Rainfall() {
               required
               className="input-field"
             />
+            {errors.rainfall && <p className="error-message">{errors.rainfall}</p>} {/* Error message for invalid input */}
           </div>
           <button type="submit" className="submit-button">
             Predict
           </button>
+          {errors.general && <p className="error-message">{errors.general}</p>}
         </form>
       </section>
 
