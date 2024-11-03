@@ -1,18 +1,22 @@
+/* Weather Title Styles */
 .weather-title {
   color: #1976d2;
-  text-align: center; /* Center the title */
+  text-align: center;
   margin-bottom: 20px;
 }
 
+/* Weather Section Title Styles */
 .weather-section-title {
   color: #1976d2;
-  text-align: center; /* Center section titles */
-  margin: 20px 0; /* Spacing above and below section titles */
+  text-align: center;
+  margin: 20px 0;
   font-size: xx-large;
 }
+
+/* Weather Description Styles */
 .weather-description {
-  text-align: left; /* Align description text */
-  margin-bottom: 20px; /* Space below the description */
+  text-align: left; 
+  margin-bottom: 20px; 
   color: #000;
   padding: 3%; 
   background-color: #f0f8ff;

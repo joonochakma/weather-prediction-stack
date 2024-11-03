@@ -1,3 +1,6 @@
+"""
+Calculates Weather mean values
+"""
 import pandas as pd
 
 # Load your training data

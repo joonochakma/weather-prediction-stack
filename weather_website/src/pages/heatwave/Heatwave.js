@@ -7,25 +7,29 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
 const Heatwave = () => {
-  const [minTemp, setMinTemp] = useState("");
-  const [maxTemp, setMaxTemp] = useState("");
-  const [date, setDate] = useState("");
-  const [prediction, setPrediction] = useState(null);
-  const [error, setError] = useState("");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [detailsModalIsOpen, setDetailsModalIsOpen] = useState(false);
-  const [clusterData, setClusterData] = useState({ x: [], y: [], cluster: [] });
-  const [loading, setLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false); // Single state for toggle
+  // State variables for managing form inputs and prediction results
+  const [minTemp, setMinTemp] = useState(""); // Minimum temperature input
+  const [maxTemp, setMaxTemp] = useState(""); // Maximum temperature input
+  const [date, setDate] = useState(""); // Date input for prediction
+  const [prediction, setPrediction] = useState(null); // Holds prediction result
+  const [error, setError] = useState(""); // For storing error messages
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State for prediction result modal
+  const [detailsModalIsOpen, setDetailsModalIsOpen] = useState(false); // State for details modal
+  const [clusterData, setClusterData] = useState({ x: [], y: [], cluster: [] }); // State for cluster data
+  const [loading, setLoading] = useState(true); // Loading state for data fetching
+  const [isOpen, setIsOpen] = useState(false); // Toggle state for expandable section
 
+  // Fetch cluster data when the component mounts
   useEffect(() => {
-    fetchClusterVisualization(); // Fetch cluster data on component mount
+    fetchClusterVisualization();
   }, []);
 
+  // Handle form submission to fetch heatwave predictions
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     try {
+      // Sending a POST request to fetch prediction data based on user input
       const response = await fetch(
         `http://127.0.0.1:8000/heatwave_prediction?date=${date}`,
         {
@@ -41,63 +45,68 @@ const Heatwave = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Network response was not ok"); // Error handling for network issues
       }
 
-      const data = await response.json();
-      setPrediction(data); // Set the entire prediction object
-      setError(""); // Clear any previous errors
-      setModalIsOpen(true); // Open the modal after setting prediction
+      const data = await response.json(); // Parse the JSON response
+      setPrediction(data);
+      setError("");
+      setModalIsOpen(true);
     } catch (err) {
-      console.error("Error:", err);
-      setError("Error fetching prediction. Please try again.");
+      console.error("Error:", err); // Log any errors to the console
+      setError("Error fetching prediction. Please try again."); // Set error message for user
       setPrediction(null); // Clear previous prediction on error
     }
   };
 
+  // Function to fetch cluster visualization data
   const fetchClusterVisualization = async () => {
     try {
       const response = await fetch(
         "http://127.0.0.1:8000/clusters_visualization"
       );
-      console.log("Response status:", response.status); // Log the response status
+      console.log("Response status:", response.status); // Log the response status for debugging
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`); // Handle any errors
       }
 
-      const data = await response.json();
-      console.log("Cluster data:", data); // Log the received data
+      const data = await response.json(); // Parse the JSON response
+      console.log("Cluster data:", data); // Log the cluster data for debugging
 
-      // Update state with received data
+      // Update state with the received cluster data
       setClusterData(data);
-      setLoading(false);
+      setLoading(false); // Update loading state
     } catch (error) {
-      console.error("Error fetching cluster visualization:", error);
-      setLoading(false);
+      console.error("Error fetching cluster visualization:", error); // Log any errors
+      setLoading(false); // Update loading state even on error
     }
   };
 
+  // Close the prediction result modal
   const closeModal = () => {
     setModalIsOpen(false);
   };
 
+  // Open the details modal for more information
   const openDetailsModal = () => {
-    setDetailsModalIsOpen(true); // Open details modal
+    setDetailsModalIsOpen(true);
   };
 
+  // Close the details modal
   const closeDetailsModal = () => {
-    setDetailsModalIsOpen(false); // Close details modal
+    setDetailsModalIsOpen(false);
   };
 
+  // Function to determine cluster colors for visualization
   const getClusterColors = (clusters) => {
-    return clusters.map((cluster) => (cluster === 0 ? "blue" : "red")); // Customize colors as needed
+    return clusters.map((cluster) => (cluster === 0 ? "blue" : "red")); // Set colors based on cluster value
   };
 
   return (
     <div className="heatwave-form">
       <h2 className="heatwave-title">Heatwave Prediction Model</h2>
-      <hr></hr>
+      <hr />
       {/* Description Section */}
       <section className="description-section">
         <h2 className="heatwave-section-title">Description</h2>
@@ -113,22 +122,10 @@ const Heatwave = () => {
       </section>
       <section className="charts-section">
         <h2 className="heatwave-section-title">Charts</h2>
-        {/* Single Dropdown for Prediction and Cluster Visualization */}
+        {/* Expandable section for prediction and cluster visualization */}
         <div
-          onClick={() => setIsOpen(!isOpen)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            padding: "1em",
-            border: "1px solid #ccc",
-            fontWeight: "bold",
-            margin: "0 10%",
-            borderRadius: "5px",
-            marginTop: "20px",
-            backgroundColor: "#ECF6FE",
-            color: "#1870C9",
-          }}
+          className="expandable-section"
+          onClick={() => setIsOpen(!isOpen)} // Toggle open/close on click
         >
           {isOpen
             ? "Hide Prediction and Cluster Visualization"
@@ -136,16 +133,16 @@ const Heatwave = () => {
           <ExpandMoreIcon
             style={{
               marginLeft: "auto",
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)", // Rotate icon based on section state
               transition: "transform 0.3s ease",
             }}
           />
         </div>
 
-        {/* Combined Content */}
+        {/* Display prediction and cluster data if section is open */}
         {isOpen && (
           <div style={{ marginTop: "20px" }}>
-            {prediction && (
+            {prediction && ( // If prediction exists, display it
               <div>
                 <h3>Prediction Result</h3>
                 <p>Date: {prediction.date}</p>
@@ -154,7 +151,7 @@ const Heatwave = () => {
                 <p>Predicted Cluster: {prediction.cluster}</p>
                 <p>
                   {prediction.cluster === 1
-                    ? "Heatwave is occurring!"
+                    ? "Heatwave is occurring!" // Message based on cluster prediction
                     : "No heatwave."}
                 </p>
               </div>
@@ -162,13 +159,7 @@ const Heatwave = () => {
 
             {clusterData.x.length > 0 && clusterData.y.length > 0 ? (
               <Plot
-                style={{
-                  padding: "1em",
-                  border: "1px solid #ccc",
-                  borderTop: "none",
-                  overflowX: "auto",
-                  margin: "0 10%",
-                }}
+                className="plot-container"
                 data={[
                   {
                     x: clusterData.x,
@@ -176,12 +167,12 @@ const Heatwave = () => {
                     mode: "markers",
                     type: "scatter",
                     marker: {
-                      color: getClusterColors(clusterData.cluster),
+                      color: getClusterColors(clusterData.cluster), // Get colors based on clusters
                       size: 10,
                       opacity: 0.8,
                     },
                     text: clusterData.cluster.map(
-                      (cluster) => `Cluster: ${cluster}`
+                      (cluster) => `Cluster: ${cluster}` // Display cluster info on hover
                     ),
                   },
                 ]}
@@ -189,12 +180,12 @@ const Heatwave = () => {
                   width: 800,
                   height: 400,
                   title: "Clusters of Temperature Data",
-                  xaxis: { title: "PCA 1" },
-                  yaxis: { title: "PCA 2" },
+                  xaxis: { title: "PCA 1" }, // Label for x-axis
+                  yaxis: { title: "PCA 2" }, // Label for y-axis
                 }}
               />
             ) : (
-              <p>No cluster data available.</p>
+              <p>No cluster data available.</p> // Message if no cluster data is found
             )}
           </div>
         )}
@@ -204,13 +195,15 @@ const Heatwave = () => {
       <section className="prediction-model">
         <h2 className="temperature-section-title">Prediction Model</h2>
         <form onSubmit={handleSubmit}>
+          {" "}
+          {/* Form for user input */}
           <div>
             <label>
               Minimum Temperature (°C):
               <input
                 type="number"
-                value={minTemp}
-                onChange={(e) => setMinTemp(e.target.value)}
+                value={minTemp} // Controlled input for minimum temperature
+                onChange={(e) => setMinTemp(e.target.value)} // Update state on change
                 required
               />
             </label>
@@ -220,8 +213,8 @@ const Heatwave = () => {
               Maximum Temperature (°C):
               <input
                 type="number"
-                value={maxTemp}
-                onChange={(e) => setMaxTemp(e.target.value)}
+                value={maxTemp} // Controlled input for maximum temperature
+                onChange={(e) => setMaxTemp(e.target.value)} // Update state on change
                 required
               />
             </label>
@@ -231,8 +224,8 @@ const Heatwave = () => {
               Date (YYYY-MM-DD):
               <input
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={date} // Controlled input for date
+                onChange={(e) => setDate(e.target.value)} // Update state on change
                 required
               />
             </label>
@@ -241,9 +234,9 @@ const Heatwave = () => {
             Predict
           </button>
         </form>
-
         {error && <p className="error-message">{error}</p>}
-
+        {/* Display error message if any */}
+        {/* Modal for displaying prediction result */}
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -258,7 +251,7 @@ const Heatwave = () => {
               <p>Predicted Cluster: {prediction.cluster}</p>
               <p>
                 {prediction.cluster === 1
-                  ? "Heatwave is occurring!"
+                  ? "Heatwave is occurring!" // Message based on prediction
                   : "No heatwave."}
               </p>
               <div className="button-container">
@@ -268,15 +261,11 @@ const Heatwave = () => {
               </div>
             </div>
           )}
-          <button
-            onClick={closeModal}
-            style={{ margin: "20px auto", width: "stretch", display: "block" }}
-          >
+          <button className="close-button" onClick={closeModal}>
             Close
           </button>
         </Modal>
-
-        {/* Nested Modal for More Details */}
+        {/* Nested Modal for additional details about heatwaves */}
         <Modal
           isOpen={detailsModalIsOpen}
           onRequestClose={closeDetailsModal}
@@ -294,4 +283,4 @@ const Heatwave = () => {
   );
 };
 
-export default Heatwave; // Ensure this line is present
+export default Heatwave; // Export the component for use in other parts of the application

@@ -1,67 +1,75 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Plot from "react-plotly.js";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Modal from "react-modal";
-import "./Rainfall.css";
+import React, { useState, useEffect } from "react"; 
+import axios from "axios"; 
+import Plot from "react-plotly.js"; 
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"; 
+import Modal from "react-modal"; 
+import "./Rainfall.css"; 
 
+// Setting the root element for the modal
 Modal.setAppElement("#root");
 
 function Rainfall() {
-  const [maxTemp, setMaxTemp] = useState("");
-  const [minTemp, setMinTemp] = useState("");
-  const [rainfall, setRainfall] = useState("");
-  const [prediction, setPrediction] = useState(null);
-  const [score, setScore] = useState(null);
+  // State variables to manage inputs and predictions
+  const [maxTemp, setMaxTemp] = useState(""); // Maximum temperature input
+  const [minTemp, setMinTemp] = useState(""); // Minimum temperature input
+  const [rainfall, setRainfall] = useState(""); // Previous day's rainfall input
+  const [prediction, setPrediction] = useState(null); // Rain prediction result
+  const [score, setScore] = useState(null); // Confidence score for the prediction
   const [probabilities, setProbabilities] = useState({
-    rainy_days: [],
-    non_rainy_days: [],
+    rainy_days: [], // Array for rainy days
+    non_rainy_days: [], // Array for non-rainy days
   });
-  const [loading, setLoading] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [isChartOpen, setIsChartOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // Loading state for data fetching
+  const [modalIsOpen, setModalIsOpen] = useState(false); // Modal open state
+  const [isChartOpen, setIsChartOpen] = useState(false); // State for chart visibility
 
+  // Fetching the probability distribution data on component mount
   useEffect(() => {
     const fetchProbabilityDistribution = async () => {
       try {
+        // Making an API call to get the probability distribution
         const response = await axios.get(
           "http://localhost:8000/probability_distribution"
         );
-        setProbabilities(response.data);
+        setProbabilities(response.data); // Setting the response data to state
       } catch (error) {
-        console.error("Error fetching probability distribution:", error);
+        console.error("Error fetching probability distribution:", error); // Logging errors
       } finally {
-        setLoading(false);
+        setLoading(false); // Setting loading to false after data fetch
       }
     };
 
-    fetchProbabilityDistribution();
-  }, []);
+    fetchProbabilityDistribution(); // Calling the function to fetch data
+  }, []); // Empty dependency array means this runs once after the initial render
 
+  // Function to handle form submission for predicting rain
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Preventing the default form submission behavior
 
     try {
+      // Sending a POST request with the temperature and rainfall data
       const response = await axios.post(
         "http://localhost:8000/rain_prediction",
         {
-          max_temp: parseFloat(maxTemp),
+          max_temp: parseFloat(maxTemp), 
           min_temp: parseFloat(minTemp),
           rainfall: parseFloat(rainfall),
         }
       );
 
+      // Setting prediction and score based on the response
       setPrediction(response.data.will_rain);
       setScore(response.data.score);
-      setModalIsOpen(true);
+      setModalIsOpen(true); 
     } catch (error) {
       console.error("Error fetching prediction:", error);
       setPrediction("Error");
-      setScore(null);
-      setModalIsOpen(true);
+      setScore(null); 
+      setModalIsOpen(true); 
     }
   };
 
+  // Function to close the modal
   const closeModal = () => {
     setModalIsOpen(false);
   };
@@ -69,7 +77,7 @@ function Rainfall() {
   return (
     <div className="rainfall-form">
       <h2 className="rainfall-title">Rainfall Prediction Model</h2>
-      <hr></hr>
+      <hr />
       {/* Description Section */}
       <section className="description-section">
         <h2 className="rainfall-section-title">Description</h2>
@@ -97,47 +105,24 @@ function Rainfall() {
 
         {/* Toggle for Probability Distribution Chart */}
         <div
-          onClick={() => setIsChartOpen(!isChartOpen)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            padding: "1em",
-            backgroundColor: "#ECF6FE",
-            border: "1px solid #ccc",
-            fontWeight: "bold",
-            marginBottom: "10px",
-            color: "#1870C9",
-            borderRadius:"5px",
-            margin:" 0 10%"
-          }}
+          className="chart-toggle"
+          onClick={() => setIsChartOpen(!isChartOpen)} // Toggling the chart visibility
         >
           {isChartOpen
             ? "Hide Probability Distribution"
             : "Show Probability Distribution"}
           <ExpandMoreIcon
-            style={{
-              marginLeft: "auto",
-              transform: isChartOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s ease",
-            }}
+            className={`chart-icon ${isChartOpen ? "open" : "closed"}`} // Changing icon based on chart state
           />
         </div>
 
         {/* Chart Content */}
         {isChartOpen && !loading && (
-          <div
-            style={{
-              padding: "1em",
-              border: "1px solid #ccc",
-              borderTop: "none",
-              margin: "0 10%"
-            }}
-          >
+          <div className="chart-container">
             <Plot
-              data={[
+              data={[ // Plotting the probability distribution chart
                 {
-                  x: ["Rainy Days", "Non-Rainy Days"],
+                  x: ["Rainy Days", "Non-Rainy Days"], // X-axis categories
                   y: [
                     probabilities.rainy_days.length > 0
                       ? probabilities.rainy_days[0]
@@ -146,21 +131,21 @@ function Rainfall() {
                       ? probabilities.non_rainy_days[0]
                       : 0,
                   ],
-                  type: "bar",
-                  marker: { color: ["blue", "orange"] },
+                  type: "bar", // Bar chart type
+                  marker: { color: ["blue", "orange"] }, // Color for bars
                 },
               ]}
               layout={{
-                title: "Probability Distribution of Rainfall",
-                xaxis: { title: "Weather Type" },
-                yaxis: { title: "Count" },
-                barmode: "group",
+                title: "Probability Distribution of Rainfall", // Chart title
+                xaxis: { title: "Weather Type" }, // X-axis label
+                yaxis: { title: "Count" }, // Y-axis label
+                barmode: "group", // Grouping bars
               }}
             />
           </div>
         )}
 
-        {loading && <p>Loading probability data, please wait...</p>}
+        {loading && <p>Loading probability data, please wait...</p>} {/* Loading message */}
 
         {/* Prediction Form */}
         <h2 className="rainfall-section-title">Will it Rain Tomorrow?</h2>
@@ -170,10 +155,10 @@ function Rainfall() {
             <input
               type="number"
               id="maxTemp"
-              value={maxTemp}
-              onChange={(e) => setMaxTemp(e.target.value)}
+              value={maxTemp} // Binding input to state
+              onChange={(e) => setMaxTemp(e.target.value)} // Updating state on input change
               required
-              className="input-field"
+              className="input-field" // Styling for input
             />
           </div>
           <div className="form-group">
@@ -206,11 +191,11 @@ function Rainfall() {
 
       {/* Modal for displaying prediction results */}
       <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Prediction Result"
-        className="prediction-modal"
-        overlayClassName="prediction-modal-overlay"
+        isOpen={modalIsOpen} // Controlling modal visibility
+        onRequestClose={closeModal} // Function to close modal
+        contentLabel="Prediction Result" // Accessibility label for modal
+        className="prediction-modal" // Styling for modal
+        overlayClassName="prediction-modal-overlay" // Styling for modal overlay
       >
         <h2 className="prediction-result">Prediction Result</h2>
         <p className="prediction-text">
@@ -218,19 +203,17 @@ function Rainfall() {
             ? "Yes, it will rain."
             : prediction === "No"
             ? "No, it will not rain."
-            : "Error in prediction"}
+            : "Error in prediction"} {/* Displaying prediction result */}
         </p>
-        {score !== null && (
+        {score !== null && ( // Conditionally rendering confidence score
           <p className="confidence-score">
-            Confidence Score: {score.toFixed(2)}
+            Confidence Score: {score.toFixed(2)} {/* Formatting score */}
           </p>
         )}
-        <button onClick={closeModal} className="close-button">
-          Close
-        </button>
+        <button onClick={closeModal} className="close-button">Close</button> {/* Button to close modal */}
       </Modal>
     </div>
   );
 }
 
-export default Rainfall;
+export default Rainfall; // Exporting the Rainfall component

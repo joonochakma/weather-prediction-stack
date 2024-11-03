@@ -1,20 +1,20 @@
-/* General Styles */
+/* General Styles for Titles and Descriptions */
 .heatwave-title {
   color: #1976d2;
-  text-align: center; /* Center the title */
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .heatwave-section-title {
   color: #1976d2;
-  text-align: center; /* Center section titles */
-  margin: 20px 0; /* Spacing above and below section titles */
+  text-align: center;
+  margin: 20px 0;
   font-size: xx-large;
 }
 
 .heatwave-description {
-  text-align: left; /* Align description text */
-  margin-bottom: 20px; /* Space below the description */
+  text-align: left; 
+  margin-bottom: 20px; 
   color: #000;  
   padding: 3%; 
   background-color: #f0f8ff;
@@ -35,13 +35,14 @@
   font-style: italic;
 }
 
+/* Label Styles */
 label {
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
 }
 
-/* Container for the prediction form */
+/* Styles for the Prediction Form Container */
 form {
   background-color: #0095fd;
   border-radius: 15px;
@@ -52,7 +53,7 @@ form {
   margin: 0 auto;
 }
 
-/* Input Styles */
+/* Input Field Styles */
 input[type="number"],
 input[type="date"] {
   padding: 10px;
@@ -64,6 +65,7 @@ input[type="date"] {
   margin-bottom: 10px;
 }
 
+/* Styles for the Submit Button */
 .submit-button {
   padding: 10px 20px;
   border: none;
@@ -81,12 +83,14 @@ input[type="date"] {
   background-color: #45a049;
 }
 
+/* Container Styles for Button Arrangement */
 .button-container {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
 
+/* Styles for Detail Button */
 .detail-button {
   padding: 10px 20px;
   border: none;
@@ -104,7 +108,7 @@ input[type="date"] {
   background-color: #0077c2;
 }
 
-/* Error message styles */
+/* Styles for Error Messages */
 .error-message {
   margin-top: 20px;
   color: white;
@@ -118,7 +122,7 @@ input[type="date"] {
   text-align: center;
 }
 
-/* Prediction result styles */
+/* Styles for Prediction Results */
 .heatwave-result {
   margin-top: 30px;
   padding: 15px;
@@ -132,17 +136,19 @@ input[type="date"] {
   transform: translateY(-5px);
 }
 
+/* Styles for Prediction Result Titles and Descriptions */
 .heatwave-result h3 {
   color: #1976d2;
   margin-bottom: 15px;
 }
 
+/* Styles for Prediction Result Paragraphs */
 .heatwave-result p {
   margin: 5px 0;
   color: #2b2b2b;
 }
 
-/* Modal styling */
+/* Modal Styles for Overlays */
 .ReactModal__Overlay {
   background-color: rgba(0, 0, 0, 0.75);
   display: flex;
@@ -155,11 +161,12 @@ input[type="date"] {
   bottom: 0;
 }
 
+/* Modal Styles for Content */
 .ReactModal__Content {
-  top: auto !important; /* Override top style */
-  left: auto !important; /* Override left style */
-  right: auto !important; /* Override right style */
-  bottom: auto !important; /* Override bottom style */
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
   transform: none;
   position: relative;
   padding: 20px;
@@ -170,7 +177,7 @@ input[type="date"] {
   width: 90%;
 }
 
-/* Responsive Design */
+/* Responsive Design Adjustments */
 @media (max-width: 680px) {
   .model_title {
     font-size: 2rem;
@@ -214,4 +221,35 @@ input[type="date"] {
     font-size: 1rem; 
     padding: 5%;
   }
+}
+
+/* Styles for Expandable Sections */
+.expandable-section {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1em;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  margin: 0 10%;
+  border-radius: 5px;
+  margin-top: 20px;
+  background-color: #ecf6fe;
+  color: #1870c9;
+}
+
+/* Styles for Plot Component */
+.plot-container {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-top: none;
+  overflow-x: auto;
+  margin: 0 10%;
+}
+
+/* Styles for Close Button */
+.close-button {
+  margin: 20px auto;
+  width: 100%;
+  display: block;
 }

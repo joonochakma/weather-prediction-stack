@@ -1,3 +1,6 @@
+"""
+API setup
+"""
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Query, Response, HTTPException
 from fastapi.middleware.cors import CORSMiddleware

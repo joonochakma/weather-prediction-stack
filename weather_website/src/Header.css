@@ -5,7 +5,7 @@
 
 .app-bar {
   padding: 0 20px;
-  background-color: #0095fd; /* Customize AppBar color */
+  background-color: #1976d2;
 }
 
 .toolbar {
@@ -13,15 +13,14 @@
   justify-content: space-between;
   align-items: center;
   min-height: 64px;
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  flex-wrap: wrap;
 }
 
 /* Logo and title styling */
 .logo-container {
   display: flex;
   align-items: center;
-  position: relative; /* Allow positioning */
-  flex-grow: 1; /* Allow logo to take space */
+  flex-grow: 1;
 }
 
 .logo-link {
@@ -46,10 +45,10 @@
 /* Navigation buttons styling */
 .nav-buttons {
   display: flex;
-  gap: 25px; /* Increased gap for better spacing */
-  justify-content: center; /* Center the buttons */
+  gap: 25px;
+  justify-content: center;
   align-items: center;
-  flex-wrap: wrap; /* Allow wrapping */
+  flex-wrap: wrap;
 }
 
 .nav-button {
@@ -83,19 +82,17 @@
   .logo-container {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%); /* Center the logo */
-    margin-left: auto;
+    transform: translateX(-50%);
   }
 
   .nav-buttons {
-    display: none; /* Hide nav buttons on small screens */
+    display: none;
   }
 
   .title {
     font-size: 1.3rem;
   }
 
-  /* Show drawer button on the left side */
   .menu-icon {
     display: block;
     transform: translateX(-50%);
@@ -105,7 +102,7 @@
 /* Hide menu icon for screens above 768px */
 @media (min-width: 768px) {
   .menu-icon {
-    display: hidden;
+    display: none;
   }
 
   .title {

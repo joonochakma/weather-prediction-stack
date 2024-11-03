@@ -21,10 +21,11 @@ function Temperature() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // Input validation
+  // Validate user inputs
   const ValidateInputs = () => {
     const errors = {};
 
+    // Validate maximum temperature
     if (
       temperatureMax === "" ||
       isNaN(temperatureMax) ||
@@ -34,6 +35,8 @@ function Temperature() {
       errors.temperatureMax =
         "Maximum temperature must be a number between -50 and 60.";
     }
+
+    // Validate minimum temperature
     if (
       temperatureMin === "" ||
       isNaN(temperatureMin) ||
@@ -43,15 +46,21 @@ function Temperature() {
       errors.temperatureMin =
         "Minimum temperature must be a number between -50 and 60.";
     }
+
+    // Ensure min temperature is less than max temperature
     if (parseFloat(temperatureMax) < parseFloat(temperatureMin)) {
       errors.temperatureMin =
         "Minimum temperature must be less than maximum temperature.";
       errors.temperatureMax =
         "Maximum temperature must be greater than minimum temperature.";
     }
+
+    // Validate rainfall input
     if (rainSum === "" || isNaN(rainSum) || rainSum < 0) {
       errors.rainSum = "Rain sum must be a positive number.";
     }
+
+    // Validate mean humidity
     if (
       humidityMean === "" ||
       isNaN(humidityMean) ||
@@ -61,6 +70,8 @@ function Temperature() {
       errors.humidityMean =
         "Mean relative humidity must be a number between 0 and 100.";
     }
+
+    // Validate max humidity
     if (
       humidityMax === "" ||
       isNaN(humidityMax) ||
@@ -70,6 +81,8 @@ function Temperature() {
       errors.humidityMax =
         "Maximum relative humidity must be a number between 0 and 100.";
     }
+
+    // Validate min humidity
     if (
       humidityMin === "" ||
       isNaN(humidityMin) ||
@@ -79,6 +92,8 @@ function Temperature() {
       errors.humidityMin =
         "Minimum relative humidity must be a number between 0 and 100.";
     }
+
+    // Ensure min humidity is less than max humidity
     if (parseFloat(humidityMax) < parseFloat(humidityMin)) {
       errors.humidityMin =
         "Minimum relative humidity must be less than maximum relative humidity.";
@@ -90,7 +105,7 @@ function Temperature() {
     return Object.keys(errors).length === 0;
   };
 
-  // Handle form submission and fetch prediction
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -105,10 +120,11 @@ function Temperature() {
       relative_humidity_mean: parseFloat(humidityMean),
       relative_humidity_max: parseFloat(humidityMax),
       relative_humidity_min: parseFloat(humidityMin),
-   });
+    });
 
     try {
-      const response = await axios.post("http://localhost:8000/temperature_prediction",
+      const response = await axios.post(
+        "http://localhost:8000/temperature_prediction",
         {
           temperature_max: parseFloat(temperatureMax),
           temperature_min: parseFloat(temperatureMin),
@@ -128,6 +144,7 @@ function Temperature() {
     }
   };
 
+  // Fetch initial data and manage window resize event
   useEffect(() => {
     const fetchData = async () => {
       const result = await getTestData();
@@ -182,7 +199,7 @@ function Temperature() {
   return (
     <div className="temperature-form">
       <h2 className="temperature-title">Temperature Prediction Model</h2>
-      <hr></hr>
+      <hr />
 
       {/* Description Section */}
       <section className="description-section">
@@ -198,50 +215,24 @@ function Temperature() {
           precise predictions can provide insights to help you stay prepared.
         </p>
       </section>
-
       {/* Charts Section */}
       <section className="charts-section">
         <h2 className="temperature-section-title">Charts</h2>
         {/* Scatter Plot Accordion */}
         <div
           onClick={() => setIsScatterOpen(!isScatterOpen)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            padding: "1em",
-            backgroundColor: "#ECF6FE",
-            border: "1px solid #ccc",
-            fontWeight: "bold",
-            color: "#1870C9",
-            borderRadius: "5px",
-            margin: "0 10%",
-            marginBottom: "10px"
-          }}
+          className="accordion-header"
         >
           {isScatterOpen
             ? "Hide Scatter Plot"
             : "Show Scatter Plot for Temperature Features"}
           <ExpandMoreIcon
-            style={{
-              marginLeft: "auto",
-              transform: isScatterOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s ease",
-            }}
+            className={isScatterOpen ? "icon-rotated" : "icon-default"}
           />
         </div>
 
-        {/* Scatter Plot Content */}
         {isScatterOpen && (
-          <div
-            style={{
-              padding: "1em",
-              border: "1px solid #ccc",
-              borderTop: "none",
-              overflowX: "auto",
-              margin: "0 10%"
-            }}
-          >
+          <div className="scatter-plot-content">
             <Plot
               data={[scatterData]}
               layout={{
@@ -256,47 +247,21 @@ function Temperature() {
             />
           </div>
         )}
-
         {/* Histogram Plot Accordion */}
         <div
           onClick={() => setIsHistogramOpen(!isHistogramOpen)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            cursor: "pointer",
-            padding: "1em",
-            backgroundColor: "#ECF6FE",
-            border: "1px solid #ccc",
-            fontWeight: "bold",
-            margin: "0 10%",
-            borderRadius:"5px",
-            marginBottom: "10px",
-            color: "#1870C9",
-          }}
+          className="accordion-header"
         >
           {isHistogramOpen
             ? "Hide Histogram"
             : "Show Histogram for Actual vs Predicted Temperature"}
           <ExpandMoreIcon
-            style={{
-              marginLeft: "auto",
-              transform: isHistogramOpen ? "rotate(180deg)" : "rotate(0deg)",
-              transition: "transform 0.3s ease",
-            }}
+            className={isHistogramOpen ? "icon-rotated" : "icon-default"}
           />
         </div>
-
         {/* Histogram Plot Content */}
         {isHistogramOpen && (
-          <div
-            style={{
-              padding: "1em",
-              border: "1px solid #ccc",
-              borderTop: "none",
-              overflowX: "auto",
-              margin: "0 10%"
-            }}
-          >
+          <div className="scatter-plot-content">
             <Plot
               data={histogramData}
               layout={{
@@ -312,7 +277,6 @@ function Temperature() {
           </div>
         )}
       </section>
-
       {/* Prediction Model Section */}
       <section className="prediction-model">
         <h2 className="temperature-section-title">Prediction Model</h2>
@@ -394,7 +358,6 @@ function Temperature() {
           </button>
         </form>
       </section>
-
       {/* Modal for displaying prediction */}
       <Modal
         isOpen={modalIsOpen}

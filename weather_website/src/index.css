@@ -1,3 +1,4 @@
+/* Base styles */
 body {
   margin: 0;
   padding: 0;
@@ -14,6 +15,7 @@ code {
     monospace;
 }
 
+/* Full height and width for HTML and body */
 html,
 body {
   height: 100%;
@@ -21,11 +23,11 @@ body {
   overflow-x: hidden;
 }
 
+/* Styles for horizontal rules */
 hr {
   color: #1976d2;
-  height: 2px; /* Adjust the height to make it thicker */
-  background-color: #1976d2; /* Ensures the color fills the entire line */
-  border: none; /* Removes any default border styling */
+  height: 2px;
+  background-color: #1976d2;
+  border: none;
   margin: 0 10%;
 }
-

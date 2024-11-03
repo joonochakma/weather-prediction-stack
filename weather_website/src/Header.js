@@ -1,6 +1,6 @@
 import "./Header.css";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react"; // Importing React and useState hook
+import { Link } from "react-router-dom"; // Importing Link for navigation
 import {
   AppBar,
   Toolbar,
@@ -14,49 +14,53 @@ import {
   List,
   ListItem,
   ListItemText,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+} from "@mui/material"; // Importing Material-UI components
+import MenuIcon from "@mui/icons-material/Menu"; // Importing Menu icon
 
 const Header = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null); // State for managing the dropdown menu
+  const [drawerOpen, setDrawerOpen] = useState(false); // State for managing the drawer's open state
 
+  // Function to open the menu and set anchor element for dropdown
   const handleMenu = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
-  const toggleDrawer = (open) => () => setDrawerOpen(open);
+  const handleClose = () => setAnchorEl(null); // Function to close the dropdown menu
+  const toggleDrawer = (open) => () => setDrawerOpen(open); // Function to toggle the drawer open/close
 
+  // Function to scroll smoothly to the FAQ section
   const scrollToFAQ = () => {
-    const element = document.getElementById("faq-section"); // Ensure this matches your FAQ section ID
+    const element = document.getElementById("faq-section"); // Get the FAQ section by ID
     if (element) {
-      // Close the drawer first
-      setDrawerOpen(false);
-
-      // Use a slight delay to ensure the drawer closes before scrolling
+      setDrawerOpen(false); // Close the drawer first
+      // Delay the scroll to ensure the drawer closes before scrolling
       setTimeout(() => {
-        element.scrollIntoView({ behavior: "smooth" });
-      }, 0); // Using 0 milliseconds as a delay to push it to the end of the event loop
+        element.scrollIntoView({ behavior: "smooth" }); // Scroll smoothly to the FAQ section
+      }, 0);
     }
   };
 
+  // Function to render the drawer menu items
   const renderDrawerMenu = () => (
     <List className="drawer-list">
       <ListItem
         button
         component={Link}
         to="/home"
-        onClick={toggleDrawer(false)}
+        onClick={toggleDrawer(false)} // Close drawer when navigating
       >
         <ListItemText primary="Home" />
       </ListItem>
       <ListItem button onClick={handleMenu}>
+        {" "}
+        {/* Opens dropdown for models */}
         <ListItemText primary="Models" />
       </ListItem>
       <Menu
         id="models-menu"
         anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
+        open={Boolean(anchorEl)} // Open menu if anchor element is set
+        onClose={handleClose} // Close menu when clicked outside
       >
+        {/* Menu items for different models */}
         <MenuItem component={Link} to="/rainfall" onClick={handleClose}>
           Rainfall
         </MenuItem>
@@ -71,13 +75,15 @@ const Header = () => {
         </MenuItem>
       </Menu>
       <ListItem button onClick={scrollToFAQ}>
+        {" "}
+        {/* Scroll to FAQ section */}
         <ListItemText primary="FAQ" />
       </ListItem>
       <ListItem
         button
         component={Link}
         to="/about"
-        onClick={toggleDrawer(false)}
+        onClick={toggleDrawer(false)} // Close drawer when navigating
       >
         <ListItemText primary="About Us" />
       </ListItem>
@@ -93,21 +99,24 @@ const Header = () => {
             color="inherit"
             aria-label="menu"
             className="menu-icon"
-            onClick={toggleDrawer(true)}
+            onClick={toggleDrawer(true)} // Open drawer on click
           >
-            <MenuIcon />
+            <MenuIcon /> {/* Icon for menu */}
           </IconButton>
 
           <Box className="logo-container">
             <Link to="/home" className="logo-link">
               <Typography variant="h6" component="div" className="title">
-                DCA
+                DCA {/* Site Title */}
               </Typography>
-              <img src="/umbrella.png" alt="Logo" className="logo-image" />
+              <img src="/umbrella.png" alt="Logo" className="logo-image" />{" "}
+              {/* Logo image */}
             </Link>
           </Box>
 
           <Box className="nav-buttons">
+            {" "}
+            {/* Navigation buttons */}
             <Button
               color="inherit"
               component={Link}
@@ -160,7 +169,7 @@ const Header = () => {
           </Box>
 
           <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-            {renderDrawerMenu()}
+            {renderDrawerMenu()} {/* Render drawer menu items */}
           </Drawer>
         </Toolbar>
       </AppBar>
@@ -168,4 +177,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header; // Export the Header component

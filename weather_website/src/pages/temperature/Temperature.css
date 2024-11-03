@@ -1,20 +1,20 @@
-/* General Styles */
+/* General Styles for Titles and Descriptions */
 .temperature-title {
   color: #1976d2;
-  text-align: center; /* Center the title */
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .temperature-section-title {
   color: #1976d2;
-  text-align: center; /* Center section titles */
-  margin: 20px 0; /* Spacing above and below section titles */
+  text-align: center;
+  margin: 20px 0;
   font-size: xx-large;
 }
 
 .temperature-description {
-  text-align: left; /* Align description text */
-  margin-bottom: 20px; /* Space below the description */
+  text-align: left; 
+  margin-bottom: 20px; 
   padding: 3%; 
   color: #000;
   background-color: #f0f8ff;
@@ -35,13 +35,14 @@
   font-style: italic;
 }
 
+/* Label Styles */
 label {
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
 }
 
-/* Container for the prediction form */
+/* Form Styles */
 form {
   background-color: #0095fd;
   border-radius: 15px;
@@ -65,6 +66,7 @@ input[type="date"] {
   margin-bottom: 10px;
 }
 
+/* Button Styles */
 .submit-button {
   padding: 10px 20px;
   border: none;
@@ -92,7 +94,7 @@ input[type="date"] {
   background-color: #d32f2f;
 }
 
-/* Error message styles */
+/* Error Message Styles */
 .error-message {
   margin-top: 20px;
   color: white;
@@ -106,7 +108,7 @@ input[type="date"] {
   text-align: center;
 }
 
-/* Prediction result styles */
+/* Prediction Result Styles */
 .result {
   margin-top: 30px;
   padding: 15px;
@@ -133,7 +135,7 @@ input[type="date"] {
   margin-bottom: 20px;
 }
 
-/* Modal styling */
+/* Modal Styles */
 .ReactModal__Overlay {
   background-color: rgba(0, 0, 0, 0.75);
   display: flex;
@@ -147,10 +149,10 @@ input[type="date"] {
 }
 
 .ReactModal__Content {
-  top: auto !important; /* Override top style */
-  left: auto !important; /* Override left style */
-  right: auto !important; /* Override right style */
-  bottom: auto !important; /* Override bottom style */
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
   transform: none;
   position: relative;
   padding: 20px;
@@ -210,4 +212,78 @@ input[type="date"] {
   .result p {
     font-size: 1rem;
   }
+}
+
+/* Accordion Styles */
+.accordion-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1em;
+  background-color: #ECF6FE;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  color: #1870C9;
+  border-radius: 5px;
+  margin: 0 10%;
+  margin-bottom: 10px;
+}
+
+/* Icon Styles */
+.icon-rotated {
+  margin-left: auto;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.icon-default {
+  margin-left: auto;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+/* Scatter Plot Content Styles */
+.scatter-plot-content {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-top: none;
+  overflow-x: auto;
+  margin: 0 10%;
+}
+
+/* Accordion Styles */
+.accordion-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1em;
+  background-color: #ECF6FE;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  color: #1870C9;
+  border-radius: 5px;
+  margin: 0 10%;
+  margin-bottom: 10px;
+}
+
+/* Icon Styles */
+.icon-rotated {
+  margin-left: auto;
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+.icon-default {
+  margin-left: auto;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+/* Scatter Plot Content Styles */
+.scatter-plot-content {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-top: none;
+  overflow-x: auto;
+  margin: 0 10%;
 }

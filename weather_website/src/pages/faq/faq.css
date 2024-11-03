@@ -1,15 +1,18 @@
+/* Main container for the FAQ section */
 .faq-container {
   padding: 0px 20px 20px 20px;
   border-radius: 8px;
   box-shadow: var(--mui-shadow-2);
 }
 
+/* Title styling */
 .faq-title {
   color: #1976d2;
   font-weight: bold;
   text-align: center;
 }
 
+/* Description styling */
 .faq-description {
   color: #1976d2;
   font-size: 1.4rem;
@@ -17,22 +20,25 @@
   text-align: center;
 }
 
+/* Question styling */
 .faq-question {
   color: #1976d2;
   font-size: 1.2rem;
 }
 
+/* Answer styling */
 .faq-answer {
   color: #36454f;
   font-size: 1rem;
 }
 
+/* Accordion item styling */
 .accordion {
   margin-bottom: 10px;
   border: 1px solid #1976d2;
 }
 
-/* Media queries for small screens */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {
   .faq-container {
     padding: 10px;
