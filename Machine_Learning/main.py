@@ -16,7 +16,9 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 
+
 app = FastAPI()
+
 
 # CORS middleware for handling requests from different origins
 app.add_middleware(
@@ -26,6 +28,47 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Load your trained model
+weather_model = joblib.load('model/weather_classifier_model.joblib')
+
+def get_feature_importance(clf, feature_names: List[str]) -> Dict[str, float]:
+    """
+    Get feature importance from the trained classifier.
+
+    Args:
+        clf: The trained classifier.
+        feature_names (list): List of feature names.
+
+    Returns:
+        Dict: A dictionary of feature names and their importance scores.
+    """
+    importances = clf.feature_importances_
+    return {name: importance for name, importance in zip(feature_names, importances)}
+
+@app.get("/feature_importance", response_model=Dict[str, float])
+async def feature_importance() -> Dict[str, float]:
+    """Endpoint to return feature importance for the weather prediction model."""
+    feature_names = [
+        "Minimum temperature (°C)",
+        "Maximum temperature (°C)",
+        "Rainfall (mm)",
+        "9am Temperature (°C)",
+        "9am relative humidity (%)",
+        "9am cloud amount (oktas)",
+        "9am wind speed (km/h)",
+        "3pm Temperature (°C)",
+        "3pm relative humidity (%)",
+        "3pm cloud amount (oktas)",
+        "3pm wind speed (km/h)",
+    ]
+    
+    try:
+        importance_data = get_feature_importance(weather_model, feature_names)
+        return importance_data
+    except Exception as e:
+        print(f"Error in feature_importance endpoint: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get feature importance.")
 
 # --------------- Rainfall modelintegration ----------------
 # Load the pre-trained rainfall prediction model
