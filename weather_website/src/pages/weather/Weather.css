@@ -1,20 +1,24 @@
+/* Weather Title Styles */
 .weather-title {
   color: #1976d2;
-  text-align: center; /* Center the title */
+  text-align: center;
   margin-bottom: 20px;
 }
 
+/* Weather Section Title Styles */
 .weather-section-title {
   color: #1976d2;
-  text-align: center; /* Center section titles */
-  margin: 20px 0; /* Spacing above and below section titles */
+  text-align: center;
+  margin: 20px 0;
   font-size: xx-large;
 }
+
+/* Weather Description Styles */
 .weather-description {
-  text-align: left; /* Align description text */
-  margin-bottom: 20px; /* Space below the description */
-  padding-left: 10%; /* Use percentage for responsive padding */
-  padding-right: 10%; /* Use percentage for responsive padding */
+  text-align: left;
+  margin-bottom: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
   color: #000;
 }
 
@@ -33,7 +37,7 @@
     width: stretch;
     padding: 20px;
     margin: 0 20px;
-    max-width: 600px; /* Optional: Sets a max width for larger screens */
+    max-width: 600px;
   }
 
   input[type="number"],

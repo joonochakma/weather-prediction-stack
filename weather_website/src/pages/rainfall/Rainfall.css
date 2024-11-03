@@ -1,75 +1,126 @@
+/* Main Title Styles */
 .rainfall-title {
   color: #1976d2;
-  text-align: center; /* Center the title */
-  margin-bottom: 20px; /* Space below the title */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
+/* Section Title Styles */
 .rainfall-section-title {
   color: #1976d2;
-  text-align: center; /* Center section titles */
-  margin: 20px 0; /* Spacing above and below section titles */
+  text-align: center;
+  margin: 20px 0;
   font-size: xx-large;
 }
 
+/* Description Text Styles */
 .rainfall-description-text {
-  text-align: left; /* Align description text */
-  margin-bottom: 20px; /* Space below the description */
-  padding-left: 10%; /* Use percentage for responsive padding */
-  padding-right: 10%; /* Use percentage for responsive padding */
+  text-align: left;
+  margin-bottom: 20px;
+  padding-left: 10%;
+  padding-right: 10%;
   color: #000;
 }
 
+/* Form Group Styles */
 .form-group {
-  margin-bottom: 15px; /* Space between form fields */
-  text-align: center; /* Center-align form labels and inputs */
+  margin-bottom: 15px;
+  text-align: center;
 }
 
+/* Input Field Styles */
 .input-field {
-  padding: 10px; /* Padding inside input fields */
-  margin-top: 5px; /* Space above input fields */
-  width: 80%; /* Make input fields take up most of the width */
-  border: 1px solid #ccc; /* Light border */
-  border-radius: 4px; /* Rounded corners for input fields */
+  padding: 10px;
+  margin-top: 5px;
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
+/* Submit Button Styles */
 .submit-button {
-  background-color: #0fa225; /* Primary button color */
-  color: white; /* Text color */
-  padding: 10px 20px; /* Padding for button */
-  border: none; /* No border */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  font-size: 16px; /* Increase button text size */
+  background-color: #0fa225;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
+/* Submit Button Hover Effects */
 .submit-button:hover {
-  background-color: #1565c0; /* Darken button on hover */
+  background-color: #1565c0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
+/* Prediction Result Styles */
 .prediction-result {
-  text-align: center; /* Center prediction results */
-  margin-top: 20px; /* Space above prediction results */
+  text-align: center;
+  margin-top: 20px;
   color: #1976d2;
 }
 
+/* Prediction Text Styles */
 .prediction-text {
-  font-size: 18px; /* Slightly larger font for the prediction text */
+  font-size: 18px;
 }
 
+/* Confidence Score Styles */
 .confidence-score {
-  font-size: 16px; /* Font size for the confidence score */
-  color: #555; /* Grey color for score */
+  font-size: 16px;
+  color: #555;
 }
 
-/* Optional: Add media queries for finer control */
+/* Chart Toggle Styles */
+.chart-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 1em;
+  background-color: #ecf6fe;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1870c9;
+  border-radius: 5px;
+  margin: 0 10%;
+  transition: background-color 0.3s ease;
+}
+
+/* Chart Toggle Hover Effects */
+.chart-toggle:hover {
+  background-color: #d4e5f0;
+}
+
+/* Chart Icon Styles */
+.chart-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Chart Icon Open State */
+.chart-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Chart Container Styles */
+.chart-container {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-top: none;
+  margin: 0 10%;
+}
+
+/* Media Queries for Responsive Design */
 @media (max-width: 768px) {
-  .description-text,
-  .charts-description {
-    padding-left: 5%; /* Adjust padding for smaller screens */
-    padding-right: 5%; /* Adjust padding for smaller screens */
+  .rainfall-description-text {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 
   .input-field {
-    width: 90%; /* Allow input fields to take up more width on smaller screens */
+    width: 90%;
   }
 }
