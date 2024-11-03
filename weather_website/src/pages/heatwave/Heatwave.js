@@ -19,6 +19,36 @@ const Heatwave = () => {
   const [loading, setLoading] = useState(true); // Loading state for data fetching
   const [isOpen, setIsOpen] = useState(false); // Toggle state for expandable section
 
+  // Function to validate user inputs before submitting the form
+  const validateInputs = () => {
+    let validationErrors = '';
+    const minTemperature = parseFloat(minTemp);
+    const maxTemperature = parseFloat(maxTemp);
+
+    // Validate minimum temperature input is a number between -50 and 60 °C 
+    if (isNaN(minTemperature) || minTemperature < -50 || minTemperature > 60) {
+      validationErrors = 'Minimum temperature must be between -50 and 60 °C.';
+    } 
+    
+    // Validate maximum temperature input is a number between -50 and 60 °C
+    if (isNaN(maxTemperature) || maxTemperature < -50 || maxTemperature > 60) {
+      validationErrors = 'Maximum temperature must be between -50 and 60 °C.';
+    } 
+    
+    // Validate maximum temperature is greater than minimum temperature
+    if (minTemperature >= maxTemperature) {
+      validationErrors = 'Maximum temperature must be greater than minimum temperature.';
+    } 
+    
+    // Validate date input is not empty
+    if (!date) {
+      validationErrors = 'Please select a valid date.';
+    }
+
+    setError(validationErrors);
+    return validationErrors === '';
+  };
+
   // Fetch cluster data when the component mounts
   useEffect(() => {
     fetchClusterVisualization();
@@ -27,6 +57,10 @@ const Heatwave = () => {
   // Handle form submission to fetch heatwave predictions
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!validateInputs()) { // Validate user inputs before fetching prediction
+      return;
+    }
 
     try {
       // Sending a POST request to fetch prediction data based on user input
@@ -234,8 +268,10 @@ const Heatwave = () => {
             Predict
           </button>
         </form>
-        {error && <p className="error-message">{error}</p>}
+        
         {/* Display error message if any */}
+        {error && <p className="error-message">{error}</p>}
+
         {/* Modal for displaying prediction result */}
         <Modal
           isOpen={modalIsOpen}

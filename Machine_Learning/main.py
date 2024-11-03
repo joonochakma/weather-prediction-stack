@@ -356,8 +356,26 @@ scaler = StandardScaler()
 
 # Define a Pydantic model for the prediction request
 class HeatwavePredictionRequest(BaseModel):
-    min_temp: float
-    max_temp: float
+    min_temp: float = Field(..., ge=-50, le=60, description="Minimum temperature between -50 and 60 °C")
+    max_temp: float = Field(..., ge=-50, le=60, description="Maximum temperature between -50 and 60 °C")
+
+    # Validate minimum and maximum temperature individually
+    @field_validator("min_temp", "max_temp")
+    def validate_temp_range(cls, value, info):
+        if not -50 <= value <= 60:
+            raise ValueError(f"{info.field_name.replace('_', ' ').capitalize()} must be between -50 and 60 °C.")
+        return value
+
+    # Cross-field validation to ensure max_temp > min_temp
+    @model_validator(mode="after")
+    def validate_min_max_relationship(cls, values):
+        max_temp = values.max_temp
+        min_temp = values.min_temp
+
+        if max_temp is not None and min_temp is not None and min_temp >= max_temp:
+            raise ValueError("Maximum temperature must be greater than minimum temperature.")
+        
+        return values
 
 # Define a route for the heatwave prediction endpoint
 @app.post("/heatwave_prediction")
