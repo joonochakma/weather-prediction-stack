@@ -182,6 +182,7 @@ function Temperature() {
   return (
     <div className="temperature-form">
       <h2 className="temperature-title">Temperature Prediction Model</h2>
+      <hr></hr>
 
       {/* Description Section */}
       <section className="description-section">
@@ -212,8 +213,10 @@ function Temperature() {
             backgroundColor: "#ECF6FE",
             border: "1px solid #ccc",
             fontWeight: "bold",
-            marginBottom: "10px",
             color: "#1870C9",
+            borderRadius: "5px",
+            margin: "0 10%",
+            marginBottom: "10px"
           }}
         >
           {isScatterOpen
@@ -236,6 +239,7 @@ function Temperature() {
               border: "1px solid #ccc",
               borderTop: "none",
               overflowX: "auto",
+              margin: "0 10%"
             }}
           >
             <Plot
@@ -264,6 +268,8 @@ function Temperature() {
             backgroundColor: "#ECF6FE",
             border: "1px solid #ccc",
             fontWeight: "bold",
+            margin: "0 10%",
+            borderRadius:"5px",
             marginBottom: "10px",
             color: "#1870C9",
           }}
@@ -288,6 +294,7 @@ function Temperature() {
               border: "1px solid #ccc",
               borderTop: "none",
               overflowX: "auto",
+              margin: "0 10%"
             }}
           >
             <Plot

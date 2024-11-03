@@ -33,40 +33,6 @@ function Home() {
     setFilteredCities([]); // Hide suggestions after selecting
   };
 
-  const handleSearch = async () => {
-    if (city) {
-      try {
-        const response = await fetch(
-          `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}`
-        );
-        const data = await response.json();
-
-        if (data.error) {
-          setError("City not found. Please try again.");
-          setWeatherData(null);
-          setForecastData(null);
-          return;
-        }
-
-        setWeatherData({
-          temp_min: data.current.temp_c,
-          temp_max: data.current.temp_c,
-          weather_state: data.current.condition.text,
-        });
-        setError("");
-        setForecastIndex(0); // Reset forecast index
-      } catch (error) {
-        console.error("Error fetching weather data:", error);
-        setError("Error fetching weather data. Please try again later.");
-        setWeatherData(null);
-      }
-    } else {
-      setError("Please select a city.");
-      setWeatherData(null);
-      setForecastData(null);
-    }
-  };
-
   const fetchForecast = async () => {
     if (city) {
       try {
@@ -139,26 +105,9 @@ function Home() {
                 ))}
               </ul>
             )}
-            <button onClick={handleSearch}>Search</button>
             <button onClick={fetchForecast}>Get 3-Day Forecast</button>
           </div>
           {error && <p className="error-message">{error}</p>}
-          {!forecastData && weatherData && (
-            <div className="weather-info">
-              <p>{formatDate(new Date())}</p>
-              <p>Temperature: {weatherData.temp_min}°C</p>
-              <p className="icon">
-                {getWeatherIcon(weatherData.weather_state) && (
-                  <img
-                    src={getWeatherIcon(weatherData.weather_state)}
-                    alt={weatherData.weather_state}
-                    className="weather-icon"
-                  />
-                )}
-                {weatherData.weather_state}
-              </p>
-            </div>
-          )}
           {forecastData && (
             <div className="forecast-info">
               <h2>3-Day Forecast</h2>
@@ -167,14 +116,16 @@ function Home() {
                   Previous
                 </button>
                 <div className="forecast-day">
-                  <p className="text-white">{formatDate(new Date(forecastData[forecastIndex].date))}</p>
+                  <p className="text-white">
+                    {formatDate(new Date(forecastData[forecastIndex].date))}
+                  </p>
                   <p className="text-white">
                     Min: {forecastData[forecastIndex].day.mintemp_c}°C
                   </p>
                   <p className="text-white">
                     Max: {forecastData[forecastIndex].day.maxtemp_c}°C
                   </p>
-                  <p className="icon" >
+                  <p className="icon">
                     <img
                       src={getWeatherIcon(
                         forecastData[forecastIndex].day.condition.text

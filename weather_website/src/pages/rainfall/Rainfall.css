@@ -49,6 +49,7 @@
 .prediction-result {
   text-align: center; /* Center prediction results */
   margin-top: 20px; /* Space above prediction results */
+  color: #1976d2;
 }
 
 .prediction-text {

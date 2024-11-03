@@ -95,7 +95,7 @@ const Heatwave = () => {
   return (
     <div className="heatwave-form">
       <h2 className="heatwave-title">Heatwave Prediction Model</h2>
-
+      <hr></hr>
       {/* Description Section */}
       <section className="description-section">
         <h2 className="heatwave-section-title">Description</h2>
@@ -121,6 +121,8 @@ const Heatwave = () => {
             padding: "1em",
             border: "1px solid #ccc",
             fontWeight: "bold",
+            margin: "0 10%",
+            borderRadius: "5px",
             marginTop: "20px",
             backgroundColor: "#ECF6FE",
             color: "#1870C9",
@@ -156,9 +158,15 @@ const Heatwave = () => {
               </div>
             )}
 
-            <h3>Cluster Visualization</h3>
             {clusterData.x.length > 0 && clusterData.y.length > 0 ? (
               <Plot
+                style={{
+                  padding: "1em",
+                  border: "1px solid #ccc",
+                  borderTop: "none",
+                  overflowX: "auto",
+                  margin: "0 10%",
+                }}
                 data={[
                   {
                     x: clusterData.x,

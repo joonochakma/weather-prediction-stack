@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Plot from 'react-plotly.js';
+import Plot from "react-plotly.js";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Modal from "react-modal";
 import "./Rainfall.css";
@@ -13,7 +13,10 @@ function Rainfall() {
   const [rainfall, setRainfall] = useState("");
   const [prediction, setPrediction] = useState(null);
   const [score, setScore] = useState(null);
-  const [probabilities, setProbabilities] = useState({ rainy_days: [], non_rainy_days: [] });
+  const [probabilities, setProbabilities] = useState({
+    rainy_days: [],
+    non_rainy_days: [],
+  });
   const [loading, setLoading] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isChartOpen, setIsChartOpen] = useState(false);
@@ -21,7 +24,9 @@ function Rainfall() {
   useEffect(() => {
     const fetchProbabilityDistribution = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/probability_distribution");
+        const response = await axios.get(
+          "http://localhost:8000/probability_distribution"
+        );
         setProbabilities(response.data);
       } catch (error) {
         console.error("Error fetching probability distribution:", error);
@@ -37,11 +42,14 @@ function Rainfall() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:8000/rain_prediction", {
-        max_temp: parseFloat(maxTemp),
-        min_temp: parseFloat(minTemp),
-        rainfall: parseFloat(rainfall),
-      });
+      const response = await axios.post(
+        "http://localhost:8000/rain_prediction",
+        {
+          max_temp: parseFloat(maxTemp),
+          min_temp: parseFloat(minTemp),
+          rainfall: parseFloat(rainfall),
+        }
+      );
 
       setPrediction(response.data.will_rain);
       setScore(response.data.score);
@@ -61,12 +69,25 @@ function Rainfall() {
   return (
     <div className="rainfall-form">
       <h2 className="rainfall-title">Rainfall Prediction Model</h2>
-
+      <hr></hr>
       {/* Description Section */}
       <section className="description-section">
         <h2 className="rainfall-section-title">Description</h2>
         <p className="rainfall-description-text">
-          Welcome to our Rainfall Prediction Model! Simply enter the relevant details, and our system will analyze the data to determine the probability of rainfall.
+          Welcome to our Rainfall Prediction Model! Our cutting-edge tool
+          utilizes advanced binary classification machine learning techniques to
+          forecast the likelihood of rain based on the data you provide. Whether
+          you're planning a picnic, organizing an outdoor event, or just want to
+          stay dry, our model offers accurate predictions tailored to your
+          specific location and input data.
+          <br />
+          <br />
+          Simply enter the relevant details, and our system will analyze
+          historical weather patterns and current conditions to determine the
+          probability of rainfall. With user-friendly functionality and
+          real-time updates, you can make informed decisions and stay ahead of
+          the weather. Experience the power of data-driven forecasting and never
+          get caught in the rain again!
         </p>
       </section>
 
@@ -87,9 +108,13 @@ function Rainfall() {
             fontWeight: "bold",
             marginBottom: "10px",
             color: "#1870C9",
+            borderRadius:"5px",
+            margin:" 0 10%"
           }}
         >
-          {isChartOpen ? "Hide Probability Distribution" : "Show Probability Distribution"}
+          {isChartOpen
+            ? "Hide Probability Distribution"
+            : "Show Probability Distribution"}
           <ExpandMoreIcon
             style={{
               marginLeft: "auto",
@@ -101,14 +126,25 @@ function Rainfall() {
 
         {/* Chart Content */}
         {isChartOpen && !loading && (
-          <div style={{ padding: "1em", border: "1px solid #ccc", borderTop: "none" }}>
+          <div
+            style={{
+              padding: "1em",
+              border: "1px solid #ccc",
+              borderTop: "none",
+              margin: "0 10%"
+            }}
+          >
             <Plot
               data={[
                 {
                   x: ["Rainy Days", "Non-Rainy Days"],
                   y: [
-                    probabilities.rainy_days.length > 0 ? probabilities.rainy_days[0] : 0,
-                    probabilities.non_rainy_days.length > 0 ? probabilities.non_rainy_days[0] : 0
+                    probabilities.rainy_days.length > 0
+                      ? probabilities.rainy_days[0]
+                      : 0,
+                    probabilities.non_rainy_days.length > 0
+                      ? probabilities.non_rainy_days[0]
+                      : 0,
                   ],
                   type: "bar",
                   marker: { color: ["blue", "orange"] },
@@ -162,7 +198,9 @@ function Rainfall() {
               className="input-field"
             />
           </div>
-          <button type="submit" className="submit-button">Predict</button>
+          <button type="submit" className="submit-button">
+            Predict
+          </button>
         </form>
       </section>
 
@@ -174,12 +212,22 @@ function Rainfall() {
         className="prediction-modal"
         overlayClassName="prediction-modal-overlay"
       >
-        <h2>Prediction Result</h2>
+        <h2 className="prediction-result">Prediction Result</h2>
         <p className="prediction-text">
-          {prediction === "Yes" ? "Yes, it will rain." : prediction === "No" ? "No, it will not rain." : "Error in prediction"}
+          {prediction === "Yes"
+            ? "Yes, it will rain."
+            : prediction === "No"
+            ? "No, it will not rain."
+            : "Error in prediction"}
         </p>
-        {score !== null && <p className="confidence-score">Confidence Score: {score.toFixed(2)}</p>}
-        <button onClick={closeModal} className="close-button">Close</button>
+        {score !== null && (
+          <p className="confidence-score">
+            Confidence Score: {score.toFixed(2)}
+          </p>
+        )}
+        <button onClick={closeModal} className="close-button">
+          Close
+        </button>
       </Modal>
     </div>
   );
