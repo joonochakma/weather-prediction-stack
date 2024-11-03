@@ -1,0 +1,12 @@
+﻿keras==3.5.0
+matplotlib==3.9.2
+numpy==1.26.4
+pandas==2.2.2
+plotly==5.24.1
+pydot==3.0.1
+scikit-learn==1.5.1
+scipy==1.14.1
+seaborn==0.13.2
+tensorflow==2.17.0
+h5py==3.11.0
+fastapi[standard]==0.115.0
