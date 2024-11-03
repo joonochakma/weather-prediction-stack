@@ -1,17 +1,20 @@
 import React from "react";
 import { Container, Typography, Card, CardContent } from "@mui/material";
-import "./About.css"; // Importing the CSS file
+import "./About.css";
 
+// About component to display information about the website and team
 function About() {
   return (
     <Container
       maxWidth="lg"
-      className="about-container" // Using a CSS class for styling
+      className="about-container" 
     >
-      {/* Website Overview */}
+      {/* Header for the About section */}
       <Typography variant="h2" component="h1" align="center" gutterBottom>
         About Us
       </Typography>
+
+      {/* Subheading for the website overview */}
       <Typography
         variant="h3"
         component="h3"
@@ -20,6 +23,8 @@ function About() {
       >
         Website Overview
       </Typography>
+
+      {/* Brief description of the website's purpose and features */}
       <Typography variant="body1" align="left" className="overview-text">
         At DCA Weather, we provide real-time weather updates and forecasts to
         help you stay prepared for any conditions. Our platform is designed with
@@ -28,6 +33,8 @@ function About() {
         cutting-edge technology, we offer reliable data powered by advanced AI
         models, including:
       </Typography>
+
+      {/* List of key features offered by the website */}
       <ul className="overview-list">
         <li>
           <strong>Temperature Forecasts:</strong> Get accurate predictions for
@@ -50,6 +57,8 @@ function About() {
           humidity, and visibility.
         </li>
       </ul>
+
+      {/* Additional details about the technology stack used */}
       <Typography variant="body1" align="left" className="overview-text">
         Built using React for a responsive front end and FastAPI for a robust
         back end, DCA Weather ensures fast and efficient data retrieval. Our
@@ -59,7 +68,7 @@ function About() {
         just curious about the weather, DCA Weather has you covered.
       </Typography>
 
-      {/* Team Section */}
+      {/* Section header for the team information */}
       <Typography
         variant="h3"
         component="h3"
@@ -68,13 +77,16 @@ function About() {
       >
         Our Team
       </Typography>
+
+      {/* Brief description of the team members and their contributions */}
       <Typography variant="body1" align="center" className="team-description">
         We are a dedicated team of three members working on this project, each
         bringing unique skills and perspectives:
       </Typography>
 
-      {/* Team Members */}
+      {/* Container for team member cards */}
       <div className="team-container">
+        {/* Individual card for each team member */}
         <Card variant="outlined" className="team-card">
           <CardContent>
             <Typography variant="h6">Joono Chakma</Typography>
@@ -113,4 +125,4 @@ function About() {
   );
 }
 
-export default About;
+export default About; // Exporting the About component for use in other parts of the application
