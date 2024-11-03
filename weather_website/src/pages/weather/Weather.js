@@ -177,10 +177,10 @@ const [chartData, setChartData] = useState([]); // State for chart data
       <section className="description-section">
         <h2 className="weather-section-title">Description</h2>
         <p className="weather-description">
-          Our Weather Conditions Prediction Model offers a powerful tool for
-          forecasting and understanding daily weather patterns. Utilizing
-          advanced classification algorithms in machine learning, this model
-          accurately predicts the type of weather expected in a given area.
+        Our <strong>Weather Conditions Prediction Model</strong> offers a powerful tool for
+        forecasting and understanding daily weather patterns. Utilizing
+        <em> advanced classification algorithms</em> in machine learning, this model
+        accurately predicts the <strong>type of weather</strong> expected in a given area.
         </p>
       </section>
 
@@ -347,6 +347,7 @@ const [chartData, setChartData] = useState([]); // State for chart data
           isOpen={modalIsOpen}
           onRequestClose={() => setModalIsOpen(false)}
         >
+          <h2 className="prediction-result">Prediction Result</h2>
           {predictedCondition ? (
             <p>
               Predicted Weather Condition: <strong>{predictedCondition}</strong>
