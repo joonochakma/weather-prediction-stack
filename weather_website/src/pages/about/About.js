@@ -7,29 +7,20 @@ function About() {
   return (
     <Container maxWidth="lg" className="about-container">
       {/* Header for the About section */}
-      <Typography variant="h2" component="h1" align="center" gutterBottom>
-        About Us
-      </Typography>
+      <h1 align="center" className="about-title">About Us</h1>
 
       {/* Subheading for the website overview */}
-      <Typography
-        variant="h3"
-        component="h3"
-        align="center"
-        className="overview-text"
-      >
-        Website Overview
-      </Typography>
+      <h2 align="center" className="about-sub-title">Website Overview</h2>
 
       {/* Brief description of the website's purpose and features */}
-      <Typography variant="body1" align="left" className="overview-text">
+      <p align="left" className="overview-text">
         At DCA Weather, we provide real-time weather updates and forecasts to
         help you stay prepared for any conditions. Our platform is designed with
         user experience in mind, featuring a clean and intuitive interface that
         allows users to easily access the latest weather information. Leveraging
         cutting-edge technology, we offer reliable data powered by advanced AI
         models, including:
-      </Typography>
+      </p>
 
       {/* List of key features offered by the website */}
       <ul className="overview-list">
@@ -56,30 +47,23 @@ function About() {
       </ul>
 
       {/* Additional details about the technology stack used */}
-      <Typography variant="body1" align="left" className="overview-text">
+      <p align="left" className="overview-text">
         Built using React for a responsive front end and FastAPI for a robust
         back end, DCA Weather ensures fast and efficient data retrieval. Our
         platform is committed to delivering the most accurate and up-to-date
         weather information, making us your trusted source for all things
         weather. Whether you’re planning a trip, heading out for the day, or
         just curious about the weather, DCA Weather has you covered.
-      </Typography>
+      </p>
 
       {/* Section header for the team information */}
-      <Typography
-        variant="h3"
-        component="h3"
-        align="center"
-        className="team-description"
-      >
-        Our Team
-      </Typography>
+      <h3 align="center" className="about-sub-title">Our Team</h3>
 
       {/* Brief description of the team members and their contributions */}
-      <Typography variant="body1" align="center" className="team-description">
+      <p align="center" className="team-description">
         We are a dedicated team of three members working on this project, each
         bringing unique skills and perspectives:
-      </Typography>
+      </p>
 
       {/* Container for team member cards */}
       <div className="team-container">
@@ -89,7 +73,7 @@ function About() {
             <Typography variant="h6">Joono Chakma</Typography>
             <Typography variant="body2">ID: 104582560</Typography>
             <Typography variant="body2">
-              Joono handles the header, body, backend, API, and model
+              Joono handles data visualisation, body, backend, API, and model
               integration, ensuring smooth functionality throughout the website.
             </Typography>
           </CardContent>
@@ -111,8 +95,7 @@ function About() {
             <Typography variant="h6">Nirachorn Boonnoul</Typography>
             <Typography variant="body2">ID: 104349778</Typography>
             <Typography variant="body2">
-              Nirachorn focuses on the FAQ, report, frontend, and descriptions
-              for heatwave and weather conditions, enhancing user experience and
+              Nirachorn focuses on header, FAQ, frontend & backend of models' prediction, enhancing user experience and
               information accessibility.
             </Typography>
           </CardContent>

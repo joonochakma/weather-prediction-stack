@@ -14,12 +14,32 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Styles for the main title of the About section */
+.about-title {
+  font-size: 2.5rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Styles for the section titles */
+.about-sub-title {
+  margin-top: 40px;
+  font-size: 2rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 /* Styles for the list of features in the overview */
 .overview-list {
   list-style-type: disc;
   margin-left: 20px;
   color: #fff;
   padding: 10px 0;
+  font-size: 1.1rem;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 /* General styles for the overview text */
@@ -28,6 +48,8 @@ body {
   margin: 20px 0;
   font-size: 1.1rem;
   color: #fff;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 /* Styles for the team description section */
@@ -63,9 +85,26 @@ body {
 
 /* Responsive styles for smaller screens */
 @media (max-width: 600px) {
+  .about-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .about-sub-title {
+    margin-top: 30px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .overview-list {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
   .overview-text,
   .team-description {
     font-size: 1rem;
+    margin: 10px 0;
   }
 
   .team-container {
