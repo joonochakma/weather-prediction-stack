@@ -19,11 +19,13 @@ This repository contains a weather website with a Machine Learning backend and a
 
 ### 1. Setting up Machine Learning Backend
 
-```bash
-# Navigate to Machine Learning directory
-cd .\Machine_Learning\
 
-# Install Python dependencies
+Navigate to Machine Learning directory
+```bash
+cd .\Machine_Learning\
+```
+Install Python dependencies
+```bash
 pip install -r requirements.txt
 ```
 
@@ -33,29 +35,38 @@ First, ensure Node.js is installed on your system. You can download it from [nod
 
 To verify the installation:
 ```bash
-npm --version  # or npm -v
+npm --version
+```
+or
+```bash
+npm -v
 ```
 
 Then proceed with frontend setup:
-```bash
-# Navigate to weather website directory
-cd .\weather_website\
 
-# Install Node dependencies
+Navigate to weather website directory
+```bash
+cd .\weather_website\
+```
+
+Install Node dependencies
+```bash
 npm install
 ```
 
 ## Running the Application
 
 1. Start the Backend Server:
+
+From the Machine_Learning directory
 ```bash
-# From the Machine_Learning directory
 fastapi dev
 ```
 
 2. Start the Frontend Server:
+
+From the weather_website directory
 ```bash
-# From the weather_website directory
 npm start
 ```
 
