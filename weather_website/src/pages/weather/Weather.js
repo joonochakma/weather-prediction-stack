@@ -28,18 +28,23 @@ function Weather() {
   const validateInputs = () => {
     const errors = {};
 
+    // Validate minimum temperature range
     if (
       formData.minimum_temp &&
       (formData.minimum_temp < -50 || formData.minimum_temp > 60)
     ) {
       errors.minimum_temp = "Minimum temperature must be between -50 and 60 °C";
     }
+
+    // Validate maximum temperature range
     if (
       formData.maximum_temp &&
       (formData.maximum_temp < -50 || formData.maximum_temp > 60)
     ) {
       errors.maximum_temp = "Maximum temperature must be between -50 and 60 °C";
     }
+
+    // Cross-validation: Ensure minimum temperature does not exceed maximum temperature
     if (
       formData.minimum_temp &&
       formData.maximum_temp &&
@@ -50,20 +55,50 @@ function Weather() {
       errors.maximum_temp =
         "Maximum temperature cannot be lower than minimum temperature";
     }
+
+    // Validate rainfall as a non-negative value
     if (formData.rainfall < 0) {
       errors.rainfall = "Rainfall cannot be negative";
     }
+
+    // Validate 9 AM temperature range
+    if (formData.nine_am_temp < -50 || formData.nine_am_temp > 60) {
+      errors.nine_am_temp = "9 AM temperature must be between -50 and 60 °C";
+    }
+
+    // Validate 9 AM humidity range
     if (formData.nine_am_humidity < 0 || formData.nine_am_humidity > 100) {
       errors.nine_am_humidity = "9 AM humidity must be between 0 and 100%";
     }
+
+    // Validate 9 AM cloud amount range
+      if (formData.nine_am_cloud < 0 || formData.nine_am_cloud > 8) {
+      errors.nine_am_cloud = "9 AM cloud amount must be between 0 and 8 oktas";
+    }
+
+    // Validate 9 AM wind speed range
+    if (formData.nine_am_wind_speed < 0) {
+      errors.nine_am_wind_speed = "9 AM wind speed must be a non-negative value";
+    }
+
+    // Validate 3 PM temperature range
+    if (formData.three_pm_temp < -50 || formData.three_pm_temp > 60) {
+      errors.three_pm_temp = "3 PM temperature must be between -50 and 60 °C";
+    }
+
+    // Validate 3 PM humidity range
     if (formData.three_pm_humidity < 0 || formData.three_pm_humidity > 100) {
       errors.three_pm_humidity = "3 PM humidity must be between 0 and 100%";
     }
-    if (formData.nine_am_cloud < 0 || formData.nine_am_cloud > 8) {
-      errors.nine_am_cloud = "9 AM cloud amount must be between 0 and 8 oktas";
-    }
+
+    // Validate 3 PM cloud amount range
     if (formData.three_pm_cloud < 0 || formData.three_pm_cloud > 8) {
       errors.three_pm_cloud = "3 PM cloud amount must be between 0 and 8 oktas";
+    }
+
+    // Validate 3 PM wind speed range
+    if (formData.three_pm_wind_speed < 0) {
+      errors.three_pm_wind_speed = "3 PM wind speed must be a non-negative value";
     }
 
     setError(errors);
@@ -79,7 +114,6 @@ function Weather() {
     event.preventDefault();
 
     if (!validateInputs()) {
-      setModalIsOpen(true);
       return;
     }
 
