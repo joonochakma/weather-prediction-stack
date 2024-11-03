@@ -3,7 +3,6 @@ import axios from "axios";
 import Plot from "react-plotly.js";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Modal from "react-modal";
-// Add your CSS styling file here
 
 // Set the root element for the modal
 Modal.setAppElement("#root");
