@@ -1,12 +1,7 @@
-# Weather Application
+# DCA Weather Website
 
-This repository contains a weather application with a Machine Learning backend and a React frontend. Follow these instructions to set up and run the application.
+This repository contains a weather website with a Machine Learning backend and a React frontend. Follow these instructions to set up and run the application.
 
-## Prerequisites
-
-- Python 3.x
-- Node.js and npm
-- Git
 
 ## Repository Structure
 
@@ -26,7 +21,7 @@ This repository contains a weather application with a Machine Learning backend a
 
 ```bash
 # Navigate to Machine Learning directory
-cd Machine_Learning/
+cd .\Machine_Learning\
 
 # Install Python dependencies
 pip install -r requirements.txt
@@ -44,7 +39,7 @@ npm --version  # or npm -v
 Then proceed with frontend setup:
 ```bash
 # Navigate to weather website directory
-cd weather_website/
+cd .\weather_website\
 
 # Install Node dependencies
 npm install
@@ -74,6 +69,7 @@ If you encounter any issues:
 2. Check if the required ports (backend and frontend) are not in use
 3. Verify Node.js and Python are correctly installed and accessible from command line
 
-## Support
-
-For any additional help or issues, please open an issue in the repository.
+## Acknowledgements
+1. Dhruv Patel
+2. Joono Chakma
+3. NIRACHORN BOONNOUL
