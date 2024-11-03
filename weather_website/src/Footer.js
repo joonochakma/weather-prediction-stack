@@ -6,22 +6,26 @@ import {
   DialogContent,
   DialogActions,
   Button,
-} from "@mui/material";
+} from "@mui/material"; // Importing Material-UI components for dialog functionality
 
+// Function to smoothly scroll to the FAQ section when called
 const scrollToFAQ = () => {
   const element = document.getElementById("faq-section");
   if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
+    element.scrollIntoView({ behavior: "smooth" }); // Smooth scroll effect
   }
 };
 
 function Footer() {
+  // State variables to control the opening and closing of the privacy policy and terms & conditions dialogs
   const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false);
   const [openTermsConditions, setOpenTermsConditions] = useState(false);
 
+  // Handlers to open and close the privacy policy dialog
   const handlePrivacyPolicyOpen = () => setOpenPrivacyPolicy(true);
   const handlePrivacyPolicyClose = () => setOpenPrivacyPolicy(false);
 
+  // Handlers to open and close the terms & conditions dialog
   const handleTermsConditionsOpen = () => setOpenTermsConditions(true);
   const handleTermsConditionsClose = () => setOpenTermsConditions(false);
 
@@ -79,7 +83,6 @@ function Footer() {
           </ul>
         </div>
       </div>
-
       <div className="footer-middle">
         <ul className="information">
           <p className="text-white">
@@ -94,7 +97,6 @@ function Footer() {
           </p>
         </ul>
       </div>
-
       <div className="footer-bottom">
         <div className="footer-left">
           <img src="/umbrella.png" alt="Logo" className="footer-logo" />
@@ -109,17 +111,15 @@ function Footer() {
           </a>
         </div>
       </div>
-
+      {/* Dialog for Privacy Policy */}
       <Dialog
         open={openPrivacyPolicy}
         onClose={handlePrivacyPolicyClose}
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle style={{ color: "#1976d2", fontWeight: "bold" }}>
-          Privacy Policy
-        </DialogTitle>
-        <DialogContent>
+        <DialogTitle className="dialog-title">Privacy Policy</DialogTitle>
+        <DialogContent className="dialog-content">
           <p>
             <strong>Last Updated: 1/11/2024</strong>
           </p>
@@ -129,100 +129,50 @@ function Footer() {
             information we collect, how we use it, and your rights regarding
             your personal information.
           </p>
+          <h4>Information We Collect</h4>
           <p>
-            <strong>1. Information We Collect</strong>
+            We may collect personal information from you when you use our
+            services, including:
           </p>
           <ul>
-            <li>
-              <strong>Personal Information:</strong> When you use our website,
-              we may collect personal information, such as your name, email
-              address, and location, to provide customized weather updates and
-              improve our services.
-            </li>
-            <li>
-              <strong>Usage Data:</strong> We automatically collect certain data
-              about your interaction with the site, including IP address,
-              browser type, and browsing actions.
-            </li>
-            <li>
-              <strong>Cookies:</strong> We use cookies to improve user
-              experience, personalize content, and analyze traffic.
-            </li>
+            <li>Name</li>
+            <li>Email Address</li>
+            <li>Location Data</li>
+            <li>Usage Data</li>
           </ul>
+          <h4>How We Use Your Information</h4>
           <p>
-            <strong>2. How We Use Your Information</strong>
+            Your information may be used in the following ways:
           </p>
           <ul>
-            <li>
-              <strong>Provide Services:</strong> We use your data to deliver
-              real-time weather updates and forecasts based on your location.
-            </li>
-            <li>
-              <strong>Improve Services:</strong> We analyze usage data to
-              enhance website functionality and user experience.
-            </li>
-            <li>
-              <strong>Communication:</strong> We may use your email to send
-              notifications or updates if you’ve opted in.
-            </li>
+            <li>To provide and maintain our services.</li>
+            <li>To notify you about changes to our services.</li>
+            <li>To allow you to participate in interactive features.</li>
+            <li>To provide customer support.</li>
+            <li>To gather analysis or valuable information.</li>
+            <li>To monitor the usage of our services.</li>
+            <li>To detect, prevent and address technical issues.</li>
           </ul>
+          <h4>Your Rights</h4>
           <p>
-            <strong>3. Data Sharing and Disclosure</strong>
-          </p>
-          <p>
-            We do not sell or share your personal information with third
-            parties, except as necessary to provide services, comply with the
-            law, or protect our rights.
-          </p>
-          <p>
-            <strong>4. Data Retention</strong>
-          </p>
-          <p>
-            We retain your information only for as long as needed to fulfill the
-            purposes outlined in this policy, unless a longer retention period
-            is required by law.
-          </p>
-          <p>
-            <strong>5. Security</strong>
-          </p>
-          <p>
-            We use reasonable measures to protect your information from
-            unauthorized access, disclosure, or destruction. However, no
-            internet transmission is 100% secure, and we cannot guarantee
-            absolute security.
-          </p>
-          <p>
-            <strong>6. Your Rights</strong>
-          </p>
-          <p>
-            You may have the right to access, correct, delete, or restrict the
-            use of your personal data. Please contact us if you wish to exercise
-            any of these rights.
-          </p>
-          <p>
-            <strong>7. Changes to the Privacy Policy</strong>
-          </p>
-          <p>
-            We may update this Privacy Policy periodically. We will notify you
-            of any changes by posting the new policy on this page with a revised
-            "Last Updated" date.
+            You have the right to request access to the personal data we hold
+            about you, to request corrections to that data, and to request
+            deletion of your personal data under certain circumstances.
           </p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions className="dialog-actions">
           <Button onClick={handlePrivacyPolicyClose}>Close</Button>
         </DialogActions>
       </Dialog>
-
+      {/* Dialog for Terms and Conditions */}
       <Dialog
         open={openTermsConditions}
         onClose={handleTermsConditionsClose}
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle style={{ color: "#1976d2", fontWeight: "bold" }}>
-          Terms and Conditions
-        </DialogTitle>
-        <DialogContent>
+        <DialogTitle className="dialog-title">Terms and Conditions</DialogTitle>
+        <DialogContent className="dialog-content">
           <p>
             <strong>Last Updated: 1/11/2024</strong>
           </p>
@@ -230,77 +180,38 @@ function Footer() {
             Welcome to DCA Weather! By using this website, you agree to comply
             with these Terms and Conditions. Please read them carefully.
           </p>
+          <h4>Acceptance of Terms</h4>
           <p>
-            <strong>1. Use of the Website</strong>
+            By accessing this website, you acknowledge that you have read,
+            understood, and agree to be bound by these Terms and Conditions.
           </p>
-          <ul>
-            <li>
-              You may use DCA Weather solely for personal, non-commercial
-              purposes.
-            </li>
-            <li>
-              You agree not to misuse the website, including by attempting
-              unauthorized access, distributing malicious software, or engaging
-              in any illegal activities.
-            </li>
-          </ul>
+          <h4>Use of the Website</h4>
           <p>
-            <strong>2. Weather Information</strong>
+            You may use this website for lawful purposes only. You agree not
+            to use the site in any way that violates any applicable federal,
+            state, local, or international law.
           </p>
-          <ul>
-            <li>
-              <strong>Accuracy:</strong> While we strive to provide accurate
-              weather updates and forecasts, weather conditions are subject to
-              change, and we cannot guarantee accuracy.
-            </li>
-            <li>
-              <strong>Disclaimer:</strong> Weather forecasts and alerts provided
-              by DCA Weather are for informational purposes only and should not
-              replace official sources or emergency services.
-            </li>
-          </ul>
+          <h4>Intellectual Property</h4>
           <p>
-            <strong>3. Intellectual Property</strong>
+            All content, trademarks, and other intellectual property on this
+            website are the property of DCA Weather or our licensors. You may
+            not reproduce, distribute, or create derivative works from this
+            content without our express written consent.
           </p>
+          <h4>Limitation of Liability</h4>
           <p>
-            All content, logos, and graphics on DCA Weather are protected by
-            intellectual property laws. You may not reproduce, distribute, or
-            create derivative works from our content without written permission.
+            In no event shall DCA Weather be liable for any direct, indirect,
+            incidental, special, consequential, or punitive damages arising
+            from or related to your use of the website.
           </p>
+          <h4>Changes to Terms</h4>
           <p>
-            <strong>4. Limitation of Liability</strong>
-          </p>
-          <p>
-            DCA Weather and its affiliates are not liable for any direct,
-            indirect, incidental, or consequential damages arising from the use
-            or inability to use the website, including errors, inaccuracies, or
-            delays in data.
-          </p>
-          <p>
-            <strong>5. Third-Party Links</strong>
-          </p>
-          <p>
-            Our website may contain links to third-party sites. We are not
-            responsible for the content, privacy practices, or terms of those
-            third-party sites.
-          </p>
-          <p>
-            <strong>6. Changes to the Terms and Conditions</strong>
-          </p>
-          <p>
-            We may modify these Terms and Conditions at any time. We will notify
-            you of changes by posting the updated Terms on this page with the
-            revised "Last Updated" date.
-          </p>
-          <p>
-            <strong>7. Governing Law</strong>
-          </p>
-          <p>
-            These Terms and Conditions are governed by the laws of Australia,
-            without regard to its conflict of law principles.
+            We reserve the right to modify these Terms and Conditions at any
+            time. Your continued use of the website following any changes
+            signifies your acceptance of the new terms.
           </p>
         </DialogContent>
-        <DialogActions>
+        <DialogActions className="dialog-actions">
           <Button onClick={handleTermsConditionsClose}>Close</Button>
         </DialogActions>
       </Dialog>
@@ -308,4 +219,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Footer; // Exporting the Footer component for use in other parts of the application

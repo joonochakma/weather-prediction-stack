@@ -7,13 +7,13 @@ import FAQ from "./pages/faq/FAQ";
 const Layout = () => {
   return (
     <>
-      <Header />
+      <Header /> {/* Render the header at the top of the page */}
       <main>
-        {/* The Outlet component will render the current matched child route */}
+        {/* This is where the matched child route will show up */}
         <Outlet />
       </main>
-      <FAQ />
-      <Footer />
+      <FAQ /> {/* Display the FAQ section below the main content */}
+      <Footer /> {/* Render the footer at the bottom */}
     </>
   );
 };

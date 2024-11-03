@@ -1,4 +1,6 @@
-/* Base Styling */
+/* ========================= */
+/* Base Styling             */
+/* ========================= */
 .footer {
   background-color: #1976d2;
   color: #fff;
@@ -17,7 +19,9 @@
   text-decoration: underline;
 }
 
-/* Footer Top */
+/* ========================= */
+/* Footer Top               */
+/* ========================= */
 .footer-top {
   display: flex;
   justify-content: space-around;
@@ -46,7 +50,9 @@
   margin-bottom: 10px;
 }
 
-/* Footer Middle */
+/* ========================= */
+/* Footer Middle            */
+/* ========================= */
 .footer-middle {
   text-align: center;
   padding: 15px 0;
@@ -63,7 +69,9 @@
   text-decoration: underline;
 }
 
-/* Footer Bottom */
+/* ========================= */
+/* Footer Bottom            */
+/* ========================= */
 .footer-bottom {
   display: flex;
   flex-direction: column;
@@ -95,10 +103,12 @@
 }
 
 .footer-right a:hover {
-  border-color: #ffffff; /* Border color on hover */
+  border-color: #ffffff;
 }
 
-/* Responsive Design */
+/* ========================= */
+/* Responsive Design         */
+/* ========================= */
 @media (max-width: 768px) {
   .footer-top {
     flex-direction: column;
@@ -130,26 +140,33 @@
   }
 }
 
-/* Additional Styling for Hover Effects */
+/* ========================= */
+/* Additional Styling for    */
+/* Hover Effects             */
+/* ========================= */
 .footer a:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
-  border-radius: 5px; /* Slight rounding */
-  padding: 5px; /* Space around text */
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 5px;
 }
 
-/* Dialog Styling */
+/* ========================= */
+/* Dialog Styling            */
+/* ========================= */
 .dialog-title {
   font-weight: bold;
-  color: #1976d2; /* Match footer background color */
+  color: #1976d2;
 }
 
 .dialog-content {
   font-size: 14px;
-  line-height: 1.6; /* Better readability */
-  color: #333; /* Darker text for contrast */
+  line-height: 1.6;
+  color: #333;
 }
 
-/* Dialog Actions */
+/* ========================= */
+/* Dialog Actions            */
+/* ========================= */
 .dialog-actions {
   padding: 10px;
   display: flex;
@@ -163,18 +180,23 @@
 }
 
 .dialog-actions .MuiButton:hover {
-  background-color: #155a8a; /* Darker shade on hover */
+  background-color: #155a8a;
 }
 
-/* Add padding to Dialogs */
+/* ========================= */
+/* Dialog Padding            */
+/* ========================= */
 .MuiDialog-paper {
-  padding: 20px; /* Add padding inside dialog */
-  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  border-radius: 10px;
 }
 
-/* Responsive Design for Dialog */
+/* ========================= */
+/* Responsive Design for     */
+/* Dialog                    */
+/* ========================= */
 @media (max-width: 768px) {
   .dialog-content {
-    font-size: 12px; /* Smaller font for mobile */
+    font-size: 12px;
   }
 }
