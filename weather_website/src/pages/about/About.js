@@ -5,10 +5,7 @@ import "./About.css";
 // About component to display information about the website and team
 function About() {
   return (
-    <Container
-      maxWidth="lg"
-      className="about-container" 
-    >
+    <Container maxWidth="lg" className="about-container">
       {/* Header for the About section */}
       <Typography variant="h2" component="h1" align="center" gutterBottom>
         About Us
