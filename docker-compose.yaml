@@ -1,0 +1,13 @@
+
+services:
+  frontend:  
+    build: ./weather_website
+    ports:
+      - "3000:3000"
+   
+  backend: 
+    build: ./Machine_Learning
+    ports:
+      - "8000:8000"
+    
+
